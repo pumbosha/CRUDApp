@@ -1,0 +1,172 @@
+body {
+	margin:0px;
+	padding:0px;
+	background-color:#ddd;
+	font-family: 'Lato';
+}
+
+#mainContent {
+	width:80%;
+	margin-left:10%;
+	background-color:white;
+	padding:10px;
+	margin-top:10px;
+}
+
+#operations {
+	background-color:#eee;
+	padding:5px;
+}
+
+/**
+ * Table styles
+ */
+
+#tableContent {
+	font-size:1.3em;
+	font-color:#555;
+	margin-top:15px;
+	overflow-x: scroll;
+}
+
+#tableContent table{
+	border: 1px solid #aaa;
+	padding:5px;
+	width:100%;
+}
+
+#tableContent table thead {
+	font-weight:bold;
+	background-color:#eee;
+}
+
+#tableContent table tr td{
+	padding:5px;
+}
+
+#tableContent table tr td span.select {
+	float:right;
+	padding:5px;
+	border:1px solid #aaa;
+}
+
+#tableContent td.operationsColumn {
+	min-width:150px;
+}
+
+/**
+ * Form styles
+ */
+
+.crud-formItem select {
+	width:100%;	
+}
+
+.crud-formItem {
+	margin-bottom:5px;
+	font-size:1.3em;
+	font-color:#555;
+	/*height:45px;*/
+}
+
+.crud-formItem label {
+	margin-right:5px;
+}
+
+.crud-formItem input[type=text], .crud-formItem input[type=number] {
+	width:100%;
+}
+
+.crud-formItem input, .crud-formItem select, .crud-formItem fieldset {
+	margin-top: 5px;
+}
+
+.crud-formItem fieldset.crud-group {
+	margin-top:5px;
+}
+
+.crud-formItem fieldset {
+	border:1px solid #ccc;
+}
+
+form {
+	margin-top:15px;
+	margin-bottom:15px;
+	border: 1px solid #aaa;
+	padding:10px;
+}
+
+form .bttns {
+	margin-top:15px;
+	height:20px;
+}
+
+/* Form animations */
+
+#formContent {
+	transition: all linear 0.5s;
+	opacity: 1;
+	/* 15+15+10+10+5*50+15+20 
+	height:335px;*/
+	overflow:hidden;
+}
+
+#formContent.ng-hide {
+	opacity: 0;
+}
+
+/* messages */
+
+.msg {
+	margin-top:15px;
+	border:2px solid #999;
+	padding:5px;
+}
+
+.msg {
+	transition: all linear 0.5s;
+	opacity: 1;
+	height:20px;
+}
+
+.msg.ng-hide {
+	opacity: 0;
+	height:0px;
+}
+
+.msg .close {
+	float:right;
+	color:blue;
+	cursor:pointer;
+}
+
+#errMsg {
+	color: red;
+}
+
+.error {
+	color:red;
+	font-weight:bold;
+	padding-top:5px;
+	height:30px;
+	opacity:1;
+	transition: all linear 0.5s;
+}
+
+.error.ng-hide {
+	height:0px;
+	opacity:0;
+}
+
+.requiredMark {
+	color:red;
+	font-weight:bold;
+}
+
+.hint {
+	cursor: help;
+}
+
+label.disabled {
+	opacity: 0.35;
+}

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<crud-input 
+		type="text"
+		name="$ctrl.name"
+		errormessages="$ctrl.errorMessages"
+		model="$ctrl.model"
+		assignparams="$ctrl.assignParams"
+		change="$ctrl.onchange(assgnprms)" 
+		validations=$ctrl.validations
+		onupdate=$ctrl.updateOn
+		desc="{{$ctrl.desc}}">
+			<ng-transclude></ng-transclude>
+	</crud-input >	
+</html>

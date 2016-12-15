@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<fieldset class="crud-group">
+		<label ng-repeat="item in $ctrl.availableOpts" ng-class="$ctrl.getClass(item)">
+			<input 
+				type="radio" 
+				ng-disabled="!item.id.match($ctrl.pattern)"
+				ng-required="$ctrl.required" 
+				name="{{$ctrl.name}}" 
+				ng-click="$ctrl.model=item.id" 
+				value="{{item.id}}" 
+				ng-checked="$ctrl.model==item.id"
+				ng-pattern="$ctrl.pattern"
+				ng-model="$ctrl.model"> 
+				{{item.name}}
+			</input>
+		</label>
+	</fieldset>
+	
+</html>

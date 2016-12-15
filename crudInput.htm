@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<div class="crud-formItem">
+	
+		<crud-label required-mark="{{$ctrl.required}}" desc="{{$ctrl.desc}}">
+			<ng-transclude>
+			</ng-transclude>
+		</crud-label>
+		
+		<div ng-include="$ctrl.getTemplate()" onload="$ctrl.loaded = true"></div>
+		
+		<crud-error 
+			ng-if="$ctrl.loaded"
+			field="$ctrl.form[$ctrl.name]" 	
+			errormessages="$ctrl.errorMessages" 
+			submitattempted="$ctrl.form.failedAttemted">
+		</crud-error>
+
+	</div>
+</html>

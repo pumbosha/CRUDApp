@@ -1,0 +1,64 @@
+1. Tabela w której wyœwietlane bêd¹ dane ludzi (l.p., Imie, nazwisko, pesel, zarobki, data urodzenia)
+2. Dodanie mo¿liwoœci usuwania, dodawania i edycji ludzi
+	- zrobienie odpowiednich walidacji na odpowiednich polach (dodawanie, edycja)
+	- walidacja danych poprzez wywo³anie jeakiegoœ mokowego serwisu (stworzyæ customowy serwis do tego)
+3. Dodanie filtrów i sortowañ na tabelce
+4. Stronnicowanie
+5. Zamiana tabelki w dyrektywy (komponenty) i sprawienie aby wyœwietlanie tabelki by³o generyczne (ró¿ne dane)
+6. Przeniesienie czêœci funkcjonalnoœci (np. dodawanie i edycja ludzi) na inne podstrony i ogarniêcie routingu
+7. Internacjonalizacja
+8. Mobilnoœæ
+9. Zrobiæ mechanizm warunkowego pokazywania pól na formularzu, tzn jeœli np. pola A ma wartoœæ 'x' to poka¿ pole B a jak nie to poka¿ pole C i D
+
+Next:
+
++ przywróciæ kopiowanie!!
++ co w³o¿yæ do rootScope a co przekazywaæ??
++ przenieœæ serwisy i komponenty do osobnych plików
++ sprawdziæ czy dzia³a bez metody copy() NIE TRZEBA
++ Przenieœæ do serwisu metodê assign i innne metody bêd¹ce w g³ównym kontrolerze poza scopem
++ Nie przekazywaæ komponentom ca³ego obiektu person
++ wywaliæ z componentu pole error
++ daæ do pola error wiadomoœci o b³êdzie (tzn namiary na te wiadomoœci ze scopa, ¿eby nie brudziæ widoku)
++ brak polskich znaków znowu...
++ wyœwietlenie tekstów walidacyjnych w przypadku nie udanego submitowania
++ zrobiæ ¿eby model by³ dzielony przez wszystkie komponenty za pomoc¹ porady ze stackoverflow
++ obiekty do metod assign zdefiniowaæ w scopie ¿eby nie zaœmiecaæ widoku -> pesel do sprawdzenia
++ problem jest z tym, ¿e gdy mamy onblur to model zmienia siê dopiero po metodzie assign wywo³anej na zdarzenie onchange
+++ desc
+++ gwiazdka 
++ validations
++ dodaæ to do niektórych pól (np. pesel) ng-model-options="{ updateOn: 'blur' }"
+++ onchange
++ pola disabled
+
+- pattern zalezy od innych pól -> przenieœæ pattern do serwisu [obiekty 'pattern' zdefiniowaæ w scopie ¿eby nie zaœmiecaæ widoku]
+- przetwa¿anie patternu  (w metodzie eval obiekt record nie zosta³ dostarczony)
+
+RADIO:
++ validacje (filtry)
++ dzia³anie patternów: opcje wyeliminowane przez filtr wyœwietlaæ jako disabled (lub wgl nie wyœwietlaæ tak jak jest teraz)
++ opcje disabled bardziej wyszarzyæ
+- assign w obie strony
++ errormessages
+
+CHECKBOX, MULTISELECT:
+- minimum i maximum zaznaczonych opcji
+
++ ró¿ne opcje w updateOn (dzia³a dla mouseover, blur)
++ przy submitowaniu formularza z b³edami i poprawie ich, w miejscach gdzie by³y b³edy pozostaje pusta przestrzeñ
++ po submitowaniu formularza z b³edami i kliknieciu cancel, ponownym klikniêciu addPerson na formularzu widniej¹ b³êdy
+
+- kontrolka do radio
+- kontrolka do checkbox
+- kontrolka do select, multiselect *
++ komponent to liczb
+- assignowaæ jakimœ polem pola: checkbox, radio, select, multiselect
+
+1. Zrobiæ dyrektywy z prefixem json, tak aby mia³y tylko jeden atrybut do którego wstawiaæ siê bêdzie objekt json z wszystkimi ustawieniami kontrolki
+2. Dodaæ jakieœ domyœlne pluginy do daty i multiselekta (albo i nie dodawaæ -> zastanowiæ siê)
+3. Filtry i sortowanie, stronnicowanie na tabeli
+4. porobiæ testy
+
+*w polach select, multiselect, checkbox itd trzeba zrobiæ walidacje typu: min x (max x) zaznaczonych itp. Paatern oznacza tam filtrowanie elementów listy, tzn mo¿na wybraæ takie jakie s¹ dostêpne
+
