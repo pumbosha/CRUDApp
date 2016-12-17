@@ -34,7 +34,7 @@ app.component('crudInput', {
 		var ctrl = this;
 		ctrl.form = $rootScope.form;
 		ctrl.required = ctrl.validations!=undefined ? ctrl.validations.required : false;
-		assignPattern();
+		ctrl.pattern = ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''});
 		
 		if (ctrl.type==="text") {
 		}
@@ -82,14 +82,14 @@ app.component('crudInput', {
 			}
 		};
 		
-		function assignPattern() {
+		/*function assignPattern() {
 			ctrl.pattern = ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''});
 			if (ctrl.pattern==null) {
-				setTimeout(function(){
+				$timeout(function(){
 					return assignPattern();
 				},100);
 			}
-		}
+		}*/
 	},
 	transclude: true
 });

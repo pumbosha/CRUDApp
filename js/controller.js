@@ -39,6 +39,8 @@ app.controller('CRUDAppController', function($scope, $rootScope, formService, da
 	
 	$scope.assignParams = configService.getAssignParams();
 	
+	$scope.validations = configService.getValidations();
+	
 	$scope.persons = daoService.getRecords();
 	
 	$scope.showForm = false;
@@ -122,6 +124,7 @@ app.controller('CRUDAppController', function($scope, $rootScope, formService, da
 	}
 	
 	$scope.evalPattern = function(obj) {
+		//alert("COS SIE ZMIENILO: "+JSON.stringify(obj));
 		if (typeof $scope.person === undefined) {
 			return null;
 		}
