@@ -12,7 +12,7 @@
 				'vehicle': {'required':'Vehicle must be selected', 'pattern':'Pattern is not fulfilled'}
 			};
 		},
-		getValidations: function() {
+		getAssignParams: function() {
 			return {
 				'name': {'pseudonym':[{'cond':'this[0]==\'x\'', 'val':'this[0] + record.surname[0]'}, {'cond':'otherwise', 'val':'this'}]},
 				'surname': {'pseudonym':[{'cond':'true', 'val':'record.name + this'}]},
@@ -33,6 +33,18 @@
 						]
 					}
 			};
+		},
+		getValidations: function() {
+			return {
+				'name': {'required':true},
+				'surname': {'required':true},
+				'pesel': {'required':true, 'pattern':'\\d{11}'},
+				'dateOfBirth': {'required':true, 'pattern':			'^(?:(?:31(-)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(-)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:19|20)?\\d{2})$|^(?:29(-)0?2\\3(?:(?:(?:19|20)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(-)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:19|20)?\\d{2})$'},
+				'salary': {'required':true, 'min':'0', 'max':'1000', 'step':'10'},
+				'pseudonym': {'required':true, 'pattern':'^.*(record.name|record.surname).*$'},
+				'vehicle': {'required':true, 'pattern':'^.*ike$'},
+				'dateOfAffiliating': {'pattern':'^(?:(?:31(-)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(-)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:19|20)?\\d{2})$|^(?:29(-)0?2\\3(?:(?:(?:19|20)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(-)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:19|20)?\\d{2})$'}
+			}
 		}
 	}
 });
@@ -75,6 +87,18 @@ app.factory('utilService', function() {
 	return {
 		copy: function(obj) {
 			return JSON.parse(JSON.stringify(obj));
+		},
+		evalPatternCondition: function(obj, record) {
+			if (obj==undefined) {
+				return '';
+			}
+			var condArr = obj.split(/\||\&|\=\=\!\=|\!|\^|\$|\(|\)/);
+			//console.log(condArr);
+			for (var i = 0;i<condArr.length;i++) {
+				var evaledCond = this.evalOrReturn(condArr[i], record);
+				obj = obj.replace(condArr[i], evaledCond);
+			}
+			return obj;
 		},
 		evalOrReturn: function(obj, record) {
 			//alert("eval obj: "+JSON.stringify(obj)+" record: "+JSON.stringify(record));

@@ -32,8 +32,9 @@ Next:
 ++ onchange
 + pola disabled
 
-- pattern zalezy od innych pól -> przenieœæ pattern do serwisu [obiekty 'pattern' zdefiniowaæ w scopie ¿eby nie zaœmiecaæ widoku]
-- przetwa¿anie patternu  (w metodzie eval obiekt record nie zosta³ dostarczony)
++ pattern zalezy od innych pól -> przenieœæ pattern do serwisu [obiekty 'pattern' zdefiniowaæ w scopie ¿eby nie zaœmiecaæ widoku]
++ przetwa¿anie patternu  (w metodzie eval obiekt record nie zosta³ dostarczony)
+- patterny musz¹ siê aktualizowaæ jakoœ globalnie, a nie na akcjê onchange danego pola
 
 RADIO:
 + validacje (filtry)

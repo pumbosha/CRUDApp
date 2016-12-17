@@ -37,7 +37,7 @@ app.controller('CRUDAppController', function($scope, $rootScope, formService, da
 	
 	$scope.errorMessages = configService.getErrorMessages();
 	
-	$scope.assignParams = configService.getValidations();
+	$scope.assignParams = configService.getAssignParams();
 	
 	$scope.persons = daoService.getRecords();
 	
@@ -118,8 +118,14 @@ app.controller('CRUDAppController', function($scope, $rootScope, formService, da
 	}
 	
 	$scope.assign = function(obj) {
-		//alert(JSON.stringify($scope.person));
 		formService.assign(obj, $scope.person);
+	}
+	
+	$scope.evalPattern = function(obj) {
+		if (typeof $scope.person === undefined) {
+			return null;
+		}
+		return utilService.evalPatternCondition(obj, $scope.person);
 	}
 	
 	$scope.updateModelChbx = function(field, id) {

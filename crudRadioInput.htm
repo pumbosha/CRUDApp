@@ -11,10 +11,12 @@
 				value="{{item.id}}" 
 				ng-checked="$ctrl.model==item.id"
 				ng-pattern="$ctrl.pattern"
+				ng-change="$ctrl.assign()"
 				ng-model="$ctrl.model"> 
 				{{item.name}}
 			</input>
 		</label>
 	</fieldset>
+	pattern={{$ctrl.pattern}}
 	
 </html>

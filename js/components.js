@@ -20,6 +20,7 @@ app.component('crudInput', {
 		updateOn: '@updateon',
 		model: '=',
 		onchange: '&change',
+		evalParamsMethod: '&valid',
 		name: '@',
 		validations: '<',
 		desc: '@',
@@ -33,12 +34,9 @@ app.component('crudInput', {
 		var ctrl = this;
 		ctrl.form = $rootScope.form;
 		ctrl.required = ctrl.validations!=undefined ? ctrl.validations.required : false;
-		ctrl.pattern = ctrl.validations!=undefined ? ctrl.validations.pattern: false;
+		assignPattern();
 		
 		if (ctrl.type==="text") {
-			ctrl.pattern = ctrl.validations!=undefined ? ctrl.validations.pattern: false;
-			ctrl.pattern = utilService.evalOrReturn(ctrl.pattern);
-			alert(ctrl.pattern);
 		}
 		else if (ctrl.type==="number") {
 			this.templateUrl = "crudInput.htm";
@@ -66,8 +64,11 @@ app.component('crudInput', {
 				return "disabled";
 			}
 			return "";
-		}
+		};
 		ctrl.assign = function() {
+			//need here in case when other fields are changed, hence validation's pattern also may be changed
+			ctrl.pattern = ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''});
+			
 			if (ctrl.assignParams!=undefined) {
 				ctrl.onchange({assgnprms: utilService.replaceThisKeyword(ctrl.assignParams, ctrl.model)});
 			}
@@ -78,6 +79,15 @@ app.component('crudInput', {
 			}
 			else if (ctrl.type==="radio") {
 				return "crudRadioInput.htm";
+			}
+		};
+		
+		function assignPattern() {
+			ctrl.pattern = ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''});
+			if (ctrl.pattern==null) {
+				setTimeout(function(){
+					return assignPattern();
+				},100);
 			}
 		}
 	},
