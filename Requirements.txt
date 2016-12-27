@@ -9,6 +9,7 @@
 7. Internacjonalizacja
 8. Mobilnoœæ
 9. Zrobiæ mechanizm warunkowego pokazywania pól na formularzu, tzn jeœli np. pola A ma wartoœæ 'x' to poka¿ pole B a jak nie to poka¿ pole C i D
+10. FreeText -> mechanizm wyœwietlania wolnego tekstu na zasadzie podobnej do javowych *.properties (w sensie przekazywania parametrów)
 
 Next:
 
@@ -34,13 +35,13 @@ Next:
 
 + pattern zalezy od innych pól -> przenieœæ pattern do serwisu [obiekty 'pattern' zdefiniowaæ w scopie ¿eby nie zaœmiecaæ widoku]
 + przetwa¿anie patternu  (w metodzie eval obiekt record nie zosta³ dostarczony)
-- patterny musz¹ siê aktualizowaæ jakoœ globalnie, a nie na akcjê onchange danego pola
++ patterny musz¹ siê aktualizowaæ jakoœ globalnie, a nie na akcjê onchange danego pola
 
 RADIO:
 + validacje (filtry)
 + dzia³anie patternów: opcje wyeliminowane przez filtr wyœwietlaæ jako disabled (lub wgl nie wyœwietlaæ tak jak jest teraz)
 + opcje disabled bardziej wyszarzyæ
-- assign w obie strony
++ assign w obie strony
 + errormessages
 
 CHECKBOX, MULTISELECT:
@@ -50,11 +51,11 @@ CHECKBOX, MULTISELECT:
 + przy submitowaniu formularza z b³edami i poprawie ich, w miejscach gdzie by³y b³edy pozostaje pusta przestrzeñ
 + po submitowaniu formularza z b³edami i kliknieciu cancel, ponownym klikniêciu addPerson na formularzu widniej¹ b³êdy
 
-- kontrolka do radio
++ kontrolka do radio
 - kontrolka do checkbox
 - kontrolka do select, multiselect *
 + komponent to liczb
-- assignowaæ jakimœ polem pola: checkbox, radio, select, multiselect
++ assignowaæ jakimœ polem pola: checkbox, radio, select, multiselect
 
 1. Zrobiæ dyrektywy z prefixem json, tak aby mia³y tylko jeden atrybut do którego wstawiaæ siê bêdzie objekt json z wszystkimi ustawieniami kontrolki
 2. Dodaæ jakieœ domyœlne pluginy do daty i multiselekta (albo i nie dodawaæ -> zastanowiæ siê)

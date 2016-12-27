@@ -49,6 +49,8 @@ app.controller('CRUDAppController', function($scope, $rootScope, formService, da
 	
 	$scope.errMsg = "";
 	
+	$scope.random = {'val': Math.random().toString(36).substring(7)};
+	
 	$scope.toggleForm = function() {
 		$scope.personForm.failedAttemted = false;
 		$scope.showForm = !$scope.showForm;
@@ -120,14 +122,14 @@ app.controller('CRUDAppController', function($scope, $rootScope, formService, da
 	}
 	
 	$scope.assign = function(obj) {
+		//alert("ASSIGN: "+JSON.stringify($scope.person));
 		formService.assign(obj, $scope.person);
-	}
+		//changing random variable to trigger $onChange event on each component which want to listen
+		$scope.random = {'val': Math.random().toString(36).substring(7)};
+	}		
 	
 	$scope.evalPattern = function(obj) {
-		//alert("COS SIE ZMIENILO: "+JSON.stringify(obj));
-		if (typeof $scope.person === undefined) {
-			return null;
-		}
+		
 		return utilService.evalPatternCondition(obj, $scope.person);
 	}
 	

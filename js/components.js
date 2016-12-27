@@ -28,13 +28,26 @@ app.component('crudInput', {
 		disabled: '@',
 		updateOn: '@updateon',
 		availableOpts: '<availableopts',
-		validationMode: '@validationmode'
+		validationMode: '@validationmode',
+		listener: '<listenon'
 	},
-	controller: function($rootScope, utilService) {
+	controller: function($scope, $rootScope, utilService) {
 		var ctrl = this;
 		ctrl.form = $rootScope.form;
 		ctrl.required = ctrl.validations!=undefined ? ctrl.validations.required : false;
-		ctrl.pattern = ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''});
+		
+		if (ctrl.listener!=undefined) {
+			ctrl.$onChanges = function(changeObj) {
+				//Trigerring updating pattern by changed 'listener' variable
+				if (changeObj.listener) {
+					ctrl.updatePattern(ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''}));
+				}
+			}
+		}
+		
+		ctrl.updatePattern = function(newVal) {
+			ctrl.pattern = newVal;
+		}
 		
 		if (ctrl.type==="text") {
 		}
@@ -45,18 +58,9 @@ app.component('crudInput', {
 			ctrl.max = ctrl.validations!=undefined ? ctrl.validations.max: null;
 			ctrl.step = ctrl.validations!=undefined ? ctrl.validations.step: null;
 		}
-		else if (ctrl.type==="radio") {
-			
+		else if (ctrl.type==="radio") {	
 		}
-		/*else if (ctrl.type==="checkbox") {
-
-		}
-		else if (ctrl.type==="select") {
-			
-		}
-		else if (ctrl.type==="multiselect") {
-			
-		}*/
+		
 		ctrl.modelOptions = {updateOn:ctrl.updateOn};
 		
 		ctrl.getClass = function(item) {
@@ -65,14 +69,19 @@ app.component('crudInput', {
 			}
 			return "";
 		};
-		ctrl.assign = function() {
-			//need here in case when other fields are changed, hence validation's pattern also may be changed
-			ctrl.pattern = ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''});
-			
+		
+		$scope.$watch("$ctrl.model", function() {
 			if (ctrl.assignParams!=undefined) {
 				ctrl.onchange({assgnprms: utilService.replaceThisKeyword(ctrl.assignParams, ctrl.model)});
 			}
-		};
+		});
+		
+		/*ctrl.assign = function() {
+			if (ctrl.assignParams!=undefined) {
+				ctrl.onchange({assgnprms: utilService.replaceThisKeyword(ctrl.assignParams, ctrl.model)});
+			}
+		};*/
+		
 		ctrl.getTemplate = function() {
 			if (ctrl.type==="text" || ctrl.type==="number") {
 				return "crudSimpleInput.htm";
@@ -81,21 +90,12 @@ app.component('crudInput', {
 				return "crudRadioInput.htm";
 			}
 		};
-		
-		/*function assignPattern() {
-			ctrl.pattern = ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''});
-			if (ctrl.pattern==null) {
-				$timeout(function(){
-					return assignPattern();
-				},100);
-			}
-		}*/
 	},
 	transclude: true
 });
 
 app.component('crudError', {
-template: "<div ng-show='$ctrl.ifShowError()' class='error'>{{$ctrl.showError()}}</div>",
+	template: "<div ng-show='$ctrl.ifShowError()' class='error'>{{$ctrl.showError()}}</div>",
 	controller: function() {
 		var ctrl = this;
 		ctrl.dirty = "true";

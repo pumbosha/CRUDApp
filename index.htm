@@ -43,6 +43,7 @@
 						model="person.name"
 						assignparams="assignParams.name"
 						change="assign(assgnprms)"
+						valid="evalPattern(params)"
 						validations="validations.name"
 						desc="to jest opis pola name">
 						Name:
@@ -55,6 +56,7 @@
 						errormessages="errorMessages.surname"
 						assignparams="assignParams.surname"
 						change="assign(assgnprms)" 
+						valid="evalPattern(params)"
 						validations="validations.surname">
 						Surname:
 					</crud-input >
@@ -119,7 +121,8 @@
 						change="assign(assgnprms)" 
 						valid="evalPattern(params)"
 						validations="validations.pseudonym"
-						desc="This field will be filled automatically by default once you fill fields 'name' and 'surname'. You can change its value">
+						desc="This field will be filled automatically by default once you fill fields 'name' and 'surname'. You can change its value"
+						listenon="random">
 						Pseudonym:
 					</crud-input >
 					
@@ -139,6 +142,7 @@
 						desc="Select your vehicle"
 						errormessages="errorMessages.vehicle"
 						change="assign(assgnprms)" 
+						assignparams="assignParams.vehicle"
 						valid="evalPattern(params)"
 						validations="validations.vehicle"
 						availableopts="[{'id':'car', 'name':'Car'}, {'id':'train', 'name':'Train'}, {'id':'bike', 'name':'Bike'}, {'id':'motorbike', 'name':'Motorike'}]">

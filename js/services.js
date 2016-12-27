@@ -14,8 +14,21 @@
 		},
 		getAssignParams: function() {
 			return {
-				'name': {'pseudonym':[{'cond':'this[0]==\'x\'', 'val':'this[0] + record.surname[0]'}, {'cond':'otherwise', 'val':'this'}]},
+				'name': {
+					'pseudonym':
+						[
+							{'cond':'this[0]==\'x\'', 'val':'this[0] + record.surname[0]'}, 
+							{'cond':'otherwise', 'val':'this'}
+						],
+					'vehicle':
+						[
+							{'cond':'this[0]==\'x\'', 'val':'bike'}, 
+							{'cond':'otherwise', 'val':'motorbike'}
+						]
+					},
 				'surname': {'pseudonym':[{'cond':'true', 'val':'record.name + this'}]},
+				'pseudonym':{},
+				'dateOfAffiliating':{},
 				'pesel': {
 					'sex':
 						[
@@ -30,6 +43,21 @@
 							{'cond':'this.length==11 && +(this[2]+this[3])<20', 'val':'this[4]+this[5]+\'-\'+this[2]+this[3]+\'-19\'+this[0]+this[1]'},
 							{'cond':'this.length==11', 'val':'this[4]+this[5]+\'-\'+this[2]+this[3]+\'-19\'+this[0]+this[1]'},
 							{'cond':'otherwise', 'val':''}
+						]
+					},
+				'dateOfBirth': {
+					'vehicle':
+						[
+							{'cond': '(+this.substring(6, 10))<1998', 'val':'car'},
+							{'cond': 'otherwise', 'val':'bike'}
+						]
+				},
+				'vehicle': {
+					'pseudonym':
+						[
+							{'cond': 'record.pseudonym==undefined || record.pseudonym==\'\'', 'val':'record.pseudonym'},
+							{'cond':'record.pseudonym.match(\'.*-.*er\')==null', 'val':'record.pseudonym + \' - \' + this + \'er\''},
+							{'cond':'otherwise', 'val':'record.pseudonym.substring(0, record.pseudonym.indexOf(\'-\')-1) + \' - \' + this + \'er\''}
 						]
 					}
 			};
@@ -52,6 +80,9 @@
 app.factory('formService', function(utilService) {
 	return {
 		assign: function(obj, record) {
+			if (record==undefined) {
+				return;
+			}
 			//alert("obj: "+JSON.stringify(obj)+" record: "+JSON.stringify(record));
 			for (var fieldName in obj) {
 				items = obj[fieldName];
@@ -96,6 +127,7 @@ app.factory('utilService', function() {
 			//console.log(condArr);
 			for (var i = 0;i<condArr.length;i++) {
 				var evaledCond = this.evalOrReturn(condArr[i], record);
+				evaledCond = evaledCond==undefined ? "" : evaledCond;
 				obj = obj.replace(condArr[i], evaledCond);
 			}
 			return obj;
@@ -116,6 +148,9 @@ app.factory('utilService', function() {
 		},
 		replaceKeyword: function (obj, replacement, word) {
 			//alert("obj: "+obj+" word: "+word+" replacement: "+replacement);
+			if (obj==undefined) {
+				return obj;
+			}
 			return JSON.parse(JSON.stringify(obj).split(word).join(replacement));
 		}, 
 		removeKeyword: function(obj, word) {
