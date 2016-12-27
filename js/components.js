@@ -35,18 +35,15 @@ app.component('crudInput', {
 		var ctrl = this;
 		ctrl.form = $rootScope.form;
 		ctrl.required = ctrl.validations!=undefined ? ctrl.validations.required : false;
+		ctrl.pattern = ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''});
 		
 		if (ctrl.listener!=undefined) {
 			ctrl.$onChanges = function(changeObj) {
 				//Trigerring updating pattern by changed 'listener' variable
 				if (changeObj.listener) {
-					ctrl.updatePattern(ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''}));
+					ctrl.pattern = ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''});
 				}
 			}
-		}
-		
-		ctrl.updatePattern = function(newVal) {
-			ctrl.pattern = newVal;
 		}
 		
 		if (ctrl.type==="text") {
