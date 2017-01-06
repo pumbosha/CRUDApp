@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+	<label>
+		<input 
+			type="checkbox" 
+			ng-required="$ctrl.required"  
+			name="{{$ctrl.name}}" 
+			value="{{item.id}}" 
+			ng-pattern="$ctrl.pattern" 
+			ng-model="$ctrl.model">
+			{{item.name}}
+		</input>
+	</label>
+</html>

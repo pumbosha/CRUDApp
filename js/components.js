@@ -73,18 +73,15 @@ app.component('crudInput', {
 			}
 		});
 		
-		/*ctrl.assign = function() {
-			if (ctrl.assignParams!=undefined) {
-				ctrl.onchange({assgnprms: utilService.replaceThisKeyword(ctrl.assignParams, ctrl.model)});
-			}
-		};*/
-		
 		ctrl.getTemplate = function() {
 			if (ctrl.type==="text" || ctrl.type==="number") {
 				return "crudSimpleInput.htm";
 			}
 			else if (ctrl.type==="radio") {
 				return "crudRadioInput.htm";
+			}
+			else if (ctrl.type==="checkbox") {
+				return "crudChbxInput.htm";
 			}
 		};
 	},

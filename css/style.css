@@ -167,6 +167,6 @@ form .bttns {
 	cursor: help;
 }
 
-label.disabled {
+fieldset.radio label.disabled {
 	opacity: 0.35;
 }

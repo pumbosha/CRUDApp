@@ -126,7 +126,7 @@
 						Pseudonym:
 					</crud-input >
 					
-					<div class="crud-formItem">
+					<!--<div class="crud-formItem">
 						<crud-label>Interestings:</crud-label>
 						<fieldset class="group" ng-init="fieldsDefinitions.interestings=[{'id':'football', 'name':'Football'}, {'id':'poetry', 'name':'Poetry'}, {'id':'politicans', 'name':'Politicans'}]">
 							<label ng-repeat="item in fieldsDefinitions.interestings">
@@ -134,7 +134,21 @@
 								{{item.name}}
 							</label>
 						</fieldset>
-					</div>
+					</div>-->
+					<crud-input
+						type="checkbox"
+						name="likeFootball"
+						model="person.likeFootball"
+						desc="Select if you like Football"
+						errormessages="errorMessages.likeFootball"
+						change="assign(assgnprms)" 
+						assignparams="assignParams.likeFootball"
+						valid="evalPattern(params)"
+						validations="validations.likeFootball"
+						>
+						Like football:
+					</crud-input>
+					
 					<crud-input
 						type="radio"
 						name="vehicle"
@@ -191,7 +205,7 @@
 							<td>Salary</td>
 							<td>Sex</td>
 							<td>Pseudonym</td>
-							<td>Interestings</td>
+							<td>Like football</td>
 							<td>Vehicle</td>
 							<td>Advantages</td>
 							<td>Date of affiliating</td>
@@ -209,7 +223,7 @@
 							<td>{{person.sex}}</td>
 							<td>{{person.pseudonym}}</td>
 							<!-- TODO odfiltrowaæ nawiasy itd -->
-							<td>{{person.interestings}}</td>
+							<td>{{person.likeFootball}}</td>
 							<td>{{person.vehicle}}</td>
 							<td>{{person.advantages}}</td>
 							<td>{{person.dateOfAffiliating}}</td>

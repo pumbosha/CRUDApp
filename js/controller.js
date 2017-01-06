@@ -132,8 +132,4 @@ app.controller('CRUDAppController', function($scope, $rootScope, formService, da
 		
 		return utilService.evalPatternCondition(obj, $scope.person);
 	}
-	
-	$scope.updateModelChbx = function(field, id) {
-		formService.updateModelChbx(field, id);
-	}
 });
