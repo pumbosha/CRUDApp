@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
-	<label>
+	<span class="checkbox">
 		<input 
+			class="form-control"
 			type="checkbox" 
 			ng-required="$ctrl.required"  
 			name="{{$ctrl.name}}" 
@@ -10,5 +11,7 @@
 			ng-model="$ctrl.model">
 			{{item.name}}
 		</input>
-	</label>
+		<label>
+		</label>
+	</span>
 </html>

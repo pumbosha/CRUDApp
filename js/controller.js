@@ -41,6 +41,8 @@ app.controller('CRUDAppController', function($scope, $rootScope, formService, da
 	
 	$scope.validations = configService.getValidations();
 	
+	$scope.availableOpts = configService.getAvailableOpts();
+	
 	$scope.persons = daoService.getRecords();
 	
 	$scope.showForm = false;

@@ -1,8 +1,13 @@
 body {
 	margin:0px;
 	padding:0px;
-	background-color:#ddd;
-	font-family: 'Lato';
+	background-color:#ddd !important;
+	font-family: 'Lato', sans-seriff!important;
+	height:100%;
+}
+
+html {
+	height:100%;
 }
 
 #mainContent {
@@ -11,6 +16,7 @@ body {
 	background-color:white;
 	padding:10px;
 	margin-top:10px;
+	position:absolute;
 }
 
 #operations {
@@ -27,17 +33,30 @@ body {
 	font-color:#555;
 	margin-top:15px;
 	overflow-x: scroll;
+} 
+
+#tableContent .operationsColumn div {
+	width:180px;
+}
+ 
+ /*
+#tableContent {
+	font-size:1.3em;
+	font-color:#555;
+	margin-top:15px;
+	overflow-x: scroll;
 }
 
 #tableContent table{
-	border: 1px solid #aaa;
 	padding:5px;
 	width:100%;
 }
 
 #tableContent table thead {
 	font-weight:bold;
-	background-color:#eee;
+}
+
+#tableContent table tr {
 }
 
 #tableContent table tr td{
@@ -47,13 +66,12 @@ body {
 #tableContent table tr td span.select {
 	float:right;
 	padding:5px;
-	border:1px solid #aaa;
 }
 
-#tableContent td.operationsColumn {
-	min-width:150px;
+#tableContent td.operationsColumn div {
+	width:150px;
 }
-
+*/
 /**
  * Form styles
  */
@@ -96,9 +114,9 @@ form {
 	padding:10px;
 }
 
-form .bttns {
+form div.bttns {
 	margin-top:15px;
-	height:20px;
+	height:40px;
 }
 
 /* Form animations */
@@ -167,6 +185,14 @@ form .bttns {
 	cursor: help;
 }
 
+fieldset.radio {
+	padding:5px;
+}
+
 fieldset.radio label.disabled {
 	opacity: 0.35;
+}
+
+input#rowsNr {
+	width:100px;
 }
