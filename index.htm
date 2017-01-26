@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pl" lang="pl"> 
 	<head> 
-		<meta http-equiv="Content-Type" content="text/html" charset="iso-8859-2" />
+		<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
 		<title>CRUD Frontend Application</title> 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
@@ -23,18 +23,6 @@
 				<h4 id="tableDesc">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tempor eros convallis nisi vehicula gravida. Vivamus ultricies mi a risus egestas tempor. Donec mollis, nulla sit amet tempor vulputate, libero dui placerat libero, ultrices dapibus risus massa et urna. 
 				</h4>
-				<div id="operations" class="form-inline">
-					<label>rows number</label>
-					<input class="form-control" id="rowsNr" type="number" />
-					<button class="btn btn-default" ng-click="addPerson()" ng-hide="showForm">
-						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-						add record
-					</button>
-					<button class="btn btn-default">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-						delete records
-					</button>
-				</div>
 			</div>
 			<div id="succMsg" class="msg" ng-show="succMsg!=''">
 				{{succMsg}}
@@ -57,7 +45,8 @@
 						change="assign(assgnprms)"
 						valid="evalPattern(params)"
 						validations="validations.name"
-						desc="to jest opis pola name">
+						desc="to jest opis pola name"
+                        listenon="random">
 						Name:
 					</crud-input >
 					
@@ -69,7 +58,8 @@
 						assignparams="assignParams.surname"
 						change="assign(assgnprms)" 
 						valid="evalPattern(params)"
-						validations="validations.surname">
+						validations="validations.surname"
+                        listenon="random">
 						Surname:
 					</crud-input >
 					
@@ -83,7 +73,8 @@
 						valid="evalPattern(params)"
 						validations="validations.pesel"
 						updateon="blur"
-						desc="to jest opis pola pesel">
+						desc="to jest opis pola pesel"
+                        listenon="random">
 						Pesel:
 					</crud-input >
 					
@@ -97,7 +88,8 @@
 						change="assign(assgnprms)" 
 						valid="evalPattern(params)"
 						validations="validations.dateOfBirth"
-						desc="to jest opis pola dateOfBirth">
+						desc="to jest opis pola dateOfBirth"
+                        listenon="random">
 						Date of birth:
 					</crud-input >
 					
@@ -110,11 +102,12 @@
 						change="assign(assgnprms)" 
 						updateon="blur"
 						validations="validations.salary"
-						desc="to jest opis pola salary">
+						desc="to jest opis pola salary"
+                        listenon="random">
 						Salary:
 					</crud-input >
 					
-					<div class="crud-formItem">
+					<!--<div class="crud-formItem">
 						<crud-label desc="This field will be filled automatically once you fill field 'pesel'">Sex:</crud-label>
 						<select disabled='disabled' name="sex" ng-init="fieldsDefinitions.sex=[{'id':'male', 'name':'Male'}, {'id':'female', 'name':'Female'}]" ng-model="person.sex">
 							<option></option>
@@ -122,7 +115,22 @@
 								{{item.name}}
 							</option>
 						</select>
-					</div>
+					</div>-->
+                    <crud-input
+                        type="select"
+                        name="sex"
+                        model="person.sex"
+                        errormessages="errorMessages.sex"
+						assignparams="assignParams.sex"
+						change="assign(assgnprms)" 
+						valid="evalPattern(params)"	
+						validations="validations.sex"
+						desc="to jest opis pola sex"
+                        availableopts="availableOpts.sex"
+						updateon="blur"
+                        listenon="random">
+                        Sex:
+                    </crud-input>
 					
 					<crud-input 
 						type="text"
@@ -157,7 +165,7 @@
 						assignparams="assignParams.likeFootball"
 						valid="evalPattern(params)"
 						validations="validations.likeFootball"
-						>
+						listenon="random">
 						Like football:
 					</crud-input>
 					
@@ -171,11 +179,12 @@
 						assignparams="assignParams.vehicle"
 						valid="evalPattern(params)"
 						validations="validations.vehicle"
-						availableopts="availableOpts.vehicle">
+						availableopts="availableOpts.vehicle"
+                        listenon="random">
 						Vehicle:
 					</crud-input>
 					
-					<div class="crud-formItem">
+					<!--<div class="crud-formItem">
 						<crud-label>Advantages:</crud-label><br/>
 						<select name="advantages" ng-model="person.advantages" ng-init="fieldsDefinitions.advantages=[{'id':'punctual', 'name':'Punctual'}, {'id':'conscientious', 'name':'Conscientious'}, {'id':'smart', 'name':'Smart'}]" multiple>
 							<option ng-repeat="item in fieldsDefinitions.advantages" value="{{item.id}}">
@@ -183,7 +192,23 @@
 							</option>
 							
 						</select>
-					</div>
+					</div>-->
+                    
+                    <crud-input
+                        type="multiselect"
+                        name="advantages"
+                        model="person.advantages"
+                        errormessages="errorMessages.advantages"
+						assignparams="assignParams.advantages"
+						change="assign(assgnprms)" 
+						valid="evalPattern(params)"	
+						validations="validations.advantages"
+						desc="to jest opis pola advantages"
+                        availableopts="availableOpts.advantages"
+						updateon="blur"
+                        listenon="random">
+                        Advantages:
+                    </crud-input>
 					
 					<crud-input 
 						type="text"
@@ -195,7 +220,8 @@
 						valid="evalPattern(params)"	
 						validations="validations.dateOfAffiliating"
 						desc="to jest opis pola dateOfAffiliating"
-						updateon="blur">
+						updateon="blur"
+                        listenon="random">
 						Date of affiliating:
 					</crud-input>
 					
@@ -205,11 +231,23 @@
 					</div>
 				</form>
 			</div>
+            <div id="operations" class="form-inline">
+                <label>rows number</label>
+                <input class="form-control" id="rowsNr" type="number" />
+                <button class="btn btn-default" ng-click="addPerson()" ng-hide="showForm">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    add record
+                </button>
+                <button class="btn btn-default">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    delete records
+                </button>
+            </div>
 			<div id="tableContent">
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>#</th>
+							<th class="id">#</th>
 							<th class="operationsColumn">Operations</th>
 							<th>Name</th>
 							<th>Surname</th>
@@ -226,7 +264,7 @@
 					</thead>	
 					<tbody>
 						<tr ng-repeat="person in persons">
-							<td>{{$index+1}}</td>
+							<td class="id">{{$index+1}}</td>
 							<td class="operationsColumn">
 								<div class="form-inline ">
 									<span class="bttns btn-group">
@@ -253,7 +291,7 @@
 							<td>{{person.pseudonym}}</td>
 							<td>{{person.likeFootball | booleanToYesNo}}</td>
 							<td>{{person.vehicle}}</td>
-							<td>{{person.advantages | arrayToString}}</td>
+							<td>{{person.advantages}}</td><!-- | arrayToString -->
 							<td>{{person.dateOfAffiliating}}</td>
 						</tr>
 					</tbody>

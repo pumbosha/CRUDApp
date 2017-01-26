@@ -40,7 +40,9 @@ app.component('crudInput', {
 		if (ctrl.listener!=undefined) {
 			ctrl.$onChanges = function(changeObj) {
 				//Trigerring updating pattern by changed 'listener' variable
+                //"Called whenever one-way bindings are updated."
 				if (changeObj.listener) {
+                    //alert("ONCHANGES: "+ctrl.name);
 					ctrl.pattern = ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''});
 				}
 			}
@@ -68,6 +70,7 @@ app.component('crudInput', {
 		};
 		
 		$scope.$watch("$ctrl.model", function() {
+            //alert("WATCH: "+ctrl.name);
 			if (ctrl.assignParams!=undefined) {
 				ctrl.onchange({assgnprms: utilService.replaceThisKeyword(ctrl.assignParams, ctrl.model)});
 			}
@@ -82,6 +85,9 @@ app.component('crudInput', {
 			}
 			else if (ctrl.type==="checkbox") {
 				return "crudChbxInput.htm";
+			}
+            else if (ctrl.type==="select" || ctrl.type==="multiselect") {
+				return "crudSelectInput.htm";
 			}
 		};
 	},

@@ -1,24 +1,24 @@
-1. Tabela w której wyœwietlane bêd¹ dane ludzi (l.p., Imie, nazwisko, pesel, zarobki, data urodzenia)
-2. Dodanie mo¿liwoœci usuwania, dodawania i edycji ludzi
+ï»¿1. Tabela w ktÃ³rej wyÅ›wietlane bÄ™dÄ… dane ludzi (l.p., Imie, nazwisko, pesel, zarobki, data urodzenia)
+2. Dodanie moÅ¼liwoÅ›ci usuwania, dodawania i edycji ludzi
 	- zrobienie odpowiednich walidacji na odpowiednich polach (dodawanie, edycja)
-	- walidacja danych poprzez wywo³anie jeakiegoœ mokowego serwisu (stworzyæ customowy serwis do tego)
-3. Dodanie filtrów i sortowañ na tabelce
+	- walidacja danych poprzez wywoÅ‚anie jeakiegoÅ› mokowego serwisu (stworzyÄ‡ customowy serwis do tego)
+3. Dodanie filtrÃ³w i sortowaÅ„ na tabelce
 4. Stronnicowanie
-5. Zamiana tabelki w dyrektywy (komponenty) i sprawienie aby wyœwietlanie tabelki by³o generyczne (ró¿ne dane)
-6. Przeniesienie czêœci funkcjonalnoœci (np. dodawanie i edycja ludzi) na inne podstrony i ogarniêcie routingu
+5. Zamiana tabelki w dyrektywy (komponenty) i sprawienie aby wyÅ›wietlanie tabelki byÅ‚o generyczne (rÃ³Å¼ne dane)
+6. Przeniesienie czÄ™Å›ci funkcjonalnoÅ›ci (np. dodawanie i edycja ludzi) na inne podstrony i ogarniÄ™cie routingu
 7. Internacjonalizacja
-8. Mobilnoœæ
-9. Zrobiæ mechanizm warunkowego pokazywania pól na formularzu, tzn jeœli np. pola A ma wartoœæ 'x' to poka¿ pole B a jak nie to poka¿ pole C i D
-10. FreeText -> mechanizm wyœwietlania wolnego tekstu na zasadzie podobnej do javowych *.properties (w sensie przekazywania parametrów)
+8. MobilnoÅ›Ä‡
+9. ZrobiÄ‡ mechanizm warunkowego pokazywania pÃ³l na formularzu, tzn jeÅ›li np. pola A ma wartoÅ›Ä‡ 'x' to pokaÅ¼ pole B a jak nie to pokaÅ¼ pole C i D
+10. FreeText -> mechanizm wyÅ›wietlania wolnego tekstu na zasadzie podobnej do javowych *.properties (w sensie przekazywania parametrÃ³w)
 
 
-1. Select, multiselect (ew. minimum zaznaczonych elementów)
-2. zrobiæ dyrektywy (z dzielonym scopem) z komponentów, tak ¿eby nie trzeba by³o przekazywaæ im tylu rzeczy np:
+1. Select, multiselect (ew. minimum zaznaczonych elementÃ³w)
+2. zrobiÄ‡ dyrektywy (z dzielonym scopem) z komponentÃ³w, tak Å¼eby nie trzeba byÅ‚o przekazywaÄ‡ im tylu rzeczy np:
 <crud-radio max="3" min="2" availableOpts=".." itd />
-i potem ju¿ tylko dyrektywy:
+i potem juÅ¼ tylko dyrektywy:
 <crud-radio name=".." />
 
-3. Dodaæ jakieœ domyœlne pluginy do daty i multiselekta (albo i nie dodawaæ -> zastanowiæ siê)
-4. zrobiæ bootstrapow¹ (albo jak¹œ inn¹ podobn¹) tabelkê, tak ¿eby poni¿sze 2 punkty da³o siê ³atwo zrobiæ
+3. DodaÄ‡ jakieÅ› domyÅ›lne pluginy do daty i multiselekta (albo i nie dodawaÄ‡ -> zastanowiÄ‡ siÄ™)
+4. zrobiÄ‡ bootstrapowÄ… (albo jakÄ…Å› innÄ… podobnÄ…) tabelkÄ™, tak Å¼eby poniÅ¼sze 2 punkty daÅ‚o siÄ™ Å‚atwo zrobiÄ‡
 5. Stronnicowanie tabelki
 6. Filtrowanie tabelki

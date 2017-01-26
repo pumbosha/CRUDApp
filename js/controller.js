@@ -1,14 +1,14 @@
-app.controller('CRUDAppController', function($scope, $rootScope, formService, daoService, utilService, configService) {
-			
-	$scope.initGlobalVariables = function() {	
-		$scope.personForm.failedAttemted = false;
-		$rootScope.form = $scope.personForm;
-	}
+app.controller('CRUDAppController', function ($scope, $rootScope, formService, daoService, utilService, configService, $timeout) {
 	
+    /******************************* Variables *******************************/ 
+    
 	var editedPesel = "";
 	
-	var getPerson = function(pesel) {
-		for(var i=$scope.persons.length-1; i>=0; i--) {
+    
+    /******************************* Functions *******************************/
+    
+	var getPerson = function (pesel) {
+		for (var i=$scope.persons.length-1; i>=0; i--) {
 			if( $scope.persons[i].pesel == pesel) {
 				return $scope.persons[i];
 			}
@@ -19,10 +19,10 @@ app.controller('CRUDAppController', function($scope, $rootScope, formService, da
 	var preFillForm = function(person) {
 		//fill form with data provided in 'person' variable
 		$scope.personForm.$setPristine();
-		$scope.person = person;
-		if (!$scope.showForm) {
-			$scope.toggleForm();
-		}
+        $scope.person = person;
+        if (!$scope.showForm) {
+            $scope.toggleForm();
+        }
 	}
 	
 	var showErrMsg = function(msg) {
@@ -34,6 +34,9 @@ app.controller('CRUDAppController', function($scope, $rootScope, formService, da
 		$scope.succMsg = msg;
 		$scope.errMsg = "";
 	}
+    
+    
+    /******************************* Scope Variables *******************************/
 	
 	$scope.errorMessages = configService.getErrorMessages();
 	
@@ -52,6 +55,16 @@ app.controller('CRUDAppController', function($scope, $rootScope, formService, da
 	$scope.errMsg = "";
 	
 	$scope.random = {'val': Math.random().toString(36).substring(7)};
+    
+    $scope.editPersonClicked = false;
+    
+    
+    /******************************* Scope Functions *******************************/
+    
+    $scope.initGlobalVariables = function () {
+		$scope.personForm.failedAttemted = false;
+		$rootScope.form = $scope.personForm;
+	}
 	
 	$scope.toggleForm = function() {
 		$scope.personForm.failedAttemted = false;
@@ -71,8 +84,10 @@ app.controller('CRUDAppController', function($scope, $rootScope, formService, da
 	
 	$scope.editPerson = function(pesel) {
 		//fill form with selected record
+        $scope.editPersonClicked = true;
 		preFillForm(utilService.copy(getPerson(pesel)));
 		editedPesel = pesel;
+        $timeout(function(){$scope.editPersonClicked = false;}, 100);
 	}
 	
 	$scope.addPerson = function() {
@@ -124,14 +139,14 @@ app.controller('CRUDAppController', function($scope, $rootScope, formService, da
 	}
 	
 	$scope.assign = function(obj) {
-		//alert("ASSIGN: "+JSON.stringify($scope.person));
-		formService.assign(obj, $scope.person);
-		//changing random variable to trigger $onChange event on each component which want to listen
-		$scope.random = {'val': Math.random().toString(36).substring(7)};
+        if (!$scope.editPersonClicked) {
+            formService.assign(obj, $scope.person);
+            //changing random variable to trigger $onChange event on each component which want to listen
+            $scope.random = {'val': Math.random().toString(36).substring(7)};
+        }
 	}		
 	
 	$scope.evalPattern = function(obj) {
-		
 		return utilService.evalPatternCondition(obj, $scope.person);
 	}
 });

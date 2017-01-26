@@ -36,10 +36,9 @@ html {
 } 
 
 #tableContent .operationsColumn div {
-	width:180px;
+	width:150px;
 }
  
- /*
 #tableContent {
 	font-size:1.3em;
 	font-color:#555;
@@ -56,11 +55,14 @@ html {
 	font-weight:bold;
 }
 
-#tableContent table tr {
+#tableContent table tr td, #tableContent table tr th{
+	padding:5px;
+    min-width: 100px;
 }
 
-#tableContent table tr td{
-	padding:5px;
+#tableContent table tr th.id, #tableContent table tr td.id{
+    max-width: 20px!important;
+    min-width: 10px !important;
 }
 
 #tableContent table tr td span.select {
@@ -71,7 +73,7 @@ html {
 #tableContent td.operationsColumn div {
 	width:150px;
 }
-*/
+
 /**
  * Form styles
  */
@@ -144,7 +146,8 @@ form div.bttns {
 .msg {
 	transition: all linear 0.5s;
 	opacity: 1;
-	height:20px;
+	height: 35px;
+    margin-bottom: 10px;
 }
 
 .msg.ng-hide {
