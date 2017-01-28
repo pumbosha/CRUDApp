@@ -38,13 +38,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
     
     /******************************* Scope Variables *******************************/
 	
-	$scope.errorMessages = configService.getErrorMessages();
-	
-	$scope.assignParams = configService.getAssignParams();
-	
-	$scope.validations = configService.getValidations();
-	
-	$scope.availableOpts = configService.getAvailableOpts();
+	$scope.metadata = configService.getMetadata();
 	
 	$scope.persons = daoService.getRecords();
 	

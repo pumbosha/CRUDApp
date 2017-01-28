@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <select
+        ng-if="$ctrl.type=='multiselect'"
+        ng-required="$ctrl.required"
+        name="{{$ctrl.name}}" 
+        ng-model="$ctrl.model"
+        ng-pattern="$ctrl.pattern"
+        multiple>
+        <option value=""></option>
+        <option 
+            ng-repeat="item in $ctrl.availableOpts"
+            value="{{item.id}}"
+            ng-disabled="!item.id.match($ctrl.pattern)">
+            {{item.name}}
+        </option>
+    </select>
+    
+    <select
+        ng-if="$ctrl.type=='select'"
+        ng-required="$ctrl.required"
+        name="{{$ctrl.name}}" 
+        ng-model="$ctrl.model"
+        ng-pattern="$ctrl.pattern">
+        <option value=""></option>
+        <option 
+            ng-repeat="item in $ctrl.availableOpts"
+            value="{{item.id}}"
+            ng-disabled="!item.id.match($ctrl.pattern)">
+            {{item.name}}
+        </option>
+    </select>
+</html>

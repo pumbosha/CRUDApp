@@ -36,193 +36,20 @@
 				<form novalidate name="personForm">
 					<span ng-init="initGlobalVariables()"></span>
 					
-					<crud-input 
-						type="text"
-						name="name"
-						errormessages="errorMessages.name"
-						model="person.name"
-						assignparams="assignParams.name"
+					<crud-input ng-repeat="md in metadata | orderBy:'order'"
+						type="{{md.type}}"
+						name="{{md.name}}"
+						errormessages="md.errorMessages"
+						model="person[md.name]"
+						assignparams="md.assignParams"
 						change="assign(assgnprms)"
 						valid="evalPattern(params)"
-						validations="validations.name"
-						desc="to jest opis pola name"
+						validations="md.validations"
+						desc="{{md.desc}}"
+                        availableopts="md.availableOpts"
+                        updateon="{{md.updateOn}}"
                         listenon="random">
-						Name:
-					</crud-input >
-					
-					<crud-input 
-						type="text"
-						name="surname"
-						model="person.surname"
-						errormessages="errorMessages.surname"
-						assignparams="assignParams.surname"
-						change="assign(assgnprms)" 
-						valid="evalPattern(params)"
-						validations="validations.surname"
-                        listenon="random">
-						Surname:
-					</crud-input >
-					
-					<crud-input 
-						type="text"
-						name="pesel"
-						model="person.pesel"
-						errormessages="errorMessages.pesel"
-						assignparams="assignParams.pesel"
-						change="assign(assgnprms)" 
-						valid="evalPattern(params)"
-						validations="validations.pesel"
-						updateon="blur"
-						desc="to jest opis pola pesel"
-                        listenon="random">
-						Pesel:
-					</crud-input >
-					
-					<crud-input 
-						type="text"
-						disabled="true"
-						name="dateOfBirth"
-						model="person.dateOfBirth"
-						errormessages="errorMessages.dateOfBirth"
-						assignparams="assignParams.dateOfBirth"
-						change="assign(assgnprms)" 
-						valid="evalPattern(params)"
-						validations="validations.dateOfBirth"
-						desc="to jest opis pola dateOfBirth"
-                        listenon="random">
-						Date of birth:
-					</crud-input >
-					
-					<crud-input 
-						type="number"
-						name="salary"
-						model="person.salary"
-						errormessages="errorMessages.salary"
-						assignparams="assignParams.salary"
-						change="assign(assgnprms)" 
-						updateon="blur"
-						validations="validations.salary"
-						desc="to jest opis pola salary"
-                        listenon="random">
-						Salary:
-					</crud-input >
-					
-					<!--<div class="crud-formItem">
-						<crud-label desc="This field will be filled automatically once you fill field 'pesel'">Sex:</crud-label>
-						<select disabled='disabled' name="sex" ng-init="fieldsDefinitions.sex=[{'id':'male', 'name':'Male'}, {'id':'female', 'name':'Female'}]" ng-model="person.sex">
-							<option></option>
-							<option ng-repeat="item in fieldsDefinitions.sex" ng-selected="person.sex==item.id" value="{{item.id}}">
-								{{item.name}}
-							</option>
-						</select>
-					</div>-->
-                    <crud-input
-                        type="select"
-                        name="sex"
-                        model="person.sex"
-                        errormessages="errorMessages.sex"
-						assignparams="assignParams.sex"
-						change="assign(assgnprms)" 
-						valid="evalPattern(params)"	
-						validations="validations.sex"
-						desc="to jest opis pola sex"
-                        availableopts="availableOpts.sex"
-						updateon="blur"
-                        listenon="random">
-                        Sex:
-                    </crud-input>
-					
-					<crud-input 
-						type="text"
-						name="pseudonym"
-						model="person.pseudonym"
-						errormessages="errorMessages.pseudonym"
-						assignparams="assignParams.pseudonym"
-						change="assign(assgnprms)" 
-						valid="evalPattern(params)"
-						validations="validations.pseudonym"
-						desc="This field will be filled automatically by default once you fill fields 'name' and 'surname'. You can change its value"
-						listenon="random">
-						Pseudonym:
-					</crud-input >
-					
-					<!--<div class="crud-formItem">
-						<crud-label>Interestings:</crud-label>
-						<fieldset class="group" ng-init="fieldsDefinitions.interestings=[{'id':'football', 'name':'Football'}, {'id':'poetry', 'name':'Poetry'}, {'id':'politicans', 'name':'Politicans'}]">
-							<label ng-repeat="item in fieldsDefinitions.interestings">
-								<input type="checkbox" name="interestings" ng-click="updateModelChbx(person.interestings, item.id)" ng-value="{{item.id}}" ng-checked="person.interestings.indexOf(item.id) > -1"> 
-								{{item.name}}
-							</label>
-						</fieldset>
-					</div>-->
-					<crud-input
-						type="checkbox"
-						name="likeFootball"
-						model="person.likeFootball"
-						desc="Select if you like Football"
-						errormessages="errorMessages.likeFootball"
-						change="assign(assgnprms)" 
-						assignparams="assignParams.likeFootball"
-						valid="evalPattern(params)"
-						validations="validations.likeFootball"
-						listenon="random">
-						Like football:
-					</crud-input>
-					
-					<crud-input
-						type="radio"
-						name="vehicle"
-						model="person.vehicle"
-						desc="Select your vehicle"
-						errormessages="errorMessages.vehicle"
-						change="assign(assgnprms)" 
-						assignparams="assignParams.vehicle"
-						valid="evalPattern(params)"
-						validations="validations.vehicle"
-						availableopts="availableOpts.vehicle"
-                        listenon="random">
-						Vehicle:
-					</crud-input>
-					
-					<!--<div class="crud-formItem">
-						<crud-label>Advantages:</crud-label><br/>
-						<select name="advantages" ng-model="person.advantages" ng-init="fieldsDefinitions.advantages=[{'id':'punctual', 'name':'Punctual'}, {'id':'conscientious', 'name':'Conscientious'}, {'id':'smart', 'name':'Smart'}]" multiple>
-							<option ng-repeat="item in fieldsDefinitions.advantages" value="{{item.id}}">
-								{{item.name}}
-							</option>
-							
-						</select>
-					</div>-->
-                    
-                    <crud-input
-                        type="multiselect"
-                        name="advantages"
-                        model="person.advantages"
-                        errormessages="errorMessages.advantages"
-						assignparams="assignParams.advantages"
-						change="assign(assgnprms)" 
-						valid="evalPattern(params)"	
-						validations="validations.advantages"
-						desc="to jest opis pola advantages"
-                        availableopts="availableOpts.advantages"
-						updateon="blur"
-                        listenon="random">
-                        Advantages:
-                    </crud-input>
-					
-					<crud-input 
-						type="text"
-						name="dateOfAffiliating"
-						model="person.dateOfAffiliating"
-						errormessages="errorMessages.dateOfAffiliating"
-						assignparams="assignParams.dateOfAffiliating"
-						change="assign(assgnprms)" 
-						valid="evalPattern(params)"	
-						validations="validations.dateOfAffiliating"
-						desc="to jest opis pola dateOfAffiliating"
-						updateon="blur"
-                        listenon="random">
-						Date of affiliating:
+						{{md.label}}:
 					</crud-input>
 					
 					<div class="bttns">
@@ -249,17 +76,9 @@
 						<tr>
 							<th class="id">#</th>
 							<th class="operationsColumn">Operations</th>
-							<th>Name</th>
-							<th>Surname</th>
-							<th>Pesel</th>
-							<th>Date of birth</th>
-							<th>Salary</th>
-							<th>Sex</th>
-							<th>Pseudonym</th>
-							<th>Like football</th>
-							<th>Vehicle</th>
-							<th>Advantages</th>
-							<th>Date of affiliating</th>
+							<th ng-show="md.showInTable" ng-repeat="md in metadata | orderBy:'order'">
+                                {{md.label}}
+                            </th>
 						<tr>
 					</thead>	
 					<tbody>
@@ -282,17 +101,9 @@
 									</span>
 								</div>
 							</td>
-							<td>{{person.name}}</td>
-							<td>{{person.surname}}</td>
-							<td>{{person.pesel}}</td>
-							<td>{{person.dateOfBirth}}</td>
-							<td>{{person.salary}}</td>
-							<td>{{person.sex}}</td>
-							<td>{{person.pseudonym}}</td>
-							<td>{{person.likeFootball | booleanToYesNo}}</td>
-							<td>{{person.vehicle}}</td>
-							<td>{{person.advantages}}</td><!-- | arrayToString -->
-							<td>{{person.dateOfAffiliating}}</td>
+                            <td ng-show="md.showInTable" ng-repeat="md in metadata | orderBy:'order'">
+                                {{person[md.name] | booleanToYesNo | arrayToString}}
+                            </td>
 						</tr>
 					</tbody>
 				</table>
@@ -301,8 +112,8 @@
 		
 		<script>
 			//Application configuration data (definitions of fields ect):
-			
-			$(document).ready(function() {
+            
+            $(document).ready(function() {
 				$("#tableContent table thead td.operationsColumn").height($("#tableContent table thead").height()-12);
 			});
 			
@@ -316,6 +127,7 @@
 		
 		<script src="js/app.js"></script>
 		<script src="js/filters.js"></script>
+		<script src="js/metadata.js"></script>
 		<script src="js/services.js"></script>
 		<script src="js/components.js"></script>
 		<script src="js/controller.js"></script>

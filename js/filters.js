@@ -13,6 +13,9 @@ app.filter('regex', function() {
 
 app.filter('arrayToString', function() {
 	return function(input) {
+        if ( Object.prototype.toString.call( input ) !== '[object Array]' ) {
+            return input;
+        }
 		var result = "";
 		for (var i=0;i<input.length;i++) {
 			result += (input[i] + ", ");
@@ -24,7 +27,10 @@ app.filter('arrayToString', function() {
 
 app.filter('booleanToYesNo', function() {
 	return function(input) {
-		if (input==true) {
+        if (input!==true && input!==false) {
+            return input;
+        }
+		else if (input==true) {
 			return "Yes";
 		}
 		else if (input==false) {

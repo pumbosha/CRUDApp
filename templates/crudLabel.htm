@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <label>
+        <ng-transclude ng-show="!$ctrl.isDescDefined"></ng-transclude>
+        <abbr 
+              ng-show="$ctrl.isDescDefined" 
+              title="{{$ctrl.desc}}" 
+              class="hint">
+            <ng-transclude></ng-transclude>
+        </abbr>
+        <span 
+              ng-show="$ctrl.isRequiredMark" 
+              class="requiredMark">
+            *
+        </span>
+    </label>
+</html>

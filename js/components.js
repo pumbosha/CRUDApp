@@ -1,8 +1,8 @@
 app.component('crudLabel', {
-	template: "<label><ng-transclude ng-show=\"!$ctrl.isDescDefined\"></ng-transclude><abbr ng-show=\"$ctrl.isDescDefined\" title=\"{{$ctrl.desc}}\" class=\"hint\"><ng-transclude></ng-transclude></abbr><span ng-show=\"$ctrl.isRequiredMark\" class=\"requiredMark\">*</span></label>",
+	templateUrl: 'templates/crudLabel.htm',
 	controller: function() {
 		var ctrl = this;
-		ctrl.isRequiredMark = (ctrl.requiredMark!=undefined && ctrl.requiredMark!='false');
+		ctrl.isRequiredMark = (ctrl.requiredMark!='' && ctrl.requiredMark!=undefined && ctrl.requiredMark!='false');
 		ctrl.isDescDefined = (ctrl.desc!='');
 	},
 	bindings: {
@@ -13,9 +13,9 @@ app.component('crudLabel', {
 });
 
 app.component('crudInput', {
-	templateUrl: "crudInput.htm",
+	templateUrl: 'templates/crudInput.htm',
 	bindings: {
-		type: "@",
+		type: '@',
 		assignParams: '<assignparams',
 		updateOn: '@updateon',
 		model: '=',
@@ -26,7 +26,6 @@ app.component('crudInput', {
 		desc: '@',
 		errorMessages: '<errormessages',
 		disabled: '@',
-		updateOn: '@updateon',
 		availableOpts: '<availableopts',
 		validationMode: '@validationmode',
 		listener: '<listenon'
@@ -40,54 +39,59 @@ app.component('crudInput', {
 		if (ctrl.listener!=undefined) {
 			ctrl.$onChanges = function(changeObj) {
 				//Trigerring updating pattern by changed 'listener' variable
-                //"Called whenever one-way bindings are updated."
+                //'Called whenever one-way bindings are updated.'
 				if (changeObj.listener) {
-                    //alert("ONCHANGES: "+ctrl.name);
+                    //alert('ONCHANGES: '+ctrl.name);
 					ctrl.pattern = ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''});
 				}
 			}
 		}
 		
-		if (ctrl.type==="text") {
+		if (ctrl.type==='text') {
 		}
-		else if (ctrl.type==="number") {
-			this.templateUrl = "crudInput.htm";
+		else if (ctrl.type==='number') {
+			this.templateUrl = 'crudInput.htm';
 			ctrl.pattern = null;
 			ctrl.min = ctrl.validations!=undefined ? ctrl.validations.min: null;
 			ctrl.max = ctrl.validations!=undefined ? ctrl.validations.max: null;
 			ctrl.step = ctrl.validations!=undefined ? ctrl.validations.step: null;
 		}
-		else if (ctrl.type==="radio") {	
+		else if (ctrl.type==='radio') {	
 		}
 		
-		ctrl.modelOptions = {updateOn:ctrl.updateOn};
-		
+        if (ctrl.updateOn!='') { 
+            ctrl.modelOptions = {updateOn:ctrl.updateOn};
+        } 
+        else {
+            ctrl.modelOptions = {updateOn:'default'};
+        }
+        
 		ctrl.getClass = function(item) {
 			if (!item.id.match(ctrl.pattern)) {
-				return "disabled";
+				return 'disabled';
 			}
-			return "";
+			return '';
 		};
 		
-		$scope.$watch("$ctrl.model", function() {
-            //alert("WATCH: "+ctrl.name);
+		$scope.$watch('$ctrl.model', function() {
+            //alert('WATCH: '+ctrl.name);
 			if (ctrl.assignParams!=undefined) {
 				ctrl.onchange({assgnprms: utilService.replaceThisKeyword(ctrl.assignParams, ctrl.model)});
 			}
 		});
 		
 		ctrl.getTemplate = function() {
-			if (ctrl.type==="text" || ctrl.type==="number") {
-				return "crudSimpleInput.htm";
+			if (ctrl.type==='text' || ctrl.type==='number') {
+				return 'templates/crudSimpleInput.htm';
 			}
-			else if (ctrl.type==="radio") {
-				return "crudRadioInput.htm";
+			else if (ctrl.type==='radio') {
+				return 'templates/crudRadioInput.htm';
 			}
-			else if (ctrl.type==="checkbox") {
-				return "crudChbxInput.htm";
+			else if (ctrl.type==='checkbox') {
+				return 'templates/crudChbxInput.htm';
 			}
-            else if (ctrl.type==="select" || ctrl.type==="multiselect") {
-				return "crudSelectInput.htm";
+            else if (ctrl.type==='select' || ctrl.type==='multiselect') {
+				return 'templates/crudSelectInput.htm';
 			}
 		};
 	},
@@ -95,10 +99,10 @@ app.component('crudInput', {
 });
 
 app.component('crudError', {
-	template: "<div ng-show='$ctrl.ifShowError()' class='error'>{{$ctrl.showError()}}</div>",
+	templateUrl: 'templates/crudError.htm',
 	controller: function() {
 		var ctrl = this;
-		ctrl.dirty = "true";
+		ctrl.dirty = 'true';
 		ctrl.showError = function() {
 			var error = ctrl.field.$error;
 			for (var key in error) {
@@ -110,7 +114,7 @@ app.component('crudError', {
 		ctrl.ifShowError = function() {
 			var isDirty = ctrl.field==undefined ? false : ctrl.field.$dirty;
 			var isInvalid = ctrl.field==undefined ? ctrl.required : ctrl.field.$invalid;
-			return ((ctrl.dirty=='false' || ctrl.submitAttempted) || isDirty==true) && isInvalid==true;
+			return ((ctrl.dirty=='false' || ctrl.submitAttempted) || isDirty==true) && isInvalid==true
 		}
 	},
 	bindings: {
