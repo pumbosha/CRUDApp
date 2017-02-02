@@ -199,3 +199,20 @@ fieldset.radio label.disabled {
 input#rowsNr {
 	width:100px;
 }
+
+/* Modal window */
+
+.modal-dialog {
+    width: 70%;
+    height: 90% !important;
+    overflow: hidden;
+}
+
+.modal-body {
+    height: 75%;
+    overflow-y: scroll;
+}
+
+.modal-content {
+    height:100%;
+}

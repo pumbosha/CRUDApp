@@ -1,24 +1,11 @@
-﻿1. Tabela w której wyświetlane będą dane ludzi (l.p., Imie, nazwisko, pesel, zarobki, data urodzenia)
-2. Dodanie możliwości usuwania, dodawania i edycji ludzi
-	- zrobienie odpowiednich walidacji na odpowiednich polach (dodawanie, edycja)
-	- walidacja danych poprzez wywołanie jeakiegoś mokowego serwisu (stworzyć customowy serwis do tego)
-3. Dodanie filtrów i sortowań na tabelce
-4. Stronnicowanie
-5. Zamiana tabelki w dyrektywy (komponenty) i sprawienie aby wyświetlanie tabelki było generyczne (różne dane)
-6. Przeniesienie części funkcjonalności (np. dodawanie i edycja ludzi) na inne podstrony i ogarnięcie routingu
-7. Internacjonalizacja
-8. Mobilność
-9. Zrobić mechanizm warunkowego pokazywania pól na formularzu, tzn jeśli np. pola A ma wartość 'x' to pokaż pole B a jak nie to pokaż pole C i D
-10. FreeText -> mechanizm wyświetlania wolnego tekstu na zasadzie podobnej do javowych *.properties (w sensie przekazywania parametrów)
-
-
-1. Select, multiselect (ew. minimum zaznaczonych elementów)
-2. zrobić dyrektywy (z dzielonym scopem) z komponentów, tak żeby nie trzeba było przekazywać im tylu rzeczy np:
-<crud-radio max="3" min="2" availableOpts=".." itd />
-i potem już tylko dyrektywy:
-<crud-radio name=".." />
-
-3. Dodać jakieś domyślne pluginy do daty i multiselekta (albo i nie dodawać -> zastanowić się)
-4. zrobić bootstrapową (albo jakąś inną podobną) tabelkę, tak żeby poniższe 2 punkty dało się łatwo zrobić
+1. Dodać jakieś domyślne pluginy do daty i multiselekta (albo i nie dodawać -> zastanowić się)
+2. Design tabelki i guzików, logika dodawania rekordu w popupie
+3. Sortowania tabelki
+4. Filtrowanie tabelki
 5. Stronnicowanie tabelki
-6. Filtrowanie tabelki
+6. Internacjonalizacja
+7. Mobilność
+
+BUGI:
+- CRUD błąd: Field 'pseudonym' should contains name or surname.  przy marii skłodowskiej, najpewniej pattern sie nie updatuje
+- przy wyświetlaniu błędu guziki do submitowania wystają poza modal

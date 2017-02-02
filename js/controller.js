@@ -1,4 +1,11 @@
 app.controller('CRUDAppController', function ($scope, $rootScope, formService, daoService, utilService, configService, $timeout) {
+    
+    $(document).ready(function() {
+        $("#formModal").on('hidden.bs.modal', function () {
+            $scope.showForm = false;   
+            $scope.$apply();
+        })
+    });
 	
     /******************************* Variables *******************************/ 
     
@@ -63,11 +70,12 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 	$scope.toggleForm = function() {
 		$scope.personForm.failedAttemted = false;
 		$scope.showForm = !$scope.showForm;
+        $('#formModal').modal('toggle');
 	}
 		
 	$scope.deletePerson = function(pesel) {
 		if (!daoService.deleteRecord(getPerson(pesel))) {
-			showErrMsg(crudErrors.delete);
+			showErrMsg(messages.errors.delete);
 			return;
 		}
 		var index = $scope.persons.indexOf(getPerson(pesel));
@@ -81,18 +89,20 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         $scope.editPersonClicked = true;
 		preFillForm(utilService.copy(getPerson(pesel)));
 		editedPesel = pesel;
+        $scope.modalTitle = messages.labels.editRecord;
         $timeout(function(){$scope.editPersonClicked = false;}, 100);
 	}
 	
 	$scope.addPerson = function() {
 		//fill form with empty record
 		preFillForm(daoService.getEmptyRecord());
+        $scope.modalTitle = messages.labels.addRecord;
 		editedPesel = "";
 	}
 	
 	$scope.savePerson = function() {
 		if (!$scope.personForm.$valid) {
-			showErrMsg("Form contains validation errors.");
+			showErrMsg(messages.errors.validationErrors);
 			$scope.personForm.failedAttemted = true;
 			return;
 		}
@@ -100,12 +110,12 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 		if (editedPesel != "") {
 			if(editedPesel!=$scope.person.pesel) {
 				if (getPerson($scope.person.pesel)!=null) {
-					showErrMsg("Person with this pesel already exists");
+					showErrMsg(messages.errors.nonUniquePrimaryKey);
 					return;
 				}
 			}
 			if (!daoService.updateRecord($scope.person)) {
-				showErrMsg(crudErrors.update);
+				showErrMsg(messages.errors.update);
 				return;
 			}
 			var index = $scope.persons.indexOf(getPerson(editedPesel));
@@ -113,13 +123,13 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 		}
 		else {
 			if (!daoService.addRecord($scope.person)) {
-				showErrMsg(crudErrors.add);
+				showErrMsg(messages.errors.add);
 				return;
 			}
 			$scope.persons.push($scope.person)
 		}
 		
-		showSuccMsg("Changes saved successfully.");
+		showSuccMsg(messages.communicates.successSaveForm);
 		$scope.toggleForm();
 	}
 	

@@ -26,38 +26,9 @@
 			</div>
 			<div id="succMsg" class="msg" ng-show="succMsg!=''">
 				{{succMsg}}
-				<span class="close" href="#" ng-click="deleteMsg('succ')">[close]</span>
+                <button type="button" class="close" ng-click="deleteMsg('succ')">&times;</button>
 			</div>
-			<div id="errMsg" class="msg" ng-show="errMsg!=''">
-				{{errMsg}}
-				<span class="close" href="#" ng-click="deleteMsg('err')">[close]</span>
-			</div>
-			<div id="formContent" ng-show="showForm">
-				<form novalidate name="personForm">
-					<span ng-init="initGlobalVariables()"></span>
-					
-					<crud-input ng-repeat="md in metadata | orderBy:'order'"
-						type="{{md.type}}"
-						name="{{md.name}}"
-						errormessages="md.errorMessages"
-						model="person[md.name]"
-						assignparams="md.assignParams"
-						change="assign(assgnprms)"
-						valid="evalPattern(params)"
-						validations="md.validations"
-						desc="{{md.desc}}"
-                        availableopts="md.availableOpts"
-                        updateon="{{md.updateOn}}"
-                        listenon="random">
-						{{md.label}}:
-					</crud-input>
-					
-					<div class="bttns">
-						<button class="btn btn-default" ng-click="toggleForm()">Cancel</button>
-						<button class="btn btn-default" ng-click="savePerson()">Submit</button>
-					</div>
-				</form>
-			</div>
+			
             <div id="operations" class="form-inline">
                 <label>rows number</label>
                 <input class="form-control" id="rowsNr" type="number" />
@@ -108,6 +79,50 @@
 					</tbody>
 				</table>
 			</div>
+            
+            <div id="formModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" ng-click="toggleForm()">&times;</button>
+                            <h4 class="modal-title">{{modalTitle}}</h4>
+                            <div id="errMsg" class="msg" ng-show="errMsg!=''">
+                                {{errMsg}}
+                                <button type="button" class="close" ng-click="deleteMsg('err')">&times;</button>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div id="formContent">
+                                <form novalidate name="personForm">
+                                    <span ng-init="initGlobalVariables()"></span>
+
+                                    <crud-input ng-repeat="md in metadata | orderBy:'order'"
+                                        type="{{md.type}}"
+                                        name="{{md.name}}"
+                                        errormessages="md.errorMessages"
+                                        model="person[md.name]"
+                                        assignparams="md.assignParams"
+                                        change="assign(assgnprms)"
+                                        valid="evalPattern(params)"
+                                        validations="md.validations"
+                                        desc="{{md.desc}}"
+                                        availableopts="md.availableOpts"
+                                        updateon="{{md.updateOn}}"
+                                        listenon="random">
+                                        {{md.label}}:
+                                    </crud-input>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="bttns">
+                                <button class="btn btn-default" ng-click="toggleForm()">Cancel</button>
+                                <button class="btn btn-default" ng-click="savePerson()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 		</div>
 		
 		<script>
@@ -116,12 +131,23 @@
             $(document).ready(function() {
 				$("#tableContent table thead td.operationsColumn").height($("#tableContent table thead").height()-12);
 			});
-			
-			var crudErrors = {
-				'delete': 'Internal error while deleting person',
-				'update': 'Internal error while updating person',
-				'add': 'Internal error while adding person',
-			};
+            
+            var messages = {
+                "communicates": {
+                    "successSaveForm": "Changes saved successfully.",  
+                },
+                "labels": {
+                    "addRecord": "Add Record",
+                    "editRecord": "Edit Record"
+                },
+                "errors": {
+                    "delete": "Internal error while deleting person",
+				    "update": "Internal error while updating person",
+				    "add": "Internal error while adding person",
+                    "nonUniquePrimaryKey": "Person with this pesel already exists",
+                    "validationErrors": "Form contains validation errors.",
+                }
+            }
 			
 		</script>
 		
