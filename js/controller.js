@@ -102,7 +102,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 	
 	$scope.savePerson = function() {
 		if (!$scope.personForm.$valid) {
-			showErrMsg(messages.errors.validationErrors);
+            showErrMsg(messages.errors.validationErrors);
 			$scope.personForm.failedAttemted = true;
 			return;
 		}
@@ -143,14 +143,24 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 	}
 	
 	$scope.assign = function(obj) {
+        //call asign only when user directly changed particular field
         if (!$scope.editPersonClicked) {
             formService.assign(obj, $scope.person);
-            //changing random variable to trigger $onChange event on each component which want to listen
-            $scope.random = {'val': Math.random().toString(36).substring(7)};
         }
+        //changing random variable to trigger $onChange event on each component which want to listen
+        $scope.random = {'val': Math.random().toString(36).substring(7)};
 	}		
 	
 	$scope.evalPattern = function(obj) {
 		return utilService.evalPatternCondition(obj, $scope.person);
 	}
+    
+    $scope.$watch('personForm.$valid', function(newVal, oldVal) {
+        if (newVal==true) {
+            $scope.deleteMsg('err');
+        }
+        else if ($scope.personForm.failedAttemted==true) {
+            showErrMsg(messages.errors.validationErrors);
+        }
+    });
 });

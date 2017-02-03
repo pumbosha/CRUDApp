@@ -86,10 +86,6 @@
                         <div class="modal-header">
                             <button type="button" class="close" ng-click="toggleForm()">&times;</button>
                             <h4 class="modal-title">{{modalTitle}}</h4>
-                            <div id="errMsg" class="msg" ng-show="errMsg!=''">
-                                {{errMsg}}
-                                <button type="button" class="close" ng-click="deleteMsg('err')">&times;</button>
-                            </div>
                         </div>
                         <div class="modal-body">
                             <div id="formContent">
@@ -115,6 +111,9 @@
                             </div>
                         </div>
                         <div class="modal-footer">
+                            <div id="errMsg" class="msg" ng-show="errMsg!=''">
+                                {{errMsg}}
+                            </div>
                             <div class="bttns">
                                 <button class="btn btn-default" ng-click="toggleForm()">Cancel</button>
                                 <button class="btn btn-default" ng-click="savePerson()">Submit</button>

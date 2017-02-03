@@ -138,16 +138,11 @@ form div.bttns {
 /* messages */
 
 .msg {
-	margin-top:15px;
-	border:2px solid #999;
 	padding:5px;
 }
 
 .msg {
-	transition: all linear 0.5s;
 	opacity: 1;
-	height: 35px;
-    margin-bottom: 10px;
 }
 
 .msg.ng-hide {
@@ -163,6 +158,15 @@ form div.bttns {
 
 #errMsg {
 	color: red;
+    float:left;
+    font-size: 1.3em;
+}
+
+#succMsg {
+    font-weight: bold;
+    color: green;
+    border: 1px solid #ccc;
+    margin: 20px 0px;
 }
 
 .error {

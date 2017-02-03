@@ -7,5 +7,7 @@
 7. Mobilność
 
 BUGI:
-- CRUD błąd: Field 'pseudonym' should contains name or surname.  przy marii skłodowskiej, najpewniej pattern sie nie updatuje
-- przy wyświetlaniu błędu guziki do submitowania wystają poza modal
++ CRUD błąd: Field 'pseudonym' should contains name or surname.  przy marii skłodowskiej, najpewniej pattern sie nie updatuje
++ przy wyświetlaniu błędu guziki do submitowania wystają poza modal
++ pokazuje błedy na konsoli
++ sprawdzić naruszenie klucza głównego
