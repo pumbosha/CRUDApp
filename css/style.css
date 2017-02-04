@@ -1,7 +1,7 @@
 body {
 	margin:0px;
 	padding:0px;
-	background-color:#ddd !important;
+	background-color:#eee !important;
 	font-family: 'Lato', sans-seriff!important;
 	height:100%;
 }
@@ -14,36 +14,71 @@ html {
 	width:80%;
 	margin-left:10%;
 	background-color:white;
-	padding:10px;
 	margin-top:10px;
 	position:absolute;
+    border-top: 2px solid #ccc;
+}
+
+/**
+ * Operations pane
+ */
+
+#operations label {
+    font-weight: initial !important;
 }
 
 #operations {
-	background-color:#eee;
 	padding:5px;
 }
+
+#operations i {
+    font-size: 1em;
+}
+
 
 /**
  * Table styles
  */
 
-#tableContent {
-	font-size:1.3em;
-	font-color:#555;
-	margin-top:15px;
-	overflow-x: scroll;
-} 
+
 
 #tableContent .operationsColumn div {
 	width:150px;
 }
+
+#tableHeader {
+    border-bottom:1px solid #ccc;
+    margin-bottom:15px;
+}
  
+#tableDesc {
+    display:none;
+    padding:10px;
+}
+
+#tableName {
+    
+    padding:10px;
+    font-weight:bold;
+    font-size:1.3em;
+}
+
+#tableName i:hover {
+    color:#aaa;
+}
+
+#tableName i {
+    color:#ccc;
+    font-size: 0.8em;
+    cursor:pointer;
+}
+
 #tableContent {
 	font-size:1.3em;
 	font-color:#555;
-	margin-top:15px;
-	overflow-x: scroll;
+	margin:10px;
+	overflow-x: auto;
+    cursor:pointer;
 }
 
 #tableContent table{
@@ -71,7 +106,11 @@ html {
 }
 
 #tableContent td.operationsColumn div {
-	width:150px;
+	width:120px;
+}
+
+.highlighted {
+    background-color:#efefef;
 }
 
 /**
@@ -163,10 +202,7 @@ form div.bttns {
 }
 
 #succMsg {
-    font-weight: bold;
-    color: green;
-    border: 1px solid #ccc;
-    margin: 20px 0px;
+    margin: 20px 5px;
 }
 
 .error {
@@ -200,8 +236,11 @@ fieldset.radio label.disabled {
 	opacity: 0.35;
 }
 
-input#rowsNr {
-	width:100px;
+@media (max-width: 768px) {
+    #operations div.row div {
+        margin:5px 0px;
+    }
+
 }
 
 /* Modal window */

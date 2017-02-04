@@ -143,7 +143,7 @@ var metadata = [
         "availableOpts": "",
         "label": "Like football",
         "updateOn": "",
-        "showInTable": true,
+        "showInTable": false,
         "order": 7
     },
     {

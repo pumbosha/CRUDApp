@@ -71,6 +71,10 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 		$scope.personForm.failedAttemted = false;
 		$scope.showForm = !$scope.showForm;
         $('#formModal').modal('toggle');
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger : 'hover'
+        })  
+        $scope.errMsg = "";
 	}
 		
 	$scope.deletePerson = function(pesel) {

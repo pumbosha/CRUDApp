@@ -3,6 +3,8 @@
     <label>
         <ng-transclude ng-show="!$ctrl.isDescDefined"></ng-transclude>
         <abbr 
+              data-placement="right" 
+              data-toggle="tooltip"
               ng-show="$ctrl.isDescDefined" 
               title="{{$ctrl.desc}}" 
               class="hint">
