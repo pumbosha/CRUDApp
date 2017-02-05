@@ -15,6 +15,7 @@
 13. Po kliknięciu w wiersz tabeli niech otwiera się modal z prezentacją wiersza (export do pdf?)
 14. Filtry do daty [??]
 15. Możliwość generowania wykresów (i przypinania do daszbordu)
+16. Filtry UI: data + sprawdzanie from to czy liczby i czy from mniejsze od to
 
 
 BUGI:

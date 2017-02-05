@@ -47,9 +47,7 @@ app.component('crudInput', {
 			}
 		}
 		
-		if (ctrl.type==='text') {
-		}
-		else if (ctrl.type==='number') {
+		if (ctrl.type==='number') {
 			this.templateUrl = 'crudInput.htm';
 			ctrl.pattern = null;
 			ctrl.min = ctrl.validations!=undefined ? ctrl.validations.min: null;
@@ -81,7 +79,7 @@ app.component('crudInput', {
 		});
 		
 		ctrl.getTemplate = function() {
-			if (ctrl.type==='text' || ctrl.type==='number') {
+			if (ctrl.type==='text' || ctrl.type==='number' || ctrl.type==='date') {
 				return 'templates/crudSimpleInput.htm';
 			}
 			else if (ctrl.type==='radio') {

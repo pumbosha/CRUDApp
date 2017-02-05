@@ -5,6 +5,8 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
             $scope.showForm = false;   
             $scope.$apply();
         })
+        
+        $scope.filter.update();
     });
 	
     /******************************* Variables *******************************/ 
@@ -41,7 +43,6 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 		$scope.succMsg = msg;
 		$scope.errMsg = "";
 	}
-    
     
     /******************************* Scope Variables *******************************/
 	
@@ -167,4 +168,146 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
             showErrMsg(messages.errors.validationErrors);
         }
     });
+    
+    $scope.filter = {
+        filterValues: {},
+        checkboxFilter: 'true',
+        column: configService.retrieveFirstVisibleField(),
+        update: function() {
+            $(".filter").val("");
+            var dateType = configService.getMetadataByName(this.column).type;
+            switch(dateType) {
+                case 'textarea':
+                case 'text':
+                    this.showTextFilter();
+                    break;
+                case 'number':
+                    this.showNumberFilter();
+                    break;
+                case 'date':
+                    this.showDateFilter();
+                    break;
+                case 'checkbox':
+                    this.showCheckboxFilter();
+                    break;
+                case 'select':
+                case 'multiselect':
+                case 'radio':
+                    this.showSelectFilter();
+                    break;
+            } 
+        },
+               
+        showTextFilter: function() {
+            $(".filter").hide();
+            $("#textFilter").show();
+            
+            $("#textFilter").val(this.filterValues[this.column]);
+        },
+
+        showNumberFilter: function() {
+            //alert("showNumberFilter");
+            $(".filter").hide();
+            $("#numberFilterFrom").show();
+            $("#numberFilterTo").show();
+            
+            if (this.filterValues[this.column] != undefined) {
+                $("#numberFilterTo").val(this.filterValues[this.column].to);
+                $("#numberFilterFrom").val(this.filterValues[this.column].from);
+            }
+        },
+        
+        showDateFilter: function() {
+            alert("showDateFilter");
+        },
+        
+        showCheckboxFilter: function() {
+            //alert("showCheckboxFilter");
+            $(".filter").hide();
+            $("#checkboxFilter").show();
+            
+            if (this.filterValues[this.column] != undefined) {
+                $("#checkboxFilter").val(this.filterValues[this.column]);
+            }
+        },
+        
+        showSelectFilter: function() {
+            //alert("showSelectFilter");
+            this.availableOpts = configService.getMetadataByName(this.column).availableOpts;
+            $(".filter").hide();
+            $("#selectFilterSelect").show();
+            $("#selectFilterInput").show();
+            
+            if (this.filterValues[this.column] != undefined) {
+                $("#selectFilterInput").val(this.filterValues[this.column]);
+            }
+        },
+        
+        updateSelectFilter: function() {
+            var oldVal = $("#selectFilterInput").val();
+            var separator = " ";
+            if (oldVal!="") {
+                separator = " or ";
+            }
+            var newVal = $("#selectFilterInput").val() + separator + $("#selectFilterSelect").val();
+            if (oldVal.indexOf($("#selectFilterSelect").val()) == -1) {
+                $("#selectFilterInput").val(newVal);
+            }
+        },
+        
+        addFilter: function() {
+            var dateType = configService.getMetadataByName(this.column).type;
+            switch(dateType) {
+                case 'textarea':
+                case 'text':
+                    if (!utilService.isEmpty($("#textFilter").val())) {
+                        this.filterValues[this.column] = $("#textFilter").val();
+                    }
+                    break;
+                case 'number':
+                    if (!(utilService.isEmpty($("#numberFilterFrom").val())) || (utilService.isEmpty($("#numberFilterTo").val()))) {
+                        this.filterValues[this.column] = {from: $("#numberFilterFrom").val(), to: $("#numberFilterTo").val()};
+                    }
+                    break;
+                case 'date':
+                    if (!utilService.isEmpty($("#dateFilter").val())) {
+                        this.filterValues[this.column] = {from: $("#dateFilterFrom").val(), to: $("#dateFilterTo").val()};
+                    }
+                    break;
+                case 'checkbox':
+                    if (!utilService.isEmpty($("#checkboxFilter").val())) {
+                        this.filterValues[this.column] = $("#checkboxFilter").val();
+                    }
+                    break;
+                case 'select':
+                case 'multiselect':
+                case 'radio':
+                    if (!utilService.isEmpty($("#selectFilterInput").val())) {
+                        this.filterValues[this.column] = $("#selectFilterInput").val();
+                    }
+                    break;
+            } 
+            //alert(JSON.stringify(this.filterValues[this.column]));
+        },
+        
+        showAddFilterBtn: function() {
+            return utilService.isEmpty(this.filterValues[this.column]);
+        },
+        
+        delFilter: function() {
+            $(".filter").val("");
+            this.filterValues[this.column] = null;
+        },
+        
+        showFilterIcon(name) {
+            return !utilService.isEmpty(this.filterValues[name]);
+        },
+        
+        showFilter: function(name) {
+            this.column = name;
+            this.update();
+        }
+                 
+    };
+    
 });

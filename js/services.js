@@ -3,8 +3,28 @@ app.factory('configService', function() {
 	return {
         getMetadata: function() {
             return metadata;
+        },
+        
+        getMetadataByName: function(name) {
+            for (var i in metadata) {
+                if (metadata[i].name==name) {
+                    return metadata[i];
+                }
+            }
+        },
+        
+        retrieveFirstVisibleField: function() {
+            for (var i in metadata) {
+                if (metadata[i].showInTable==true) {
+                    return metadata[i].name;
+                }
+            }
         }
 	}
+});
+
+app.factory('tableService', function(utilService) {
+    return {}
 });
 
 app.factory('formService', function(utilService) {
@@ -37,9 +57,14 @@ app.factory('formService', function(utilService) {
 
 app.factory('utilService', function() {
 	return {
+        isEmpty: function(obj) {
+            return obj===null || obj===undefined || obj==="";
+        },
+        
 		copy: function(obj) {
 			return JSON.parse(JSON.stringify(obj));
 		},
+        
 		evalPatternCondition: function(obj, record) {
 			if (obj==undefined) {
 				return '';
@@ -53,6 +78,7 @@ app.factory('utilService', function() {
 			}
 			return obj;
 		},
+        
 		evalOrReturn: function(obj, record) {
 			//alert("eval obj: "+JSON.stringify(obj)+" record: "+JSON.stringify(record));
 			if (obj==undefined || obj==null || obj=="") {
@@ -64,9 +90,11 @@ app.factory('utilService', function() {
 				return obj;
 			}
 		},
+        
 		replaceThisKeyword: function(obj, replacement) {
 			return this.replaceKeyword(obj, "'"+replacement+"'", "this");
 		},
+        
 		replaceKeyword: function (obj, replacement, word) {
 			//alert("obj: "+obj+" word: "+word+" replacement: "+replacement);
 			if (obj==undefined) {
@@ -74,6 +102,7 @@ app.factory('utilService', function() {
 			}
 			return JSON.parse(JSON.stringify(obj).split(word).join(replacement));
 		}, 
+        
 		removeKeyword: function(obj, word) {
 			return this.replaceKeyword(obj, "", word);
 		}

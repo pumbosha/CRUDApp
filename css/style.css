@@ -35,6 +35,46 @@ html {
     font-size: 1em;
 }
 
+#operations .filter {
+    display: none;
+}
+
+#operations #textFilter {
+    width: 100%;
+}
+
+#operations #numberFilterFrom, 
+#operations #numberFilterTo,
+#operations #selectFilterSelect, 
+#operations #selectFilterInput {
+    width: 50%;
+}
+
+#operations #filterSelect {
+    width:30%;
+}
+
+#operations .btn {
+    height: 34px!important;
+}
+
+/**
+ * Bootstrap patch
+ */
+
+@media(max-width:991px){
+    .text-left-sm {
+        text-align: left ! important;
+    }
+    
+    #entriesChecker {
+        margin-top:15px;
+    }
+}
+
+.col-xs-offset-0 {
+    margin-left:0px !important;
+}
 
 /**
  * Table styles
@@ -78,7 +118,10 @@ html {
 	font-color:#555;
 	margin:10px;
 	overflow-x: auto;
-    cursor:pointer;
+}
+
+#tableContent table tr td {
+    cursor: pointer;
 }
 
 #tableContent table{
@@ -112,6 +155,16 @@ html {
 .highlighted {
     background-color:#efefef;
 }
+
+#tableContent table i.filterIcon {
+    cursor: pointer;
+    color: #999;
+}
+
+#tableContent table i.filterIcon:hover {
+    color: #000;
+}
+
 
 /**
  * Form styles
