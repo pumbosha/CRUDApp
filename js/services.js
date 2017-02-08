@@ -1,3 +1,4 @@
+
 app.factory('configService', function() {
     "use strict";
 	return {

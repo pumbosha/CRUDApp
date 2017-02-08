@@ -35,6 +35,7 @@ app.component('crudInput', {
 		ctrl.form = $rootScope.form;
 		ctrl.required = ctrl.validations!=undefined ? ctrl.validations.required : false;
 		ctrl.pattern = ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''});
+        ctrl.componentClass = 'form-control ';
 		
 		if (ctrl.listener!=undefined) {
 			ctrl.$onChanges = function(changeObj) {
@@ -53,9 +54,9 @@ app.component('crudInput', {
 			ctrl.min = ctrl.validations!=undefined ? ctrl.validations.min: null;
 			ctrl.max = ctrl.validations!=undefined ? ctrl.validations.max: null;
 			ctrl.step = ctrl.validations!=undefined ? ctrl.validations.step: null;
-		}
-		else if (ctrl.type==='radio') {	
-		}
+		} else if (ctrl.type==='date') {
+            ctrl.componentClass += 'datepicker';
+        }
 		
         if (ctrl.updateOn!='') { 
             ctrl.modelOptions = {updateOn:ctrl.updateOn};
@@ -72,15 +73,27 @@ app.component('crudInput', {
 		};
 		
 		$scope.$watch('$ctrl.model', function() {
-            //alert('WATCH: '+ctrl.name);
+            //alert('WATCH: '+ctrl.model);
 			if (ctrl.assignParams!=undefined) {
 				ctrl.onchange({assgnprms: utilService.replaceThisKeyword(ctrl.assignParams, ctrl.model)});
 			}
 		});
+        
+        if (ctrl.type==='date') {
+            $scope.$on('dateChanged', function (event, data) {
+                if (data.name==ctrl.name) {
+                    ctrl.model = data.newVal;
+                }
+                //alert("changed: "+ctrl.model+" name: "+data.name); 
+            });
+        }
 		
 		ctrl.getTemplate = function() {
-			if (ctrl.type==='text' || ctrl.type==='number' || ctrl.type==='date') {
+			if (ctrl.type==='text' || ctrl.type==='number') {
 				return 'templates/crudSimpleInput.htm';
+			}
+            else if (ctrl.type==='date') {
+				return 'templates/crudDateInput.htm';
 			}
 			else if (ctrl.type==='radio') {
 				return 'templates/crudRadioInput.htm';

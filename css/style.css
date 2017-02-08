@@ -46,7 +46,9 @@ html {
 #operations #numberFilterFrom, 
 #operations #numberFilterTo,
 #operations #selectFilterSelect, 
-#operations #selectFilterInput {
+#operations #selectFilterInput,
+#operations #dateFilterFrom, 
+#operations #dateFilterTo{
     width: 50%;
 }
 
@@ -135,7 +137,6 @@ html {
 
 #tableContent table tr td, #tableContent table tr th{
 	padding:5px;
-    min-width: 100px;
 }
 
 #tableContent table tr th.id, #tableContent table tr td.id{
@@ -152,19 +153,36 @@ html {
 	width:120px;
 }
 
-.highlighted {
+#tableContent tr.highlighted {
     background-color:#efefef;
 }
 
-#tableContent table i.filterIcon {
+#tableContent table th i{
     cursor: pointer;
     color: #999;
+    font-size: 15px;
+    display:none;
+    position:absolute;
+    right:5px;
+    margin-top:5px;
 }
 
-#tableContent table i.filterIcon:hover {
+#tableContent table th i.filterIcon:hover {
     color: #000;
 }
 
+#tableContent table th:hover i.filterIcon {
+    display:inline;
+}
+
+#tableContent table th i.filterIcon.highlighted {
+    display:inline !important;
+}
+
+#tableContent table th {
+    white-space: nowrap;
+    position:relative;
+}
 
 /**
  * Form styles
@@ -311,4 +329,8 @@ fieldset.radio label.disabled {
 
 .modal-content {
     height:100%;
+}
+
+.datepicker {
+    z-index:1151 !important;
 }

@@ -12,6 +12,8 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
     /******************************* Variables *******************************/ 
     
 	var editedPesel = "";
+    
+    var firstShowForm = true;
 	
     
     /******************************* Functions *******************************/
@@ -75,6 +77,19 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         $('[data-toggle="tooltip"]').tooltip({
             trigger : 'hover'
         })  
+        if (firstShowForm==true) {
+            firstShowForm = false;
+            $('.datepicker').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+            }).on('changeDate', function(ev){                 
+                $(this).datepicker('hide');
+                $scope.$broadcast('dateChanged', {
+                    name: $(this).attr('name'),
+                    newVal: $(this).val()
+                });
+            });
+        }
         $scope.errMsg = "";
 	}
 		
@@ -133,7 +148,6 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 			}
 			$scope.persons.push($scope.person)
 		}
-		
 		showSuccMsg(messages.communicates.successSaveForm);
 		$scope.toggleForm();
 	}
@@ -182,10 +196,8 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
                     this.showTextFilter();
                     break;
                 case 'number':
-                    this.showNumberFilter();
-                    break;
                 case 'date':
-                    this.showDateFilter();
+                    this.showRangeFilter(dateType);
                     break;
                 case 'checkbox':
                     this.showCheckboxFilter();
@@ -205,20 +217,16 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
             $("#textFilter").val(this.filterValues[this.column]);
         },
 
-        showNumberFilter: function() {
+        showRangeFilter: function(type) {
             //alert("showNumberFilter");
             $(".filter").hide();
-            $("#numberFilterFrom").show();
-            $("#numberFilterTo").show();
+            $("#"+type+"FilterFrom").show();
+            $("#"+type+"FilterTo").show();
             
             if (this.filterValues[this.column] != undefined) {
-                $("#numberFilterTo").val(this.filterValues[this.column].to);
-                $("#numberFilterFrom").val(this.filterValues[this.column].from);
+                $("#"+type+"FilterTo").val(this.filterValues[this.column].to);
+                $("#"+type+"FilterFrom").val(this.filterValues[this.column].from);
             }
-        },
-        
-        showDateFilter: function() {
-            alert("showDateFilter");
         },
         
         showCheckboxFilter: function() {
@@ -270,7 +278,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
                     }
                     break;
                 case 'date':
-                    if (!utilService.isEmpty($("#dateFilter").val())) {
+                    if (!(utilService.isEmpty($("#dateFilterFrom").val())) || (utilService.isEmpty($("#dateFilterTo").val()))) {
                         this.filterValues[this.column] = {from: $("#dateFilterFrom").val(), to: $("#dateFilterTo").val()};
                     }
                     break;
@@ -287,6 +295,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
                     }
                     break;
             } 
+            $('#filterIcon_' + this.column).addClass("highlighted");
             //alert(JSON.stringify(this.filterValues[this.column]));
         },
         
@@ -296,11 +305,8 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         
         delFilter: function() {
             $(".filter").val("");
+            $('#filterIcon_' + this.column).removeClass("highlighted");
             this.filterValues[this.column] = null;
-        },
-        
-        showFilterIcon(name) {
-            return !utilService.isEmpty(this.filterValues[name]);
         },
         
         showFilter: function(name) {

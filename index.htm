@@ -7,12 +7,14 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
 		
 		<link href="https://fonts.googleapis.com/css?family=Lato&subset=latin-ext" rel="stylesheet"> 
 		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="http://flatlogic.github.io/awesome-bootstrap-checkbox/bower_components/Font-Awesome/css/font-awesome.css">
 		<link href="css/style.css" rel="stylesheet" type="text/css" />		
+        <link href="css/datepicker.css" rel="stylesheet" type="text/css" />	
 		<link href="css/awesome-bootstrap-checkbox.css" rel="stylesheet" type="text/css" />		
 	</head> 
 
@@ -38,7 +40,9 @@
                                 <input class="form-control" ng-model="textFilter" placeholder="filter" id="textFilter" ng-class="'filter'" type="text">
                                 <input class="form-control" ng-model="numberFilterFrom" placeholder="from" id="numberFilterFrom" ng-class="'filter'" type="number">
                                 <input class="form-control" ng-model="numberFilterTo" placeholder="to" id="numberFilterTo" ng-class="'filter'" type="number">
-                                <select ng-change="filter.updateSelectFilter()" ng-model="selectFilterSelect" class="form-control" id="selectFilterSelect" ng-class="'filter'">
+                                <input class="form-control datepicker" ng-model="dateFilterFrom" placeholder="from" id="dateFilterFrom" ng-class="'filter'" type="text">
+                                <input class="form-control datepicker" ng-model="dateFilterTo" placeholder="to" id="dateFilterTo" ng-class="'filter'" type="text">
+                               <select ng-change="filter.updateSelectFilter()" ng-model="selectFilterSelect" class="form-control" id="selectFilterSelect" ng-class="'filter'">
                                     <option value=""></option>
                                     <option value="{{op.id}}" ng-repeat="op in filter.availableOpts">
                                         {{op.name}}
@@ -116,13 +120,13 @@
             </div>
             
 			<div id="tableContent">
-				<table class="table table-hover">
+				<table class="table table-hover table-bordered">
 					<thead>
 						<tr>
 							<th class="operationsColumn">Operations</th>
 							<th ng-show="md.showInTable" ng-repeat="md in metadata | orderBy:'order'">
                                 {{md.label}}
-                                <i data-placement="bottom" data-toggle="tooltip" title="Edit filter" ng-click="filter.showFilter(md.name)" ng-show="filter.showFilterIcon('{{md.name}}')" class="fa fa-filter" ng-class="'filterIcon'"></i>
+                                <i data-placement="bottom" data-toggle="tooltip" title="Edit filter" ng-click="filter.showFilter(md.name)" class="fa fa-filter filterIcon" id="filterIcon_{{md.name}}"></i>
                             </th>
 						<tr>
 					</thead>	
@@ -209,6 +213,7 @@
                                         desc="{{md.desc}}"
                                         availableopts="md.availableOpts"
                                         updateon="{{md.updateOn}}"
+                                        disabled="{{md.disabled}}"
                                         listenon="random">
                                         {{md.label}}:
                                     </crud-input>
@@ -253,6 +258,10 @@
                 $(".dataRow").click(function() {
                     $(this).toggleClass("highlighted");
                 })
+                
+                $("#tableContent table thead th").each(function() {
+                   $(this).css('min-width', $(this).width()+50); 
+                });
 			});
             
             var messages = {

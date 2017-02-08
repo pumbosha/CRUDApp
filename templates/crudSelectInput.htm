@@ -6,6 +6,7 @@
         name="{{$ctrl.name}}" 
         ng-model="$ctrl.model"
         ng-pattern="$ctrl.pattern"
+        ng-disabled="$ctrl.disabled"
         multiple>
         <option value=""></option>
         <option 
@@ -18,6 +19,7 @@
     
     <select
         ng-if="$ctrl.type=='select'"
+        ng-disabled="$ctrl.disabled"
         ng-required="$ctrl.required"
         name="{{$ctrl.name}}" 
         ng-model="$ctrl.model"

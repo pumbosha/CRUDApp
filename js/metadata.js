@@ -86,7 +86,8 @@ var metadata = [
         "label": "Date of birth",
         "updateOn": "",
         "showInTable": true,
-        "order": 4
+        "order": 4,
+        "disabled": true
     },
     {
         "name": "salary",
@@ -112,6 +113,7 @@ var metadata = [
         "label": "Sex",
         "updateOn": "blur",
         "showInTable": true,
+        "disabled": true,
         "order": 6
     },
     {
