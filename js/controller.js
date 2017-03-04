@@ -206,8 +206,11 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
                     this.showTextFilter();
                     break;
                 case 'number':
+                    var min = configService.getMetadataByName(this.column)
+                    this.showNumberRangeFilter();
+                    break;
                 case 'date':
-                    this.showRangeFilter(dateType);
+                    this.showDateRangeFilter();
                     break;
                 case 'checkbox':
                     this.showCheckboxFilter();
@@ -225,13 +228,40 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
             $("#textFilter").val(this.filterValues[this.column]);
         },
 
-        showRangeFilter: function(type) {
-            $("#"+type+"FilterFrom").show();
-            $("#"+type+"FilterTo").show();
+        showNumberRangeFilter: function() {
+            var min = daoService.getMinValOf(this.column);
+            var max = daoService.getMaxValOf(this.column);
+            $("input#numberFilter").ionRangeSlider({
+                type: "double",
+                min: min,
+                max: max
+            });
+            
+            var from = min;
+            var to = max;
+            
+            if (this.filterValues[this.column]!=undefined) {
+                from = this.filterValues[this.column].from;
+                to = this.filterValues[this.column].to;
+            }
+            
+            var slider = $("input#numberFilter").data("ionRangeSlider");
+            slider.update({
+                from: from,
+                to: to
+            });
+            
+            $timeout(function(){
+                $("#filterContainer > div > span.irs").addClass("filter");
+                $("#filterContainer > div > span.irs").prop("id", "numberFilter");
+                $("#numberFilter").css("display", "block");
+            }, 100);
             
             if (this.filterValues[this.column] != undefined) {
-                $("#"+type+"FilterTo").val(this.filterValues[this.column].to);
-                $("#"+type+"FilterFrom").val(this.filterValues[this.column].from);
+                slider.update({
+                    from: this.filterValues[this.column].from,
+                    to: this.filterValues[this.column].to
+                });
             }
         },
         
@@ -273,9 +303,8 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
                     }
                     break;
                 case 'number':
-                    if (!(utilService.isEmpty($("#numberFilterFrom").val())) || (utilService.isEmpty($("#numberFilterTo").val()))) {
-                        this.filterValues[this.column] = {from: $("#numberFilterFrom").val(), to: $("#numberFilterTo").val()};
-                    }
+                    var range = $("input#numberFilter").data("ionRangeSlider");
+                    this.filterValues[this.column] = {from: range.old_from, to: range.old_to};
                     break;
                 case 'date':
                     if (!(utilService.isEmpty($("#dateFilterFrom").val())) || (utilService.isEmpty($("#dateFilterTo").val()))) {

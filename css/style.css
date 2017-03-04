@@ -48,9 +48,7 @@ html {
 #operations #multiselectFilter + span.select2{
     width: 100% !important;
 }
-
-#operations #numberFilterFrom, 
-#operations #numberFilterTo, 
+ 
 #operations #dateFilterFrom, 
 #operations #dateFilterTo{
     width: 50%;
@@ -59,6 +57,20 @@ html {
 #operations #filterSelect {
     width:30%;
 }
+
+#operations #numberFilter {
+    width: 95%;
+}
+/*
+#operations #numberFilter .irs-bar,
+#operations #numberFilter .irs-line {
+    top:20px;
+}
+
+#operations #numberFilter .irs-slider.to,
+#operations #numberFilter .irs-slider.from {
+    display:none;
+}*/
 
 #operations .btn {
     height: 34px!important;

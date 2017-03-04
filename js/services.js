@@ -144,6 +144,14 @@ app.factory('daoService', function(utilService) {
 		deleteRecord: function(record) {
 			//deleting record from records in database
 			return true;
-		}
+		},
+        
+        getMinValOf: function(column) {
+            return Math.min.apply(Math,this.records.map(function(o){return o[column];}))
+        },
+        
+        getMaxValOf: function(column) {
+            return Math.max.apply(Math,this.records.map(function(o){return o[column];}))
+        }
 	}
 });

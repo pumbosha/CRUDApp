@@ -9,6 +9,7 @@
 		<script src="js/bootstrap.min.js"></script>
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/select2.min.js"></script>
+        <script src="js/ion.rangeSlider.js"></script>
 		
 		<link href="https://fonts.googleapis.com/css?family=Lato&subset=latin-ext" rel="stylesheet"> 
 		
@@ -17,7 +18,10 @@
 		<link href="css/style.css" rel="stylesheet" type="text/css" />		
         <link href="css/datepicker.css" rel="stylesheet" type="text/css" />	
         <link href="css/select2.min.css" rel="stylesheet" type="text/css" />	
-        <link href="css/awesome-bootstrap-checkbox.css" rel="stylesheet" type="text/css" />		
+        <link href="css/awesome-bootstrap-checkbox.css" rel="stylesheet" type="text/css" />	
+        <link href="css/ion.rangeSlider.css" rel="stylesheet" type="text/css" />	
+        <link href="css/ion.rangeSlider.skinModern.css" rel="stylesheet" type="text/css" />	
+        
 	</head> 
 
 	<body ng-app="CRUDApp">
@@ -40,8 +44,14 @@
                         <div id="filterContainer" class="col-xs-12 col-md-4">
                             <div class="input-group">
                                 <input class="form-control" ng-model="textFilter" placeholder="Filter by: {{filter.column}}" id="textFilter" ng-class="'filter'" type="text">
-                                <input class="form-control" ng-model="numberFilterFrom" placeholder="from" id="numberFilterFrom" ng-class="'filter'" type="number">
+                                
+                                <!--<input class="form-control" ng-model="numberFilterFrom" placeholder="from" id="numberFilterFrom" ng-class="'filter'" type="number">
                                 <input class="form-control" ng-model="numberFilterTo" placeholder="to" id="numberFilterTo" ng-class="'filter'" type="number">
+                                -->
+                                
+                                <input class="form-control" ng-model="numberFilter" id="numberFilter" ng-class="'filter'" type="text">
+
+                                
                                 <input class="form-control datepicker" ng-model="dateFilterFrom" placeholder="from" id="dateFilterFrom" ng-class="'filter'" type="text">
                                 <input class="form-control datepicker" ng-model="dateFilterTo" placeholder="to" id="dateFilterTo" ng-class="'filter'" type="text">
                                 
@@ -51,24 +61,12 @@
                                     </option>
                                 </select>
                                 
-                                <select ng-model="selectFilter" class="form-control" id="selectFilter" ng-class="'filter'">
-                                    <option val=""></option>
-                                    <option value="{{op.id}}" ng-repeat="op in filter.availableOpts">
-                                        {{op.name}}
-                                    </option>
-                                </select>
-                                <!--<input data-placement="bottom" data-toggle="tooltip" title="Separate items by 'or' or 'and'" class="form-control" ng-model="selectFilter" placeholder="filter" id="selectFilterInput" ng-class="'filter'" type="text">
-                                -->
                                 <select ng-model="filter.checkboxFilter" class="form-control" id="checkboxFilter" ng-class="'filter'">
-                                    <option value="true" ng-selected="true">true</option>
-                                    <option value="false">false</option>
+                                    <option value="" disabled selected hidden>Filter by: {{filter.column}}</option>
+                                    <option value="true" ng-selected="true">Yes</option>
+                                    <option value="false">No</option>
                                 </select>
                                 
-                                <!--<div id="filterSelect" class="input-group-btn">
-                                    <select class="form-control" ng-change="filter.update()" ng-model="filter.column" data-placement="bottom" data-toggle="tooltip" title="Select filter column">
-                                        <option ng-show="md.showInTable" ng-repeat="md in metadata | orderBy:'order'">{{md.name}}</option>
-                                    </select> 
-                                </div>-->
                                 <span class="input-group-btn"> 
                                     <button ng-show="!filter.showAddFilterBtn()" id="delFilter" ng-click="filter.delFilter()" data-placement="bottom" data-toggle="tooltip" title="Delete filter" type="button" class="btn btn-default">
                                         <i class="fa fa-close"></i>
@@ -277,10 +275,11 @@
                 });
                 
                 $("#multiselectFilter").select2({
-                    placeholder: "aa",
+                    placeholder: "",
                 });
-                                
+                               
 			});
+            
             
             var messages = {
                 "communicates": {
