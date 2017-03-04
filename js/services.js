@@ -71,7 +71,6 @@ app.factory('utilService', function() {
 				return '';
 			}
 			var condArr = obj.split(/\||\&|\=\=\!\=|\!|\^|\$|\(|\)/);
-			//console.log(condArr);
 			for (var i = 0;i<condArr.length;i++) {
 				var evaledCond = this.evalOrReturn(condArr[i], record);
 				evaledCond = evaledCond==undefined ? "" : evaledCond;

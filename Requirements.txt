@@ -1,29 +1,55 @@
-1. Dodać jakieś domyślne pluginy do daty i multiselekta (albo i nie dodawać -> zastanowić się)
-+ Design tabelki i guzików, logika dodawania rekordu w popupie
+Release 1:
+-> Doprowadzenie do pełnego działania podstawowych funkcji po stronie frontendu, tak aby przez dodanie backendu można było korzystać w pełni z aplikacji jako CRUD
 
-3. Sortowania tabelki
-4. Filtrowanie tabelki
-5. Stronnicowanie tabelki
-6. Internacjonalizacja
-7. Mobilność
+1. Filtry UI:
+- dodanie paska or-and do multiselekta
+- rozkminić uzywanie tego tez na zwykłych formularzach
+- przy wyborze filtra daty musi być pole date-range a nie date, to samo dla liczb
++ placeholder w multiselekcie
+- ikonki do filtra na rozdziałkach telefonicznych
 
-8. Zmiana person na record wszędzie
-9. Stworzenie nowej tabelki z json-a
-10. Metadane na nazwy tabeli i inne preferencje usera dot. wyglądu i zachowania tabeli i formularza
-11. Usuwanie kilku rekordów
-12. Pole textarea
-13. Po kliknięciu w wiersz tabeli niech otwiera się modal z prezentacją wiersza (export do pdf?)
-15. Możliwość generowania wykresów (i przypinania do daszbordu)
-16. Filtry UI: data + sprawdzanie from to czy liczby i czy from mniejsze od to
-17. Zrobić dyrektywe z tabelki (prostą - skopiować kod html)
-18. Przenieść data do oddzielnego pliku tak jak metadata
-18. Wartości defaultowe dla metadaty
-19. Różne rodzaje wyświetlania daty w tabeli
+2. Zmiana person na record wszędzie
+
+3. Usuwanie kilku rekordów
+
+4. Wartości w tabelki dla multiselecta muszą pokazywać czytelne dane a nie atrybuty 'value'
+
+5. Przenieść data do oddzielnego pliku tak jak metadata
+
+6. Sortowania tabelki
 
 
-BUGI:
-+ CRUD błąd: Field 'pseudonym' should contains name or surname.  przy marii skłodowskiej, najpewniej pattern sie nie updatuje
-+ przy wyświetlaniu błędu guziki do submitowania wystają poza modal
-- pokazuje błedy na konsoli
-+ sprawdzić naruszenie klucza głównego
-+ Zmiana daty urodzenia -> pokazuje w tabeli złą wartość (starą) (tylko jak włączony jest datepicker)
+Release 1.5:
+-> Nowe pola, drobne ulepszenia dotyczące wyglądu i UI
+
+1. Pole textarea
+
+2. Rozkminić różne ciekawe kontrolki stąd: http://webapplayers.com/inspinia_admin-v2.7/form_advanced.html
+
+3. Zmienić checkbox i radio button na te stąd: http://webapplayers.com/inspinia_admin-v2.7/form_advanced.html
+
+4. Pole do wyboru liczby jakieś fajniejsze, np wypełnianie kółka albo klikanie w pasek (insipnia advanced forms)
+
+5. Różne rodzaje wyświetlania daty w tabeli
+
+6. Wartości defaultowe dla metadaty
+
+7. Metadane na nazwy tabeli i inne preferencje usera dot. wyglądu i zachowania tabeli i formularza
+
+
+Release 2:
+-> Nowe Featur'y
+
+1. Zrobić dyrektywe z tabelki (prostą - skopiować kod html)
+
+2. Po kliknięciu w wiersz tabeli niech otwiera się modal z prezentacją wiersza (export do pdf?)
+
+3. Możliwość generowania wykresów (i przypinania do daszbordu)
+
+4. Internacjonalizacja
+
+
+Release 3:
+-> Backend
+
+1. Stronnicowanie

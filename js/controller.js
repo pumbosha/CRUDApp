@@ -4,7 +4,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         $("#formModal").on('hidden.bs.modal', function () {
             $scope.showForm = false;   
             $scope.$apply();
-        })
+        });
         
         $scope.filter.update();
     });
@@ -77,8 +77,11 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         $('[data-toggle="tooltip"]').tooltip({
             trigger : 'hover'
         })  
+        
         if (firstShowForm==true) {
             firstShowForm = false;
+            
+            //datepicker
             $('.datepicker').datepicker({
                 format: 'dd-mm-yyyy',
                 autoclose: true,
@@ -189,6 +192,13 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         column: configService.retrieveFirstVisibleField(),
         update: function() {
             $(".filter").val("");
+            $(".filter").hide();
+            $("span.select2").hide();
+            $("#tableContent table th i.filterIcon").each(function() {
+                $(this).removeClass("highlighted2");
+            });
+            $('#filterIcon_' + this.column).addClass("highlighted2");
+            
             var dateType = configService.getMetadataByName(this.column).type;
             switch(dateType) {
                 case 'textarea':
@@ -205,21 +215,17 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
                 case 'select':
                 case 'multiselect':
                 case 'radio':
-                    this.showSelectFilter();
+                    this.showMultielectFilter();
                     break;
             } 
         },
                
         showTextFilter: function() {
-            $(".filter").hide();
             $("#textFilter").show();
-            
             $("#textFilter").val(this.filterValues[this.column]);
         },
 
         showRangeFilter: function(type) {
-            //alert("showNumberFilter");
-            $(".filter").hide();
             $("#"+type+"FilterFrom").show();
             $("#"+type+"FilterTo").show();
             
@@ -230,37 +236,31 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         },
         
         showCheckboxFilter: function() {
-            //alert("showCheckboxFilter");
-            $(".filter").hide();
             $("#checkboxFilter").show();
-            
             if (this.filterValues[this.column] != undefined) {
                 $("#checkboxFilter").val(this.filterValues[this.column]);
             }
         },
         
-        showSelectFilter: function() {
-            //alert("showSelectFilter");
+        showMultielectFilter: function() {
             this.availableOpts = configService.getMetadataByName(this.column).availableOpts;
-            $(".filter").hide();
-            $("#selectFilterSelect").show();
-            $("#selectFilterInput").show();
+            var value = this.filterValues[this.column];
+            var columnName = this.column;
+            if (value==null) {
+                value=[];
+            }
+            $timeout(function(){
+                $("#multiselectFilter").val(value);
+                if (value!=undefined) {
+                    $("#multiselectFilter").trigger("change");
+                }
+                $("#multiselectFilter").show();
+                $("#multiselectFilter + span.select2").show();
+                $("#multiselectFilter").select2({
+                    placeholder: "Filter by: "+columnName,
+                });
+            }, 100);
             
-            if (this.filterValues[this.column] != undefined) {
-                $("#selectFilterInput").val(this.filterValues[this.column]);
-            }
-        },
-        
-        updateSelectFilter: function() {
-            var oldVal = $("#selectFilterInput").val();
-            var separator = " ";
-            if (oldVal!="") {
-                separator = " or ";
-            }
-            var newVal = $("#selectFilterInput").val() + separator + $("#selectFilterSelect").val();
-            if (oldVal.indexOf($("#selectFilterSelect").val()) == -1) {
-                $("#selectFilterInput").val(newVal);
-            }
         },
         
         addFilter: function() {
@@ -290,12 +290,14 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
                 case 'select':
                 case 'multiselect':
                 case 'radio':
-                    if (!utilService.isEmpty($("#selectFilterInput").val())) {
-                        this.filterValues[this.column] = $("#selectFilterInput").val();
+                    if (!utilService.isEmpty($("#multiselectFilter").val())) {
+                        this.filterValues[this.column] = $("#multiselectFilter").val();
                     }
                     break;
             } 
-            $('#filterIcon_' + this.column).addClass("highlighted");
+            if (!this.showAddFilterBtn()) {
+                $('#filterIcon_' + this.column).addClass("highlighted");
+            }
             //alert(JSON.stringify(this.filterValues[this.column]));
         },
         
@@ -307,6 +309,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
             $(".filter").val("");
             $('#filterIcon_' + this.column).removeClass("highlighted");
             this.filterValues[this.column] = null;
+            this.update();
         },
         
         showFilter: function(name) {

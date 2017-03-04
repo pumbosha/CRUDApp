@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <select
+        class="form-control multiselect"
         ng-if="$ctrl.type=='multiselect'"
         ng-required="$ctrl.required"
         name="{{$ctrl.name}}" 
         ng-model="$ctrl.model"
         ng-pattern="$ctrl.pattern"
         ng-disabled="$ctrl.disabled"
-        multiple>
-        <option value=""></option>
+        multiple="multiple">
         <option 
             ng-repeat="item in $ctrl.availableOpts"
             value="{{item.id}}"
@@ -18,6 +18,7 @@
     </select>
     
     <select
+        class="form-control"    
         ng-if="$ctrl.type=='select'"
         ng-disabled="$ctrl.disabled"
         ng-required="$ctrl.required"

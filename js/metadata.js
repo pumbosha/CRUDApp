@@ -185,9 +185,9 @@ var metadata = [
                     {"cond": "otherwise", "val": "500"}
                 ]
         },
-        "validations": {"required":true, "pattern":"^.*s|S.*$"},
+        "validations": {"required":true, "pattern":"^.*s|S|e.*$"},
         "desc": "Check your advantages (don't check punctual)",
-        "availableOpts": [{"id":"punctual", "name":"Punctual"}, {"id":"conscientious", "name":"Conscientious"}, {"id":"smart", "name":"Smart"}],
+        "availableOpts": [{"id":"punctual", "name":"Punctual"}, {"id":"clever", "name":"Clever"}, {"id":"conscientious", "name":"Conscientious"}, {"id":"smart", "name":"Smart"}],
         "label": "Advantages",
         "updateOn": "blur",
         "showInTable": true,
