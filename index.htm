@@ -10,9 +10,10 @@
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/select2.min.js"></script>
         <script src="js/ion.rangeSlider.js"></script>
-		
+        <script src="js/moment.min.js"></script>
+        <script src="js/daterangepicker.js"></script>
+        
 		<link href="https://fonts.googleapis.com/css?family=Lato&subset=latin-ext" rel="stylesheet"> 
-		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="http://flatlogic.github.io/awesome-bootstrap-checkbox/bower_components/Font-Awesome/css/font-awesome.css">
 		<link href="css/style.css" rel="stylesheet" type="text/css" />		
@@ -21,6 +22,7 @@
         <link href="css/awesome-bootstrap-checkbox.css" rel="stylesheet" type="text/css" />	
         <link href="css/ion.rangeSlider.css" rel="stylesheet" type="text/css" />	
         <link href="css/ion.rangeSlider.skinModern.css" rel="stylesheet" type="text/css" />	
+        <link href="css/daterangepicker.css" rel="stylesheet" type="text/css" />	
         
 	</head> 
 
@@ -43,24 +45,25 @@
                     <div class="col-xs-12">
                         <div id="filterContainer" class="col-xs-12 col-md-4">
                             <div class="input-group">
+                                
+                                <!-- TextFilter -->
                                 <input class="form-control" ng-model="textFilter" placeholder="Filter by: {{filter.column}}" id="textFilter" ng-class="'filter'" type="text">
                                 
-                                <!--<input class="form-control" ng-model="numberFilterFrom" placeholder="from" id="numberFilterFrom" ng-class="'filter'" type="number">
-                                <input class="form-control" ng-model="numberFilterTo" placeholder="to" id="numberFilterTo" ng-class="'filter'" type="number">
-                                -->
-                                
+                                <!-- NumberFilter -->
                                 <input class="form-control" ng-model="numberFilter" id="numberFilter" ng-class="'filter'" type="text">
 
-                                
-                                <input class="form-control datepicker" ng-model="dateFilterFrom" placeholder="from" id="dateFilterFrom" ng-class="'filter'" type="text">
-                                <input class="form-control datepicker" ng-model="dateFilterTo" placeholder="to" id="dateFilterTo" ng-class="'filter'" type="text">
-                                
+                                <!-- DateRangeFilter -->
+                                <input class="form-control" ng-model="dateFilter" placeholder="Filter by: {{filter.column}}" id="dateFilter" ng-class="'filter'" type="text">
+                                <!--<input class="form-control datepicker" ng-model="dateFilterTo" placeholder="to" id="dateFilterTo" ng-class="'filter'" type="text">
+                                -->
+                                <!-- MultiSelectFilter -->
                                 <select ng-model="multiselectFilter" class="form-control" id="multiselectFilter" ng-class="'filter'" multiple="multiple">
                                     <option value="{{op.id}}" ng-repeat="op in filter.availableOpts">
                                         {{op.name}}
                                     </option>
                                 </select>
                                 
+                                <!-- CheckboxFilter -->
                                 <select ng-model="filter.checkboxFilter" class="form-control" id="checkboxFilter" ng-class="'filter'">
                                     <option value="" disabled selected hidden>Filter by: {{filter.column}}</option>
                                     <option value="true" ng-selected="true">Yes</option>
@@ -277,9 +280,20 @@
                 $("#multiselectFilter").select2({
                     placeholder: "",
                 });
+                
+                $("#dateFilter").daterangepicker({
+                    locale: {
+                        format: "DD-MM-YYYY",
+                        cancelLabel: messages.labels.cancelDateRangePicker,
+                        applyLabel: messages.labels.applyDateRangePicker
+                    }
+                });
+                
+                $("#dateFilter").on('cancel.daterangepicker', function(ev, picker) {
+                    $(this).val('');
+                });
                                
 			});
-            
             
             var messages = {
                 "communicates": {
@@ -287,7 +301,9 @@
                 },
                 "labels": {
                     "addRecord": "Add Record",
-                    "editRecord": "Edit Record"
+                    "editRecord": "Edit Record",
+                    "cancelDateRangePicker": "Cancel",
+                    "applyDateRangePicker": "Apply"
                 },
                 "errors": {
                     "delete": "Internal error while deleting person",

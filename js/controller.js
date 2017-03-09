@@ -265,6 +265,20 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
             }
         },
         
+        showDateRangeFilter: function() {
+            
+            $("#dateFilter").show();
+            if (this.filterValues[this.column] != undefined) {
+                $("#dateFilter").data('daterangepicker').setStartDate(this.filterValues[this.column].from);
+                $("#dateFilter").data('daterangepicker').setEndDate(this.filterValues[this.column].to);
+            }
+            else {
+                $("#dateFilter").data('daterangepicker').setStartDate(moment());
+                $("#dateFilter").data('daterangepicker').setEndDate(moment());
+                $("#dateFilter").val("");
+            }
+        },
+        
         showCheckboxFilter: function() {
             $("#checkboxFilter").show();
             if (this.filterValues[this.column] != undefined) {
@@ -307,8 +321,11 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
                     this.filterValues[this.column] = {from: range.old_from, to: range.old_to};
                     break;
                 case 'date':
-                    if (!(utilService.isEmpty($("#dateFilterFrom").val())) || (utilService.isEmpty($("#dateFilterTo").val()))) {
-                        this.filterValues[this.column] = {from: $("#dateFilterFrom").val(), to: $("#dateFilterTo").val()};
+                    if (!utilService.isEmpty($("#dateFilter").val())) {
+                        var dateData = $("#dateFilter").data('daterangepicker');
+                        var startDate = dateData["startDate"];
+                        var endDate = dateData["endDate"];
+                        this.filterValues[this.column] = {from: startDate, to: endDate};
                     }
                     break;
                 case 'checkbox':
