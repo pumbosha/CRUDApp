@@ -62,6 +62,8 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
     
     $scope.editRecordClicked = false;
     
+    $scope.selectedRecords = [];
+    
     
     /******************************* Scope Functions *******************************/
     
@@ -106,6 +108,16 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 			$scope.records.splice(index, 1);
 		}
 	}
+    
+    $scope.deleteRecords = function() {
+        for (var i=0; i<$scope.selectedRecords.length; i++) {
+            $scope.deleteRecord($scope.selectedRecords[i].pesel);
+        }
+    }
+    
+    $scope.selectRecord = function(record) {
+        $scope.selectedRecords.push(record);
+    }
 	
 	$scope.editRecord = function(pesel) {
 		//fill form with selected record

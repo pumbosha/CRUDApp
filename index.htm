@@ -133,7 +133,7 @@
 									</span>
 								</div>
 							</td>
-                            <td class="dataCol" ng-show="md.showInTable" ng-repeat="md in metadata | orderBy:'order'">
+                            <td class="dataCol" ng-show="md.showInTable" ng-repeat="md in metadata | orderBy:'order'" ng-click="selectRecord(record)">
                                 {{record[md.name] | tableFilter:record[md.name]:md}}
                             </td>
 						</tr>

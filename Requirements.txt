@@ -7,7 +7,9 @@ Release 1:
 + placeholder w multiselekcie
 - ikonki do filtra na rozdziałkach telefonicznych
 
-3. Usuwanie kilku rekordów
+2. Filtrowanie tabelki
+
++ Usuwanie kilku rekordów
 
 + wartości w tabelki dla multiselecta (i innych pól) muszą pokazywać czytelne dane a nie atrybuty 'value'
 
@@ -32,11 +34,15 @@ Release 1.5:
 
 4. Pole do wyboru liczby jakieś fajniejsze, np wypełnianie kółka albo klikanie w pasek (insipnia advanced forms)
 
-5. Różne rodzaje wyświetlania daty w tabeli
++ Różne rodzaje wyświetlania daty w tabeli
 
 6. Wartości defaultowe dla metadaty
 
 7. Metadane na nazwy tabeli i inne preferencje usera dot. wyglądu i zachowania tabeli i formularza
+
+8. Opcja 'zaznacz wszystkie wiersze' (w sensie wszystkie przefiltrowane)
+
+9. Jakiś label gdy tabelka jest pusta
 
 
 Release 2:
