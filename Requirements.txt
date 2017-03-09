@@ -9,7 +9,7 @@ Release 1:
 
 3. Usuwanie kilku rekordów
 
-4. Wartości w tabelki dla multiselecta muszą pokazywać czytelne dane a nie atrybuty 'value'
++ wartości w tabelki dla multiselecta (i innych pól) muszą pokazywać czytelne dane a nie atrybuty 'value'
 
 6. Sortowania tabelki
 
@@ -19,6 +19,7 @@ Release 1:
 + zamknięcie guzików do stronnicowania w oddzielną dyrtektywę
 + zmiana person na record wszędzie
 + przenieść data do oddzielnego pliku tak jak metadata
++ localization service
 
 Release 1.5:
 -> Nowe pola, drobne ulepszenia dotyczące wyglądu i UI

@@ -113,7 +113,15 @@ app.factory('utilService', function() {
         
 		removeKeyword: function(obj, word) {
 			return this.replaceKeyword(obj, "", word);
-		}
+		},
+        
+        getByValue: function(arr, property, value) {
+            for (var i=0, iLen=arr.length; i<iLen; i++) {
+                if (arr[i][property] == value) {
+                    return arr[i];
+                }
+            }
+        }
 	}
 });
 

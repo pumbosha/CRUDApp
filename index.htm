@@ -134,7 +134,7 @@
 								</div>
 							</td>
                             <td class="dataCol" ng-show="md.showInTable" ng-repeat="md in metadata | orderBy:'order'">
-                                {{record[md.name] | booleanToYesNo | arrayToString}}
+                                {{record[md.name] | tableFilter:record[md.name]:md}}
                             </td>
 						</tr>
 					</tbody>

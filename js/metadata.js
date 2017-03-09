@@ -87,7 +87,8 @@ var metadata = [
         "updateOn": "",
         "showInTable": true,
         "order": 4,
-        "disabled": true
+        "disabled": true,
+        "format": "MMM Do YY"
     },
     {
         "name": "salary",
@@ -100,7 +101,9 @@ var metadata = [
         "label": "Salary",
         "updateOn": "",
         "showInTable": true,
-        "order": 5
+        "order": 5,
+        "prefix": "kaska:",
+        "suffix":"$$$"
     },
     {
         "name": "sex",
@@ -146,7 +149,8 @@ var metadata = [
         "label": "Like football",
         "updateOn": "",
         "showInTable": true,
-        "order": 7
+        "order": 7,
+        "aliases": {"true":"Yes", "false":"No"}
     },
     {
         "name": "vehicle",
