@@ -2,9 +2,8 @@ Release 1:
 -> Doprowadzenie do pełnego działania podstawowych funkcji po stronie frontendu, tak aby przez dodanie backendu można było korzystać w pełni z aplikacji jako CRUD
 
 1. Filtry UI:
-- dodanie paska or-and do multiselekta
-- rozkminić uzywanie tego tez na zwykłych formularzach
-- przy wyborze filtra daty musi być pole date-range a nie date, to samo dla liczb
++ rozkminić uzywanie tego tez na zwykłych formularzach
++ przy wyborze filtra daty musi być pole date-range a nie date, to samo dla liczb
 + placeholder w multiselekcie
 - ikonki do filtra na rozdziałkach telefonicznych
 
@@ -17,9 +16,9 @@ Release 1:
 7. Widok wiersza (z ew. możliwością eksportu do pdf-a)
 
 8. Refactoring:
-- zamknięcie guzików do stronnicowania w oddzielną dyrtektywę
-- zmiana person na record wszędzie
-- przenieść data do oddzielnego pliku tak jak metadata
++ zamknięcie guzików do stronnicowania w oddzielną dyrtektywę
++ zmiana person na record wszędzie
++ przenieść data do oddzielnego pliku tak jak metadata
 
 Release 1.5:
 -> Nowe pola, drobne ulepszenia dotyczące wyglądu i UI

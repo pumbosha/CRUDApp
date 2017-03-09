@@ -54,8 +54,7 @@
 
                                 <!-- DateRangeFilter -->
                                 <input class="form-control" ng-model="dateFilter" placeholder="Filter by: {{filter.column}}" id="dateFilter" ng-class="'filter'" type="text">
-                                <!--<input class="form-control datepicker" ng-model="dateFilterTo" placeholder="to" id="dateFilterTo" ng-class="'filter'" type="text">
-                                -->
+                                
                                 <!-- MultiSelectFilter -->
                                 <select ng-model="multiselectFilter" class="form-control" id="multiselectFilter" ng-class="'filter'" multiple="multiple">
                                     <option value="{{op.id}}" ng-repeat="op in filter.availableOpts">
@@ -100,35 +99,8 @@
                 </div>
                 <div class="row">    
                     <div class="col-xs-12">
-                        
-                        <div class="col-xs-12 col-sm-6 btn-group" style="margin:15px 0px">
-                            <button class="btn btn-default" ng-click="addPerson()" ng-hide="showForm" data-placement="bottom" data-toggle="tooltip" title="Add record">
-                                <i class="fa fa-plus" ></i>
-                            </button>
-                            <button class="btn btn-default" data-placement="bottom" data-toggle="tooltip" title="Delete selected records">
-                                <i class="fa fa-close" ></i>
-                            </button>
-                        </div>
-                        
-                        <div class="col-xs-12 col-sm-6 text-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#">First</a>
-                                </li>
-                                <li>
-                                    <a href="#">1</a>
-                                </li>
-                                <li>
-                                    <a href="#">2</a>
-                                </li>
-                                <li>
-                                    <a href="#">3</a>
-                                </li>
-                                <li>
-                                    <a href="#">Last</a>
-                                </li>
-                            </ul>
-                        </div>
+                        <table-menu></table-menu>
+                        <paginator></paginator>
                     </div>
                 </div>
             </div>
@@ -145,14 +117,14 @@
 						<tr>
 					</thead>	
 					<tbody>
-						<tr ng-repeat="person in persons">
+						<tr ng-repeat="record in records">
 							<td class="operationsColumn">
 								<div class="form-inline">
                                     <span class="bttns btn-group">
-										<button data-placement="right" data-toggle="tooltip" title="Edit this record" class="btn btn-default" ng-click="editPerson(person.pesel)">
+										<button data-placement="right" data-toggle="tooltip" title="Edit this record" class="btn btn-default" ng-click="editRecord(record.pesel)">
 											<span class="glyphicon glyphicon-pencil" ></span>
 										</button>
-										<button data-placement="right" data-toggle="tooltip" title="Delete this record" class="btn btn-default" ng-click="deletePerson(person.pesel)">
+										<button data-placement="right" data-toggle="tooltip" title="Delete this record" class="btn btn-default" ng-click="deleteRecord(record.pesel)">
 											<span class="glyphicon glyphicon-remove" ></span>
 										</button>
                                         <button data-placement="right" data-toggle="tooltip" title="Show this record" class="btn btn-default" >
@@ -162,7 +134,7 @@
 								</div>
 							</td>
                             <td class="dataCol" ng-show="md.showInTable" ng-repeat="md in metadata | orderBy:'order'">
-                                {{person[md.name] | booleanToYesNo | arrayToString}}
+                                {{record[md.name] | booleanToYesNo | arrayToString}}
                             </td>
 						</tr>
 					</tbody>
@@ -171,35 +143,8 @@
             
             <div class="row">    
                 <div class="col-xs-12">
-
-                    <div class="col-xs-12 col-sm-6 btn-group" style="margin:15px 0px">
-                        <button class="btn btn-default" ng-click="addPerson()" ng-hide="showForm" data-placement="bottom" data-toggle="tooltip" title="Add record">
-                            <i class="fa fa-plus" ></i>
-                        </button>
-                        <button class="btn btn-default" data-placement="bottom" data-toggle="tooltip" title="Delete selected records">
-                            <i class="fa fa-close" ></i>
-                        </button>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-6 text-right">
-                        <ul class="pagination">
-                            <li>
-                                <a href="#">First</a>
-                            </li>
-                            <li>
-                                <a href="#">1</a>
-                            </li>
-                            <li>
-                                <a href="#">2</a>
-                            </li>
-                            <li>
-                                <a href="#">3</a>
-                            </li>
-                            <li>
-                                <a href="#">Last</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <table-menu></table-menu>
+                    <paginator></paginator>
                 </div>
             </div>
             
@@ -212,14 +157,14 @@
                         </div>
                         <div class="modal-body">
                             <div id="formContent">
-                                <form novalidate name="personForm">
+                                <form novalidate name="recordForm">
                                     <span ng-init="initGlobalVariables()"></span>
 
                                     <crud-input ng-repeat="md in metadata | orderBy:'order'"
                                         type="{{md.type}}"
                                         name="{{md.name}}"
                                         errormessages="md.errorMessages"
-                                        model="person[md.name]"
+                                        model="record[md.name]"
                                         assignparams="md.assignParams"
                                         change="assign(assgnprms)"
                                         valid="evalPattern(params)"
@@ -240,7 +185,7 @@
                             </div>
                             <div class="bttns">
                                 <button class="btn btn-default" ng-click="toggleForm()">Cancel</button>
-                                <button class="btn btn-default" ng-click="savePerson()">Submit</button>
+                                <button class="btn btn-default" ng-click="saveRecord()">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -248,79 +193,15 @@
             </div>
 		</div>
 		
-		<script>
-			//Application configuration data (definitions of fields ect):
-            
-            $(document).ready(function() {
-				$("#tableContent table thead td.operationsColumn").height($("#tableContent table thead").height()-12);
-                
-                $("#tableName i").click(function() {
-                    if ($("#tableName i").hasClass("fa-chevron-down")) {
-                        $("#tableName i").removeClass("fa-chevron-down").addClass("fa-chevron-up");
-                        $("#tableDesc").show('fast');
-                    }
-                    else {
-                        $("#tableName i").removeClass("fa-chevron-up").addClass("fa-chevron-down");
-                        $("#tableDesc").hide('fast');
-                    }
-                });
-                
-                $('[data-toggle="tooltip"]').tooltip({
-                    trigger : 'hover'
-                })  
-                
-                $(".dataCol").click(function() {
-                    $(this).parent().toggleClass("highlighted");
-                })
-                
-                $("#tableContent table thead th").each(function() {
-                   $(this).css('min-width', $(this).width()+50); 
-                });
-                
-                $("#multiselectFilter").select2({
-                    placeholder: "",
-                });
-                
-                $("#dateFilter").daterangepicker({
-                    locale: {
-                        format: "DD-MM-YYYY",
-                        cancelLabel: messages.labels.cancelDateRangePicker,
-                        applyLabel: messages.labels.applyDateRangePicker
-                    }
-                });
-                
-                $("#dateFilter").on('cancel.daterangepicker', function(ev, picker) {
-                    $(this).val('');
-                });
-                               
-			});
-            
-            var messages = {
-                "communicates": {
-                    "successSaveForm": "Changes saved successfully.",  
-                },
-                "labels": {
-                    "addRecord": "Add Record",
-                    "editRecord": "Edit Record",
-                    "cancelDateRangePicker": "Cancel",
-                    "applyDateRangePicker": "Apply"
-                },
-                "errors": {
-                    "delete": "Internal error while deleting person",
-				    "update": "Internal error while updating person",
-				    "add": "Internal error while adding person",
-                    "nonUniquePrimaryKey": "Person with this pesel already exists",
-                    "validationErrors": "Form contains validation errors.",
-                }
-            }
-			
-		</script>
-		
+		<script src="js/jquery.init.js"></script>
 		<script src="js/app.js"></script>
+		<script src="js/messages.js"></script>
 		<script src="js/filters.js"></script>
 		<script src="js/metadata.js"></script>
+		<script src="js/data.js"></script>
 		<script src="js/services.js"></script>
 		<script src="js/components.js"></script>
 		<script src="js/controller.js"></script>
+		<script src="js/directives.js"></script>
 	</body> 
 </html> 
