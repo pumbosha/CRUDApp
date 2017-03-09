@@ -56,6 +56,14 @@ app.factory('formService', function(utilService) {
 	}
 });						
 
+app.factory('localizationService', function() {
+	return {
+        getMessage: function(domain, key) {
+            return messages[domain][key];
+        }
+    }
+});
+
 app.factory('utilService', function() {
 	return {
         isEmpty: function(obj) {

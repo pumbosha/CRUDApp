@@ -1,4 +1,4 @@
-app.controller('CRUDAppController', function ($scope, $rootScope, formService, daoService, utilService, configService, $timeout) {
+app.controller('CRUDAppController', function ($scope, $rootScope, formService, daoService, utilService, configService, localizationService, $timeout) {
     
     $(document).ready(function() {
         $("#formModal").on('hidden.bs.modal', function () {
@@ -186,6 +186,12 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         }
     });
     
+    $scope.locale = {
+        getMessage: function(domain, key) {
+            return localizationService.getMessage(domain, key);
+        }
+    };
+    
     $scope.filter = {
         filterValues: {},
         checkboxFilter: 'true',
@@ -301,7 +307,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
                 $("#multiselectFilter").show();
                 $("#multiselectFilter + span.select2").show();
                 $("#multiselectFilter").select2({
-                    placeholder: "Filter by: "+columnName,
+                    placeholder: $scope.locale.getMessage("labels", "filterBy") + " "+columnName,
                 });
             }, 100);
             

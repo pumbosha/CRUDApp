@@ -6,7 +6,8 @@ var messages = {
         "addRecord": "Add Record",
         "editRecord": "Edit Record",
         "cancelDateRangePicker": "Cancel",
-        "applyDateRangePicker": "Apply"
+        "applyDateRangePicker": "Apply",
+        "filterBy": "Filter by:"
     },
     "errors": {
         "delete": "Internal error while deleting record",

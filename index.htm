@@ -47,7 +47,7 @@
                             <div class="input-group">
                                 
                                 <!-- TextFilter -->
-                                <input class="form-control" ng-model="textFilter" placeholder="Filter by: {{filter.column}}" id="textFilter" ng-class="'filter'" type="text">
+                                <input class="form-control" ng-model="textFilter" placeholder="{{locale.getMessage('labels', 'filterBy')}} {{filter.column}}" id="textFilter" ng-class="'filter'" type="text">
                                 
                                 <!-- NumberFilter -->
                                 <input class="form-control" ng-model="numberFilter" id="numberFilter" ng-class="'filter'" type="text">
