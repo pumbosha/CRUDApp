@@ -7,7 +7,11 @@ var messages = {
         "editRecord": "Edit Record",
         "cancelDateRangePicker": "Cancel",
         "applyDateRangePicker": "Apply",
-        "filterBy": "Filter by:"
+        "filterBy": "Filter by:",
+        "viewModalTitle": "Record View",
+        "exportToPdf": "Export to Pdf",
+        "submit": "Submit",
+        "cancel": "Cancel"
     },
     "errors": {
         "delete": "Internal error while deleting record",

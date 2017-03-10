@@ -27,6 +27,8 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
     
     $scope.selectedRecords = [];
     
+    $scope.viewedRecord;
+    
     /******************************* Functions *******************************/
     
     var getPrimaryKey = function() {
@@ -52,7 +54,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 		$scope.recordForm.$setPristine();
         $scope.record = record;
         if (!$scope.showForm) {
-            $scope.toggleForm();
+            $scope.toggleForm("form");
         }
 	}
 	
@@ -82,7 +84,16 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 		$rootScope.form = $scope.recordForm;
 	}
 	
-	$scope.toggleForm = function() {
+    $scope.viewRecord = function(record) {
+        $scope.viewedRecord = record;
+        $scope.toggleForm("view");
+    }
+    
+	$scope.toggleForm = function(mode) {
+        if (mode=="view") {
+            $('#viewModal').modal('toggle');
+            return;
+        }
 		$scope.recordForm.failedAttemted = false;
 		$scope.showForm = !$scope.showForm;
         $('#formModal').modal('toggle');
@@ -108,12 +119,12 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         $scope.errMsg = "";
 	}
 		
-	$scope.deleteRecord = function(key) {
-		if (!daoService.deleteRecord(getRecord(key))) {
+	$scope.deleteRecord = function(record) {
+		if (!daoService.deleteRecord(record)) {
 			showErrMsg(messages.errors.delete);
 			return;
 		}
-		var index = $scope.records.indexOf(getRecord(key));
+		var index = $scope.records.indexOf(record);
 		if (index!=-1) {
 			$scope.records.splice(index, 1);
 		}
@@ -121,7 +132,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
     
     $scope.deleteRecords = function() {
         for (var i=0; i<$scope.selectedRecords.length; i++) {
-            $scope.deleteRecord($scope.selectedRecords[i][primaryKey]);
+            $scope.deleteRecord($scope.selectedRecords[i]);
         }
     }
     
@@ -129,10 +140,10 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         $scope.selectedRecords.push(record);
     }
 	
-	$scope.editRecord = function(key) {
+	$scope.editRecord = function(record) {
         $scope.editRecordClicked = true;
-		preFillForm(utilService.copy(getRecord(key)));
-		editedKey = key;
+		preFillForm(utilService.copy(record));
+		editedKey = record[primaryKey];
         $scope.modalTitle = messages.labels.editRecord;
         $timeout(function(){$scope.editRecordClicked = false;}, 100);
 	}
@@ -176,7 +187,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 			$scope.records.push($scope.record)
 		}
 		showSuccMsg(messages.communicates.successSaveForm);
-		$scope.toggleForm();
+		$scope.toggleForm("form");
 	}
 	
 	$scope.deleteMsg = function(msg) {
@@ -215,6 +226,12 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
             return localizationService.getMessage(domain, key);
         }
     };
+    
+    $scope.exportToPdf = function() {
+        var doc = new jsPDF();
+        doc.fromHTML($('#viewRecordContent').html(), 15, 15);
+        doc.save($scope.viewedRecord[primaryKey]+'.pdf');
+    }
     
     $scope.filter = {
         filterValues: {},

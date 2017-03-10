@@ -21,6 +21,7 @@ var metadata = [
         "label": "Name",
         "updateOn": "",
         "showInTable": true,
+        "showInRecordView": true,
         "order": 1
     },
     {
@@ -34,6 +35,7 @@ var metadata = [
         "label": "Surname",
         "updateOn": "",
         "showInTable": false,
+        "showInRecordView": true,
         "order": 2
     },
     {
@@ -67,6 +69,7 @@ var metadata = [
         "label": "Pesel",
         "updateOn": "blur",
         "showInTable": true,
+        "showInRecordView": true,
         "order": 3,
         "primaryKey": true
     },
@@ -87,6 +90,7 @@ var metadata = [
         "label": "Date of birth",
         "updateOn": "",
         "showInTable": true,
+        "showInRecordView": false,
         "order": 4,
         "disabled": true,
         "format": "MMM Do YY"
@@ -102,6 +106,7 @@ var metadata = [
         "label": "Salary",
         "updateOn": "",
         "showInTable": true,
+        "showInRecordView": true,
         "order": 5,
         "prefix": "kaska:",
         "suffix":"$$$"
@@ -117,6 +122,7 @@ var metadata = [
         "label": "Sex",
         "updateOn": "blur",
         "showInTable": true,
+        "showInRecordView": true,
         "disabled": true,
         "order": 6
     },
@@ -131,6 +137,7 @@ var metadata = [
         "label": "Pseudonym",
         "updateOn": "",
         "showInTable": true,
+        "showInRecordView": true,
         "order": 8
     },
     {
@@ -150,6 +157,7 @@ var metadata = [
         "label": "Like football",
         "updateOn": "",
         "showInTable": true,
+        "showInRecordView": true,
         "order": 7,
         "aliases": {"true":"Yes", "false":"No"}
     },
@@ -177,6 +185,7 @@ var metadata = [
         "label": "Vehicle",
         "updateOn": "",
         "showInTable": true,
+        "showInRecordView": true,
         "order": 10
     },
     {
@@ -196,6 +205,7 @@ var metadata = [
         "label": "Advantages",
         "updateOn": "blur",
         "showInTable": true,
+        "showInRecordView": true,
         "order": 11
     },
     {
@@ -209,6 +219,7 @@ var metadata = [
         "label": "Date of affiliating",
         "updateOn": "blur",
         "showInTable": true,
+        "showInRecordView": true,
         "order": 12
     }
 ];

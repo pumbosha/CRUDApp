@@ -374,3 +374,17 @@ fieldset.radio label.disabled {
 .datepicker {
     z-index:1151 !important;
 }
+
+#viewModal #viewRecordContent .recordView {
+    padding-bottom: 15px;
+}
+
+#viewModal #viewRecordContent{
+    width: 100%;
+}
+
+#viewModal label {
+    background-color:#eee;
+    width:100%;
+    padding:5px;
+}
