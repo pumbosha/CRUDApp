@@ -8,19 +8,39 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         
         $scope.filter.update();
     });
-	
-    /******************************* Variables *******************************/ 
     
-	var editedPesel = "";
-    
-    var firstShowForm = true;
+    /******************************* Scope Variables *******************************/
 	
+	$scope.metadata = configService.getMetadata();
+	
+	$scope.records = daoService.getRecords();
+	
+	$scope.showForm = false;
+	
+	$scope.succMsg = "";
+	
+	$scope.errMsg = "";
+	
+	$scope.random = {'val': Math.random().toString(36).substring(7)};
+    
+    $scope.editRecordClicked = false;
+    
+    $scope.selectedRecords = [];
     
     /******************************* Functions *******************************/
     
-	var getRecord = function (pesel) {
+    var getPrimaryKey = function() {
+        for (var i=0;i<$scope.metadata.length;i++) {
+            if ($scope.metadata[i].primaryKey==true) {
+                return $scope.metadata[i].name;
+            }
+        }
+        return null;
+    }
+    
+	var getRecord = function (key) {
 		for (var i=$scope.records.length-1; i>=0; i--) {
-			if( $scope.records[i].pesel == pesel) {
+			if( $scope.records[i][primaryKey] == key) {
 				return $scope.records[i];
 			}
 		}
@@ -46,23 +66,13 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 		$scope.errMsg = "";
 	}
     
-    /******************************* Scope Variables *******************************/
-	
-	$scope.metadata = configService.getMetadata();
-	
-	$scope.records = daoService.getRecords();
-	
-	$scope.showForm = false;
-	
-	$scope.succMsg = "";
-	
-	$scope.errMsg = "";
-	
-	$scope.random = {'val': Math.random().toString(36).substring(7)};
+    /******************************* Variables *******************************/ 
     
-    $scope.editRecordClicked = false;
+	var editedKey = "";
     
-    $scope.selectedRecords = [];
+    var primaryKey = getPrimaryKey();
+    
+    var firstShowForm = true;
     
     
     /******************************* Scope Functions *******************************/
@@ -98,12 +108,12 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         $scope.errMsg = "";
 	}
 		
-	$scope.deleteRecord = function(pesel) {
-		if (!daoService.deleteRecord(getRecord(pesel))) {
+	$scope.deleteRecord = function(key) {
+		if (!daoService.deleteRecord(getRecord(key))) {
 			showErrMsg(messages.errors.delete);
 			return;
 		}
-		var index = $scope.records.indexOf(getRecord(pesel));
+		var index = $scope.records.indexOf(getRecord(key));
 		if (index!=-1) {
 			$scope.records.splice(index, 1);
 		}
@@ -111,7 +121,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
     
     $scope.deleteRecords = function() {
         for (var i=0; i<$scope.selectedRecords.length; i++) {
-            $scope.deleteRecord($scope.selectedRecords[i].pesel);
+            $scope.deleteRecord($scope.selectedRecords[i][primaryKey]);
         }
     }
     
@@ -119,20 +129,18 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         $scope.selectedRecords.push(record);
     }
 	
-	$scope.editRecord = function(pesel) {
-		//fill form with selected record
+	$scope.editRecord = function(key) {
         $scope.editRecordClicked = true;
-		preFillForm(utilService.copy(getRecord(pesel)));
-		editedPesel = pesel;
+		preFillForm(utilService.copy(getRecord(key)));
+		editedKey = key;
         $scope.modalTitle = messages.labels.editRecord;
         $timeout(function(){$scope.editRecordClicked = false;}, 100);
 	}
 	
 	$scope.addRecord = function() {
-		//fill form with empty record
 		preFillForm(daoService.getEmptyRecord());
         $scope.modalTitle = messages.labels.addRecord;
-		editedPesel = "";
+		editedKey = "";
 	}
 	
 	$scope.saveRecord = function() {
@@ -142,9 +150,9 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 			return;
 		}
 		$scope.recordForm.failedAttemted = false;
-		if (editedPesel != "") {
-			if(editedPesel!=$scope.record.pesel) {
-				if (getRecord($scope.record.pesel)!=null) {
+		if (editedKey != "") {
+			if(editedKey!=$scope.record[primaryKey]) {
+				if (getRecord($scope.record[primaryKey])!=null) {
 					showErrMsg(messages.errors.nonUniquePrimaryKey);
 					return;
 				}
@@ -153,10 +161,14 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 				showErrMsg(messages.errors.update);
 				return;
 			}
-			var index = $scope.records.indexOf(getRecord(editedPesel));
+			var index = $scope.records.indexOf(getRecord(editedKey));
 			$scope.records[index] = $scope.record;
 		}
 		else {
+            if (getRecord($scope.record[primaryKey])!=null) {
+                showErrMsg(messages.errors.nonUniquePrimaryKey);
+                return;
+            }
 			if (!daoService.addRecord($scope.record)) {
 				showErrMsg(messages.errors.add);
 				return;
@@ -362,7 +374,6 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
             if (!this.showAddFilterBtn()) {
                 $('#filterIcon_' + this.column).addClass("highlighted");
             }
-            //alert(JSON.stringify(this.filterValues[this.column]));
         },
         
         showAddFilterBtn: function() {

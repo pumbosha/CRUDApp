@@ -67,7 +67,8 @@ var metadata = [
         "label": "Pesel",
         "updateOn": "blur",
         "showInTable": true,
-        "order": 3
+        "order": 3,
+        "primaryKey": true
     },
     {
         "name": "dateOfBirth",
