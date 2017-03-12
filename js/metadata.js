@@ -35,7 +35,7 @@ var metadata = [
         "label": "Surname",
         "updateOn": "",
         "showInTable": false,
-        "showInRecordView": true,
+        "showInRecordView": false,
         "order": 2
     },
     {

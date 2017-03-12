@@ -113,7 +113,8 @@
 							<th class="operationsColumn">Operations</th>
 							<th ng-show="md.showInTable" ng-repeat="md in metadata | orderBy:'order'">
                                 {{md.label}}
-                                <i data-placement="bottom" data-toggle="tooltip" title="Edit filter" ng-click="filter.showFilter(md.name)" class="fa fa-filter filterIcon" id="filterIcon_{{md.name}}"></i>
+                                <i data-placement="bottom" data-toggle="tooltip" title="{{locale.getMessage('labels', 'sortBythisCol')}}" ng-click="sort.setSort(md.name)" class="fa fa-sort-amount-asc sortIcon" id="sortIcon_{{md.name}}"></i>
+                                <i data-placement="bottom" data-toggle="tooltip" title="{{locale.getMessage('labels', 'editFilter')}}" ng-click="filter.showFilter(md.name)" class="fa fa-filter filterIcon" id="filterIcon_{{md.name}}"></i>
                             </th>
 						<tr>
 					</thead>	

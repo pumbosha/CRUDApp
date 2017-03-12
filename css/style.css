@@ -4,6 +4,10 @@ body {
 	background-color:#eee !important;
 	font-family: 'Lato', sans-seriff!important;
 	height:100%;
+    background-image: url(../img/bg.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 html {
@@ -192,7 +196,7 @@ html {
     background-color:#efefef;
 }
 
-#tableContent table th i{
+#tableContent table th i.filterIcon{
     cursor: pointer;
     color: #999;
     font-size: 15px;
@@ -202,20 +206,34 @@ html {
     margin-top:5px;
 }
 
-#tableContent table th i.filterIcon:hover {
+#tableContent table th i.sortIcon{
+    cursor: pointer;
+    color: #999;
+    font-size: 15px;
+    display:none;
+    position:absolute;
+    right:20px;
+    margin-top:5px;
+}
+
+#tableContent table th i.filterIcon:hover,
+#tableContent table th i.sortIcon:hover {
     color: #000;
 }
 
-#tableContent table th:hover i.filterIcon {
+#tableContent table th:hover i.filterIcon,
+#tableContent table th:hover i.sortIcon {
     display:inline;
 }
 
-#tableContent table th i.filterIcon.highlighted {
+#tableContent table th i.filterIcon.highlighted,
+#tableContent table th i.sortIcon.highlighted {
     display:inline !important;
     color:#000;
 }
 
-#tableContent table th i.filterIcon.highlighted2 {
+#tableContent table th i.filterIcon.highlighted2,
+#tableContent table th i.sortIcon.highlighted2{
     display:inline !important;
 }
 

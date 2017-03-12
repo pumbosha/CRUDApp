@@ -7,6 +7,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         });
         
         $scope.filter.update();
+        $scope.sort.update();
     });
     
     /******************************* Scope Variables *******************************/
@@ -231,6 +232,41 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         var doc = new jsPDF();
         doc.fromHTML($('#viewRecordContent').html(), 15, 15);
         doc.save($scope.viewedRecord[primaryKey]+'.pdf');
+    }
+    
+    $scope.sort = {
+        order: "asc",
+        column: configService.retrieveFirstVisibleField(),
+        
+        update: function() {
+            this.setSort(this.column);
+        },
+        
+        setSort: function(column) {
+            if (this.column==column) {
+                order = this.toggleOrder();
+            }
+            else {
+                this.column = column;
+                order = "asc";
+            }
+            $("#tableContent table th i.sortIcon").each(function() {
+                $(this).removeClass("highlighted");
+            });
+            $('#sortIcon_' + this.column).addClass("highlighted");
+            $('#sortIcon_' + column).tooltip();
+        },
+        
+        toggleOrder: function() {
+            if (this.order=="asc") {
+                this.order = "desc";
+                $('#sortIcon_' + this.column).removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+            }
+            else {
+                this.order = "asc";
+                $('#sortIcon_' + this.column).removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
+            }
+        }
     }
     
     $scope.filter = {

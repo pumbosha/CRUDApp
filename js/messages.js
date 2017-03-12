@@ -11,7 +11,9 @@ var messages = {
         "viewModalTitle": "Record View",
         "exportToPdf": "Export to Pdf",
         "submit": "Submit",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "sortBythisCol": "Sort by this column",
+        "editFilter": "Edit filter"
     },
     "errors": {
         "delete": "Internal error while deleting record",

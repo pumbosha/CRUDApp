@@ -15,7 +15,7 @@ Release 1:
 
 6. Sortowania tabelki
 
-7. Widok wiersza (z ew. możliwością eksportu do pdf-a)
++ Widok wiersza (z ew. możliwością eksportu do pdf-a)
 
 +. Refactoring:
 + zamknięcie guzików do stronnicowania w oddzielną dyrtektywę
@@ -23,7 +23,7 @@ Release 1:
 + przenieść data do oddzielnego pliku tak jak metadata
 + localization service
 
-9. Klucz główny! Aktualnie jest zhardcodowany na pesel
++ Klucz główny! Aktualnie jest zhardcodowany na pesel
 
 Release 1.5:
 -> Nowe pola, drobne ulepszenia dotyczące wyglądu i UI
