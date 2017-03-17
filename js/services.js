@@ -125,7 +125,7 @@ app.factory('utilService', function() {
 	}
 });
 
-app.factory('daoService', function(utilService) {
+app.factory('daoService', function(utilService, configService) {
 	return {
 		emptyRecord: {"name":"", "surname":"", "pesel":"", "dateOfBirth":"", "salary":0, "sex":"", "pseudonym":"", "interestings":[], "vehicle":"", "advantages":[], "dateOfAffiliating":""},
 		
@@ -135,6 +135,17 @@ app.factory('daoService', function(utilService) {
 		
 		getRecords: function() {
 			//should be got from outer service
+            var metadata = configService.getMetadata();
+            for (var i = 0;i<records.length;i++) {
+                for (var j = 0;j<metadata.length;j++) {
+                    if (metadata[j].type=='date') {
+                        var date = records[i][metadata[j].name].split('-');
+                        if (!utilService.isEmpty(date)) {
+                            records[i][metadata[j].name] = new Date(date[2], +date[1]-1, date[0]);
+                        }
+                    }
+                }
+            }
 			return records;
 		},
 		

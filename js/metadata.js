@@ -220,6 +220,7 @@ var metadata = [
         "updateOn": "blur",
         "showInTable": true,
         "showInRecordView": true,
-        "order": 12
+        "order": 12,
+        "format": "DD-MM-YYYY"
     }
 ];
