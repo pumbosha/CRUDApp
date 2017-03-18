@@ -24,8 +24,53 @@ app.factory('configService', function() {
 	}
 });
 
-app.factory('tableService', function(utilService) {
-    return {}
+app.factory('tableService', function(utilService, configService) {
+    return {
+        filter: function(item, filterValues) {
+            
+            var metadata = configService.getMetadata();
+            var result = true;
+            for (var i=0;i<metadata.length;i++) {
+                if (!utilService.isEmpty(filterValues[metadata[i].name])) {
+                    var colName = metadata[i].name;
+                    switch (metadata[i].type) {
+                        case 'text':
+                            result = item[colName].toLowerCase().match(filterValues[colName].toLowerCase());
+                            break;
+                        case 'date':
+                        case 'number':
+                        case 'select':
+                        case 'radio':
+                            for (var j=0;j<filterValues[colName].length;j++) {
+                                if (filterValues[colName][j]==item[colName]) {
+                                    result = true;
+                                    break;
+                                }
+                                result = false;
+                            }
+                        case 'multiselect':
+                            for (var j=0;j<filterValues[colName].length;j++) {
+                                if (item[colName].indexOf(filterValues[colName][j])!=-1) {
+                                    result = true;
+                                    break;
+                                }
+                                result = false;
+                            }
+                        case 'checkbox':
+                            var val = filterValues[colName]=='true';
+                            if (val!==item[colName]) {
+                                result = false;
+                                break;
+                            }
+                    }
+                }
+                if (!result) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
 });
 
 app.factory('formService', function(utilService) {

@@ -1,3 +1,17 @@
+app.filter('tableFilter', function(tableService) {
+    return function(items, filterValues) {
+        var result = [];
+        for (var i=0;i<items.length;i++) {
+            if (tableService.filter(items[i], filterValues)) {
+                result.push(items[i])
+            }
+        }
+        return result;
+    }
+});
+        
+        
+
 app.filter('regex', function() {
 	return function(input, field, regex) {
 		var patt = new RegExp(regex);      
@@ -11,7 +25,7 @@ app.filter('regex', function() {
 	};
 });
 
-app.filter('tableFilter', function(utilService) {
+app.filter('tableValueFilter', function(utilService) {
     return function(input, val, md) {
         switch(md.type) {
             case 'multiselect':

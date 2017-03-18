@@ -304,6 +304,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
                     this.showMultielectFilter();
                     break;
             } 
+            
         },
                
         showTextFilter: function() {
@@ -398,6 +399,9 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
                     if (!utilService.isEmpty($("#textFilter").val())) {
                         this.filterValues[this.column] = $("#textFilter").val();
                     }
+                    else {
+                        this.delFilter();
+                    }
                     break;
                 case 'number':
                     var range = $("input#numberFilter").data("ionRangeSlider");
@@ -415,6 +419,9 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
                     if (!utilService.isEmpty($("#checkboxFilter").val())) {
                         this.filterValues[this.column] = $("#checkboxFilter").val();
                     }
+                    else {
+                        this.delFilter();
+                    }
                     break;
                 case 'select':
                 case 'multiselect':
@@ -422,11 +429,14 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
                     if (!utilService.isEmpty($("#multiselectFilter").val())) {
                         this.filterValues[this.column] = $("#multiselectFilter").val();
                     }
+                    else {
+                        this.delFilter();
+                    }
                     break;
             } 
             if (!this.showAddFilterBtn()) {
                 $('#filterIcon_' + this.column).addClass("highlighted");
-            }
+            } 
         },
         
         showAddFilterBtn: function() {

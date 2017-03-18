@@ -1,11 +1,11 @@
 Release 1:
 -> Doprowadzenie do pełnego działania podstawowych funkcji po stronie frontendu, tak aby przez dodanie backendu można było korzystać w pełni z aplikacji jako CRUD
 
-1. Filtry UI:
++ Filtry UI:
 + rozkminić uzywanie tego tez na zwykłych formularzach
 + przy wyborze filtra daty musi być pole date-range a nie date, to samo dla liczb
 + placeholder w multiselekcie
-- ikonki do filtra na rozdziałkach telefonicznych
++ ikonki do filtra na rozdziałkach telefonicznych
 
 2. Filtrowanie tabelki
 
@@ -13,7 +13,7 @@ Release 1:
 
 + wartości w tabelki dla multiselecta (i innych pól) muszą pokazywać czytelne dane a nie atrybuty 'value'
 
-6. Sortowania tabelki
++ Sortowania tabelki
 
 + Widok wiersza (z ew. możliwością eksportu do pdf-a)
 
@@ -25,16 +25,20 @@ Release 1:
 
 + Klucz główny! Aktualnie jest zhardcodowany na pesel
 
+10. Dodanie pola textarea
+
+11. Jakiś label gdy tabelka jest pusta
+
+12. Pole image (rounded, circled, bordered itp)
+
 Release 1.5:
 -> Nowe pola, drobne ulepszenia dotyczące wyglądu i UI
-
-1. Pole textarea
 
 2. Rozkminić różne ciekawe kontrolki stąd: http://webapplayers.com/inspinia_admin-v2.7/form_advanced.html
 
 3. Zmienić checkbox i radio button na te stąd: http://webapplayers.com/inspinia_admin-v2.7/form_advanced.html
 
-4. Pole do wyboru liczby jakieś fajniejsze, np wypełnianie kółka albo klikanie w pasek (insipnia advanced forms)
++ Pole do wyboru liczby jakieś fajniejsze, np wypełnianie kółka albo klikanie w pasek (insipnia advanced forms)
 
 + Różne rodzaje wyświetlania daty w tabeli
 
@@ -44,10 +48,7 @@ Release 1.5:
 
 8. Opcja 'zaznacz wszystkie wiersze' (w sensie wszystkie przefiltrowane)
 
-9. Jakiś label gdy tabelka jest pusta
-
-10. Pole image (rounded, circled, bordered itp)
-
+11. Ulepszenia w filtrach (multiselect: or/and, text: regexy itp)
 
 Release 2:
 -> Nowe Featur'y

@@ -119,7 +119,7 @@
 						<tr>
 					</thead>	
 					<tbody>
-						<tr ng-repeat="record in records | orderBy:sort.column:sort.order!='asc'">
+						<tr ng-repeat="record in records | orderBy:sort.column:sort.order!='asc' | tableFilter:filter.filterValues">
 							<td class="operationsColumn">
 								<div class="form-inline">
                                     <span class="bttns btn-group">
@@ -136,7 +136,7 @@
 								</div>
 							</td>
                             <td class="dataCol" ng-show="md.showInTable" ng-repeat="md in metadata | orderBy:'order'" ng-click="selectRecord(record)">
-                                {{record[md.name] | tableFilter:record[md.name]:md}}
+                                {{record[md.name] | tableValueFilter:record[md.name]:md}}
                             </td>
 						</tr>
 					</tbody>
@@ -204,7 +204,7 @@
                         <div class="modal-body" id="viewRecordContent">
                             <div ng-show="md.showInRecordView" ng-repeat="md in metadata | orderBy:'order'" class="recordView">
                                 <label>{{md.label}}:</label>
-                                <div>{{viewedRecord[md.name] | tableFilter:record[md.name]:md}}</div>
+                                <div>{{viewedRecord[md.name] | tableValueFilter:record[md.name]:md}}</div>
                             </div>
                         </div>
                         <div class="modal-footer">
