@@ -7,11 +7,7 @@ Release 1:
 + placeholder w multiselekcie
 + ikonki do filtra na rozdziałkach telefonicznych
 + Filtrowanie tabelki
-
-3. Przy zmianie filtra (klik na ikonke sitka przy headlinie) strona musi być przeskrolowana do ustawień filtra, żeby było wiadomo jak zmienić filtr.
-
-4. Przywrócić pole wyboru kolumny w filtrze
-
++ Przy zmianie filtra (klik na ikonke sitka przy headlinie) strona musi być przeskrolowana do ustawień filtra, żeby było wiadomo jak zmienić filtr.
 + Usuwanie kilku rekordów
 + wartości w tabelki dla multiselecta (i innych pól) muszą pokazywać czytelne dane a nie atrybuty 'value'
 + Sortowania tabelki

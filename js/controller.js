@@ -455,6 +455,12 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         },
         
         showFilter: function(name) {
+            $('html, body').animate({
+                'scrollTop': $('#operations').offset().top-10
+            }, 600);
+            if (configService.getMetadataByName(this.column).type!='date') {
+                $('.filter').focus();
+            }
             this.column = name;
             this.update();
         }
