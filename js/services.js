@@ -38,6 +38,12 @@ app.factory('tableService', function(utilService, configService) {
                             result = item[colName].toLowerCase().match(filterValues[colName].toLowerCase());
                             break;
                         case 'date':
+                            var from = new Date(filterValues[colName].from);
+                            var to = new Date(filterValues[colName].to);
+                            var val = utilService.stringToDate(item[colName]);
+                            //console.log("From: "+from+" to: "+ to+" val: "+val);
+                            result = val>=from && val<=to;
+                            break;
                         case 'number':
                             var from = +filterValues[colName].from;
                             var to = +filterValues[colName].to;
@@ -119,6 +125,14 @@ app.factory('localizationService', function() {
 
 app.factory('utilService', function() {
 	return {
+        stringToDate: function(str) {
+            if (this.isEmpty(str)) {
+                return str;
+            }
+            var date = str.split('-');
+            return new Date(date[2], +date[1]-1, date[0]);
+        },
+        
         isEmpty: function(obj) {
             return obj===null || obj===undefined || obj==="";
         },
@@ -186,7 +200,7 @@ app.factory('daoService', function(utilService, configService) {
 			return utilService.copy(this.emptyRecord);
 		},
         
-        convertDateTypes: function() {
+        /*convertDateTypes: function() {
             var metadata = configService.getMetadata();
             for (var i = 0;i<records.length;i++) {
                 for (var j = 0;j<metadata.length;j++) {
@@ -198,7 +212,7 @@ app.factory('daoService', function(utilService, configService) {
                     }
                 }
             }
-        },
+        },*/
 		
 		getRecords: function() {
 			//should be got from outer service

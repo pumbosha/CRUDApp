@@ -8,7 +8,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         
         $scope.filter.update();
         $scope.sort.update();
-        daoService.convertDateTypes();
+        //daoService.convertDateTypes();
     });
     
     /******************************* Scope Variables *******************************/
@@ -458,11 +458,11 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
             $('html, body').animate({
                 'scrollTop': $('#operations').offset().top-10
             }, 600);
+            this.column = name;
+            this.update();
             if (configService.getMetadataByName(this.column).type!='date') {
                 $('.filter').focus();
             }
-            this.column = name;
-            this.update();
         }
                  
     };

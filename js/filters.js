@@ -59,6 +59,7 @@ app.filter('tableValueFilter', function(utilService) {
                 }
                 return input;
             case 'date':
+                input = utilService.stringToDate(input);
                 if (!utilService.isEmpty(md.format)) {
                     return moment(input, 'dd-MM-yyy').format(md.format);
                 }
