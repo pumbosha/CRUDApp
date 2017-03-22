@@ -39,6 +39,11 @@ app.factory('tableService', function(utilService, configService) {
                             break;
                         case 'date':
                         case 'number':
+                            var from = +filterValues[colName].from;
+                            var to = +filterValues[colName].to;
+                            var val = +item[colName];
+                            result = val>=from && val<=to;
+                            break;
                         case 'select':
                         case 'radio':
                             for (var j=0;j<filterValues[colName].length;j++) {
@@ -48,6 +53,7 @@ app.factory('tableService', function(utilService, configService) {
                                 }
                                 result = false;
                             }
+                            break;
                         case 'multiselect':
                             for (var j=0;j<filterValues[colName].length;j++) {
                                 if (item[colName].indexOf(filterValues[colName][j])!=-1) {
@@ -56,12 +62,14 @@ app.factory('tableService', function(utilService, configService) {
                                 }
                                 result = false;
                             }
+                            break;
                         case 'checkbox':
                             var val = filterValues[colName]=='true';
                             if (val!==item[colName]) {
                                 result = false;
                                 break;
                             }
+                            break;
                     }
                 }
                 if (!result) {
@@ -177,13 +185,12 @@ app.factory('daoService', function(utilService, configService) {
 		getEmptyRecord: function() {
 			return utilService.copy(this.emptyRecord);
 		},
-		
-		getRecords: function() {
-			//should be got from outer service
+        
+        convertDateTypes: function() {
             var metadata = configService.getMetadata();
             for (var i = 0;i<records.length;i++) {
                 for (var j = 0;j<metadata.length;j++) {
-                    if (metadata[j].type=='date') {
+                    if (metadata[j].type==='date') {
                         var date = records[i][metadata[j].name].split('-');
                         if (!utilService.isEmpty(date)) {
                             records[i][metadata[j].name] = new Date(date[2], +date[1]-1, date[0]);
@@ -191,6 +198,10 @@ app.factory('daoService', function(utilService, configService) {
                     }
                 }
             }
+        },
+		
+		getRecords: function() {
+			//should be got from outer service
 			return records;
 		},
 		

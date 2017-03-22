@@ -6,23 +6,21 @@ Release 1:
 + przy wyborze filtra daty musi być pole date-range a nie date, to samo dla liczb
 + placeholder w multiselekcie
 + ikonki do filtra na rozdziałkach telefonicznych
++ Filtrowanie tabelki
 
-2. Filtrowanie tabelki
+3. Przy zmianie filtra (klik na ikonke sitka przy headlinie) strona musi być przeskrolowana do ustawień filtra, żeby było wiadomo jak zmienić filtr.
+
+4. Przywrócić pole wyboru kolumny w filtrze
 
 + Usuwanie kilku rekordów
-
 + wartości w tabelki dla multiselecta (i innych pól) muszą pokazywać czytelne dane a nie atrybuty 'value'
-
 + Sortowania tabelki
-
 + Widok wiersza (z ew. możliwością eksportu do pdf-a)
-
 +. Refactoring:
 + zamknięcie guzików do stronnicowania w oddzielną dyrtektywę
 + zmiana person na record wszędzie
 + przenieść data do oddzielnego pliku tak jak metadata
 + localization service
-
 + Klucz główny! Aktualnie jest zhardcodowany na pesel
 
 10. Dodanie pola textarea
@@ -34,9 +32,13 @@ Release 1:
 Release 1.5:
 -> Nowe pola, drobne ulepszenia dotyczące wyglądu i UI
 
+1. Filtr liczb! Nie da się ustawić konkretnej liczby -> trzeba stworzyć taką możliwość
+
 2. Rozkminić różne ciekawe kontrolki stąd: http://webapplayers.com/inspinia_admin-v2.7/form_advanced.html
 
 3. Zmienić checkbox i radio button na te stąd: http://webapplayers.com/inspinia_admin-v2.7/form_advanced.html
+
+4. Pole dateAndTime
 
 + Pole do wyboru liczby jakieś fajniejsze, np wypełnianie kółka albo klikanie w pasek (insipnia advanced forms)
 

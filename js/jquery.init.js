@@ -29,6 +29,8 @@ $(document).ready(function() {
     });
 
     $("#dateFilter").daterangepicker({
+        showDropdowns: true,
+         linkedCalendars: false,
         locale: {
             format: "DD-MM-YYYY",
             cancelLabel: messages.labels.cancelDateRangePicker,

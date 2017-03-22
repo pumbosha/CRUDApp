@@ -8,6 +8,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         
         $scope.filter.update();
         $scope.sort.update();
+        daoService.convertDateTypes();
     });
     
     /******************************* Scope Variables *******************************/
@@ -318,7 +319,10 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
             $("input#numberFilter").ionRangeSlider({
                 type: "double",
                 min: min,
-                max: max
+                max: max,
+                force_edges: true,
+                grid: true,
+                hide_min_max: true
             });
             
             var from = min;

@@ -63,7 +63,7 @@ html {
 }
 
 #operations #numberFilter {
-    width: 95%;
+    margin-right:10px;
 }
 /*
 #operations #numberFilter .irs-bar,
