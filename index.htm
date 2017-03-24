@@ -87,11 +87,12 @@
                         <div id="entriesChecker" class="col-md-offset-2 col-xs-offset-0 col-xs-12 col-md-6 text-right text-left-sm form-inline">
                             <label>
                                 Show
-                                <select class="form-control">
-                                    <option>10</option>
-                                    <option>25</option>
-                                    <option>50</option>
-                                    <option>100</option>
+                                <select class="form-control" ng-model="paging.itemsOnPage" ng-change="paging.update(1)">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
                                 </select>
                                 entries
                             </label>
@@ -107,6 +108,13 @@
             </div>
             
 			<div id="tableContent">
+                <div class="tableContentInfo">
+                    {{locale.getMessage('labels', 'numOfItems')}}: <strong>{{numOfItems}}</strong> 
+                    <span ng-show="numOfItems!=paging.numOfItems">
+                        {{locale.getMessage('labels', 'numOfFilteredItems')}}: 
+                        <strong>{{paging.numOfItems}}</strong>
+                    </span>
+                </div>
 				<table class="table table-hover table-bordered">
 					<thead>
 						<tr>
@@ -119,7 +127,7 @@
 						<tr>
 					</thead>	
 					<tbody>
-						<tr ng-repeat="record in records | orderBy:sort.column:sort.order!='asc' | tableFilter:filter.filterValues">
+						<tr ng-repeat="record in records | sortFilter:sort.column:sort.order!='asc' | tableFilter:filter.filterValues | pagingFilter">
 							<td class="operationsColumn">
 								<div class="form-inline">
                                     <span class="bttns btn-group">

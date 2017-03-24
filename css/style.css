@@ -65,6 +65,21 @@ html {
 #operations #numberFilter {
     margin-right:10px;
 }
+
+#operations .clickable {
+    color: #337ab7;
+    cursor: pointer;
+}
+
+#operations .clickable:hover {
+    text-decoration: underline;
+}
+
+#operations .non-clickable {
+    color: #777;
+}
+
+
 /*
 #operations #numberFilter .irs-bar,
 #operations #numberFilter .irs-line {
@@ -121,7 +136,11 @@ html {
  * Table styles
  */
 
-
+.tableContentInfo {
+    float:left;
+    font-size: .9em;
+    color: #555;
+}
 
 #tableContent .operationsColumn div {
 	width:150px;

@@ -25,6 +25,10 @@ Release 1:
 
 12. Pole image (rounded, circled, bordered itp)
 
+13. Stronnicowanie po stronie przeglądarki
+
+14. Min date/Max date - do pola dat. Wywalić długie patterny - pola z datami muszą być readonly - mogą posiadać jakąś ikonkę kalendarza.
+
 Release 1.5:
 -> Nowe pola, drobne ulepszenia dotyczące wyglądu i UI
 
@@ -58,6 +62,8 @@ Release 2:
 3. Możliwość generowania wykresów (i przypinania do daszbordu)
 
 4. Internacjonalizacja
+
+5. Sass/Less
 
 
 Release 3:

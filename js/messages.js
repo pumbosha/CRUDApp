@@ -13,7 +13,11 @@ var messages = {
         "submit": "Submit",
         "cancel": "Cancel",
         "sortBythisCol": "Sort by this column",
-        "editFilter": "Edit filter"
+        "editFilter": "Edit filter",
+        "first": "First",
+        "last": "Last",
+        "numOfItems": "Number of items",
+        "numOfFilteredItems": "Filtered items"
     },
     "errors": {
         "delete": "Internal error while deleting record",

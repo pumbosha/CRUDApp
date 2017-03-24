@@ -4,19 +4,13 @@
     <div class="col-xs-12 col-sm-6 text-right">
         <ul class="pagination">
             <li>
-                <a href="#">First</a>
+                <span class="clickable" ng-click="paging.update(1)">{{locale.getMessage('labels', 'first')}}</span>
+            </li>
+            <li ng-repeat="page in paging.visiblePages">
+                <span ng-class="paging.calculateClass(page)" ng-click="paging.update(page)">{{page}}</span>
             </li>
             <li>
-                <a href="#">1</a>
-            </li>
-            <li>
-                <a href="#">2</a>
-            </li>
-            <li>
-                <a href="#">3</a>
-            </li>
-            <li>
-                <a href="#">Last</a>
+                <span class="clickable" ng-click="paging.update(paging.last)">{{locale.getMessage('labels', 'last')}}</span>
             </li>
         </ul>
     </div>

@@ -1,16 +1,57 @@
 app.filter('tableFilter', function(tableService) {
     return function(items, filterValues) {
         var result = [];
+        var filtered = 0;
         for (var i=0;i<items.length;i++) {
-            if (tableService.filter(items[i], filterValues)) {
-                result.push(items[i])
+            if (tableService.filter.classify(items[i], filterValues)) {
+                result.push(items[i]);
+                filtered++;
             }
+        }
+        if(tableService.paging.numOfItems!=filtered) {
+            tableService.paging.numOfItems = filtered;
+            tableService.paging.update(1);
         }
         return result;
     }
 });
-        
-        
+
+app.filter('pagingFilter', function(tableService) {
+    return function(items) {
+        var result = [];
+        var last = Math.min(tableService.paging.indexLast, items.length);
+        for (var i=tableService.paging.indexFirst;i<last;i++) {
+            result.push(items[i]);
+        }
+        return result;
+    }
+});
+
+app.filter('sortFilter', function($filter, configService, utilService) {
+    return function(items, property, order) {
+        if (configService.getMetadataByName(property).type=='date') {  
+            return $filter("orderBy")(items, property, order, function(fst, sec) {
+                //copied from Angular specs
+                if (fst.type !== 'string' || sec.type !== 'string') {
+                    return (fst.index < sec.index) ? -1 : 1;
+                }
+                //
+                if (fst.value===sec.value || utilService.isEmpty(fst.value) && utilService.isEmpty(sec.value)) {
+                    return 0;
+                }
+                if (utilService.isEmpty(fst.value)) {
+                    return -1;
+                }
+                if (utilService.isEmpty(sec.value)) {
+                    return 1;
+                }
+               
+                return (utilService.stringToDate(fst.value) < utilService.stringToDate(sec.value)) ? -1 : 1;
+            });
+        }
+        return $filter("orderBy")(items, property, order);
+    }
+});       
 
 app.filter('regex', function() {
 	return function(input, field, regex) {

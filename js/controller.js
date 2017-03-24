@@ -1,4 +1,4 @@
-app.controller('CRUDAppController', function ($scope, $rootScope, formService, daoService, utilService, configService, localizationService, $timeout) {
+app.controller('CRUDAppController', function ($scope, $rootScope, tableService, formService, daoService, utilService, configService, localizationService, $timeout) {
     
     $(document).ready(function() {
         $("#formModal").on('hidden.bs.modal', function () {
@@ -8,7 +8,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         
         $scope.filter.update();
         $scope.sort.update();
-        //daoService.convertDateTypes();
+        $scope.paging.update(1);
     });
     
     /******************************* Scope Variables *******************************/
@@ -16,6 +16,8 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
 	$scope.metadata = configService.getMetadata();
 	
 	$scope.records = daoService.getRecords();
+    
+    $scope.numOfItems = daoService.countRecords();
 	
 	$scope.showForm = false;
 	
@@ -235,236 +237,8 @@ app.controller('CRUDAppController', function ($scope, $rootScope, formService, d
         doc.save($scope.viewedRecord[primaryKey]+'.pdf');
     }
     
-    $scope.sort = {
-        order: "asc",
-        column: configService.retrieveFirstVisibleField(),
-        
-        update: function() {
-            this.setSort(this.column);
-        },
-        
-        setSort: function(column) {
-            if (this.column==column) {
-                order = this.toggleOrder();
-            }
-            else {
-                this.column = column;
-                order = "asc";
-            }
-            $("#tableContent table th i.sortIcon").each(function() {
-                $(this).removeClass("highlighted");
-            });
-            $('#sortIcon_' + this.column).addClass("highlighted");
-            $('#sortIcon_' + column).tooltip();
-        },
-        
-        toggleOrder: function() {
-            if (this.order=="asc") {
-                this.order = "desc";
-                $('#sortIcon_' + this.column).removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
-            }
-            else {
-                this.order = "asc";
-                $('#sortIcon_' + this.column).removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
-            }
-        }
-    }
-    
-    $scope.filter = {
-        filterValues: {},
-        checkboxFilter: 'true',
-        column: configService.retrieveFirstVisibleField(),
-        update: function() {
-            $(".filter").val("");
-            $(".filter").hide();
-            $("span.select2").hide();
-            $("#tableContent table th i.filterIcon").each(function() {
-                $(this).removeClass("highlighted2");
-            });
-            $('#filterIcon_' + this.column).addClass("highlighted2");
-            
-            var dateType = configService.getMetadataByName(this.column).type;
-            switch(dateType) {
-                case 'textarea':
-                case 'text':
-                    this.showTextFilter();
-                    break;
-                case 'number':
-                    var min = configService.getMetadataByName(this.column)
-                    this.showNumberRangeFilter();
-                    break;
-                case 'date':
-                    this.showDateRangeFilter();
-                    break;
-                case 'checkbox':
-                    this.showCheckboxFilter();
-                    break;
-                case 'select':
-                case 'multiselect':
-                case 'radio':
-                    this.showMultielectFilter();
-                    break;
-            } 
-            
-        },
-               
-        showTextFilter: function() {
-            $("#textFilter").show();
-            $("#textFilter").val(this.filterValues[this.column]);
-        },
-
-        showNumberRangeFilter: function() {
-            var min = daoService.getMinValOf(this.column);
-            var max = daoService.getMaxValOf(this.column);
-            $("input#numberFilter").ionRangeSlider({
-                type: "double",
-                min: min,
-                max: max,
-                force_edges: true,
-                grid: true,
-                hide_min_max: true
-            });
-            
-            var from = min;
-            var to = max;
-            
-            if (this.filterValues[this.column]!=undefined) {
-                from = this.filterValues[this.column].from;
-                to = this.filterValues[this.column].to;
-            }
-            
-            var slider = $("input#numberFilter").data("ionRangeSlider");
-            slider.update({
-                from: from,
-                to: to
-            });
-            
-            $timeout(function(){
-                $("#filterContainer > div > span.irs").addClass("filter");
-                $("#filterContainer > div > span.irs").prop("id", "numberFilter");
-                $("#numberFilter").css("display", "block");
-            }, 100);
-            
-            if (this.filterValues[this.column] != undefined) {
-                slider.update({
-                    from: this.filterValues[this.column].from,
-                    to: this.filterValues[this.column].to
-                });
-            }
-        },
-        
-        showDateRangeFilter: function() {
-            
-            $("#dateFilter").show();
-            if (this.filterValues[this.column] != undefined) {
-                $("#dateFilter").data('daterangepicker').setStartDate(this.filterValues[this.column].from);
-                $("#dateFilter").data('daterangepicker').setEndDate(this.filterValues[this.column].to);
-            }
-            else {
-                $("#dateFilter").data('daterangepicker').setStartDate(moment());
-                $("#dateFilter").data('daterangepicker').setEndDate(moment());
-                $("#dateFilter").val("");
-            }
-        },
-        
-        showCheckboxFilter: function() {
-            $("#checkboxFilter").show();
-            if (this.filterValues[this.column] != undefined) {
-                $("#checkboxFilter").val(this.filterValues[this.column]);
-            }
-        },
-        
-        showMultielectFilter: function() {
-            this.availableOpts = configService.getMetadataByName(this.column).availableOpts;
-            var value = this.filterValues[this.column];
-            var columnName = this.column;
-            if (value==null) {
-                value=[];
-            }
-            $timeout(function(){
-                $("#multiselectFilter").val(value);
-                if (value!=undefined) {
-                    $("#multiselectFilter").trigger("change");
-                }
-                $("#multiselectFilter").show();
-                $("#multiselectFilter + span.select2").show();
-                $("#multiselectFilter").select2({
-                    placeholder: $scope.locale.getMessage("labels", "filterBy") + " "+columnName,
-                });
-            }, 100);
-            
-        },
-        
-        addFilter: function() {
-            var dateType = configService.getMetadataByName(this.column).type;
-            switch(dateType) {
-                case 'textarea':
-                case 'text':
-                    if (!utilService.isEmpty($("#textFilter").val())) {
-                        this.filterValues[this.column] = $("#textFilter").val();
-                    }
-                    else {
-                        this.delFilter();
-                    }
-                    break;
-                case 'number':
-                    var range = $("input#numberFilter").data("ionRangeSlider");
-                    this.filterValues[this.column] = {from: range.old_from, to: range.old_to};
-                    break;
-                case 'date':
-                    if (!utilService.isEmpty($("#dateFilter").val())) {
-                        var dateData = $("#dateFilter").data('daterangepicker');
-                        var startDate = dateData["startDate"];
-                        var endDate = dateData["endDate"];
-                        this.filterValues[this.column] = {from: startDate, to: endDate};
-                    }
-                    break;
-                case 'checkbox':
-                    if (!utilService.isEmpty($("#checkboxFilter").val())) {
-                        this.filterValues[this.column] = $("#checkboxFilter").val();
-                    }
-                    else {
-                        this.delFilter();
-                    }
-                    break;
-                case 'select':
-                case 'multiselect':
-                case 'radio':
-                    if (!utilService.isEmpty($("#multiselectFilter").val())) {
-                        this.filterValues[this.column] = $("#multiselectFilter").val();
-                    }
-                    else {
-                        this.delFilter();
-                    }
-                    break;
-            } 
-            if (!this.showAddFilterBtn()) {
-                $('#filterIcon_' + this.column).addClass("highlighted");
-            } 
-        },
-        
-        showAddFilterBtn: function() {
-            return utilService.isEmpty(this.filterValues[this.column]);
-        },
-        
-        delFilter: function() {
-            $(".filter").val("");
-            $('#filterIcon_' + this.column).removeClass("highlighted");
-            this.filterValues[this.column] = null;
-            this.update();
-        },
-        
-        showFilter: function(name) {
-            $('html, body').animate({
-                'scrollTop': $('#operations').offset().top-10
-            }, 600);
-            this.column = name;
-            this.update();
-            if (configService.getMetadataByName(this.column).type!='date') {
-                $('.filter').focus();
-            }
-        }
-                 
-    };
+    $scope.sort = tableService.sort;
+    $scope.filter = tableService.filter;
+    $scope.paging = tableService.paging;
     
 });

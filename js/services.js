@@ -24,65 +24,335 @@ app.factory('configService', function() {
 	}
 });
 
-app.factory('tableService', function(utilService, configService) {
+app.factory('tableService', function(utilService, configService, $timeout, daoService, localizationService) {
     return {
-        filter: function(item, filterValues) {
-            
-            var metadata = configService.getMetadata();
-            var result = true;
-            for (var i=0;i<metadata.length;i++) {
-                if (!utilService.isEmpty(filterValues[metadata[i].name])) {
-                    var colName = metadata[i].name;
-                    switch (metadata[i].type) {
-                        case 'text':
-                            result = item[colName].toLowerCase().match(filterValues[colName].toLowerCase());
-                            break;
-                        case 'date':
-                            var from = new Date(filterValues[colName].from);
-                            var to = new Date(filterValues[colName].to);
-                            var val = utilService.stringToDate(item[colName]);
-                            //console.log("From: "+from+" to: "+ to+" val: "+val);
-                            result = val>=from && val<=to;
-                            break;
-                        case 'number':
-                            var from = +filterValues[colName].from;
-                            var to = +filterValues[colName].to;
-                            var val = +item[colName];
-                            result = val>=from && val<=to;
-                            break;
-                        case 'select':
-                        case 'radio':
-                            for (var j=0;j<filterValues[colName].length;j++) {
-                                if (filterValues[colName][j]==item[colName]) {
-                                    result = true;
-                                    break;
-                                }
-                                result = false;
-                            }
-                            break;
-                        case 'multiselect':
-                            for (var j=0;j<filterValues[colName].length;j++) {
-                                if (item[colName].indexOf(filterValues[colName][j])!=-1) {
-                                    result = true;
-                                    break;
-                                }
-                                result = false;
-                            }
-                            break;
-                        case 'checkbox':
-                            var val = filterValues[colName]=='true';
-                            if (val!==item[colName]) {
-                                result = false;
-                                break;
-                            }
-                            break;
-                    }
+        sort: {
+            order: "asc",
+            column: configService.retrieveFirstVisibleField(),
+
+            update: function() {
+                this.setSort(this.column);
+            },
+
+            setSort: function(column) {
+                if (this.column==column) {
+                    order = this.toggleOrder();
                 }
-                if (!result) {
-                    return false;
+                else {
+                    this.column = column;
+                    order = "asc";
+                }
+                $("#tableContent table th i.sortIcon").each(function() {
+                    $(this).removeClass("highlighted");
+                });
+                $('#sortIcon_' + this.column).addClass("highlighted");
+                $('#sortIcon_' + column).tooltip();
+            },
+
+            toggleOrder: function() {
+                if (this.order=="asc") {
+                    this.order = "desc";
+                    $('#sortIcon_' + this.column).removeClass("fa-sort-amount-asc").addClass("fa-sort-amount-desc");
+                }
+                else {
+                    this.order = "asc";
+                    $('#sortIcon_' + this.column).removeClass("fa-sort-amount-desc").addClass("fa-sort-amount-asc");
                 }
             }
-            return true;
+        },
+        
+        filter: {
+            filterValues: {},
+            checkboxFilter: 'true',
+            column: configService.retrieveFirstVisibleField(),
+            update: function() {
+                $(".filter").val("");
+                $(".filter").hide();
+                $("span.select2").hide();
+                $("#tableContent table th i.filterIcon").each(function() {
+                    $(this).removeClass("highlighted2");
+                });
+                $('#filterIcon_' + this.column).addClass("highlighted2");
+
+                var dateType = configService.getMetadataByName(this.column).type;
+                switch(dateType) {
+                    case 'textarea':
+                    case 'text':
+                        this.showTextFilter();
+                        break;
+                    case 'number':
+                        var min = configService.getMetadataByName(this.column)
+                        this.showNumberRangeFilter();
+                        break;
+                    case 'date':
+                        this.showDateRangeFilter();
+                        break;
+                    case 'checkbox':
+                        this.showCheckboxFilter();
+                        break;
+                    case 'select':
+                    case 'multiselect':
+                    case 'radio':
+                        this.showMultielectFilter();
+                        break;
+                } 
+
+            },
+
+            showTextFilter: function() {
+                $("#textFilter").show();
+                $("#textFilter").val(this.filterValues[this.column]);
+            },
+
+            showNumberRangeFilter: function() {
+                var min = daoService.getMinValOf(this.column);
+                var max = daoService.getMaxValOf(this.column);
+                $("input#numberFilter").ionRangeSlider({
+                    type: "double",
+                    min: min,
+                    max: max,
+                    force_edges: true,
+                    grid: true,
+                    hide_min_max: true
+                });
+
+                var from = min;
+                var to = max;
+
+                if (this.filterValues[this.column]!=undefined) {
+                    from = this.filterValues[this.column].from;
+                    to = this.filterValues[this.column].to;
+                }
+
+                var slider = $("input#numberFilter").data("ionRangeSlider");
+                slider.update({
+                    from: from,
+                    to: to
+                });
+
+                $timeout(function(){
+                    $("#filterContainer > div > span.irs").addClass("filter");
+                    $("#filterContainer > div > span.irs").prop("id", "numberFilter");
+                    $("#numberFilter").css("display", "block");
+                }, 100);
+
+                if (this.filterValues[this.column] != undefined) {
+                    slider.update({
+                        from: this.filterValues[this.column].from,
+                        to: this.filterValues[this.column].to
+                    });
+                }
+            },
+
+            showDateRangeFilter: function() {
+
+                $("#dateFilter").show();
+                if (this.filterValues[this.column] != undefined) {
+                    $("#dateFilter").data('daterangepicker').setStartDate(this.filterValues[this.column].from);
+                    $("#dateFilter").data('daterangepicker').setEndDate(this.filterValues[this.column].to);
+                }
+                else {
+                    $("#dateFilter").data('daterangepicker').setStartDate(moment());
+                    $("#dateFilter").data('daterangepicker').setEndDate(moment());
+                    $("#dateFilter").val("");
+                }
+            },
+
+            showCheckboxFilter: function() {
+                $("#checkboxFilter").show();
+                if (this.filterValues[this.column] != undefined) {
+                    $("#checkboxFilter").val(this.filterValues[this.column]);
+                }
+            },
+
+            showMultielectFilter: function() {
+                this.availableOpts = configService.getMetadataByName(this.column).availableOpts;
+                var value = this.filterValues[this.column];
+                var columnName = this.column;
+                if (value==null) {
+                    value=[];
+                }
+                $timeout(function(){
+                    $("#multiselectFilter").val(value);
+                    if (value!=undefined) {
+                        $("#multiselectFilter").trigger("change");
+                    }
+                    $("#multiselectFilter").show();
+                    $("#multiselectFilter + span.select2").show();
+                    $("#multiselectFilter").select2({
+                        placeholder: localizationService.getMessage("labels", "filterBy") + " "+columnName,
+                    });
+                }, 100);
+
+            },
+
+            addFilter: function() {
+                var dateType = configService.getMetadataByName(this.column).type;
+                switch(dateType) {
+                    case 'textarea':
+                    case 'text':
+                        if (!utilService.isEmpty($("#textFilter").val())) {
+                            this.filterValues[this.column] = $("#textFilter").val();
+                        }
+                        else {
+                            this.delFilter();
+                        }
+                        break;
+                    case 'number':
+                        var range = $("input#numberFilter").data("ionRangeSlider");
+                        this.filterValues[this.column] = {from: range.old_from, to: range.old_to};
+                        break;
+                    case 'date':
+                        if (!utilService.isEmpty($("#dateFilter").val())) {
+                            var dateData = $("#dateFilter").data('daterangepicker');
+                            var startDate = dateData["startDate"];
+                            var endDate = dateData["endDate"];
+                            this.filterValues[this.column] = {from: startDate, to: endDate};
+                        }
+                        break;
+                    case 'checkbox':
+                        if (!utilService.isEmpty($("#checkboxFilter").val())) {
+                            this.filterValues[this.column] = $("#checkboxFilter").val();
+                        }
+                        else {
+                            this.delFilter();
+                        }
+                        break;
+                    case 'select':
+                    case 'multiselect':
+                    case 'radio':
+                        if (!utilService.isEmpty($("#multiselectFilter").val())) {
+                            this.filterValues[this.column] = $("#multiselectFilter").val();
+                        }
+                        else {
+                            this.delFilter();
+                        }
+                        break;
+                } 
+                if (!this.showAddFilterBtn()) {
+                    $('#filterIcon_' + this.column).addClass("highlighted");
+                } 
+            },
+
+            showAddFilterBtn: function() {
+                return utilService.isEmpty(this.filterValues[this.column]);
+            },
+
+            delFilter: function() {
+                $(".filter").val("");
+                $('#filterIcon_' + this.column).removeClass("highlighted");
+                this.filterValues[this.column] = null;
+                this.update();
+            },
+
+            showFilter: function(name) {
+                $('html, body').animate({
+                    'scrollTop': $('#operations').offset().top-10
+                }, 600);
+                this.column = name;
+                this.update();
+                if (configService.getMetadataByName(this.column).type!='date') {
+                    $('.filter').focus();
+                }
+            },
+            
+            classify: function(item, filterValues) {
+                var metadata = configService.getMetadata();
+                var result = true;
+                for (var i=0;i<metadata.length;i++) {
+                    if (!utilService.isEmpty(filterValues[metadata[i].name])) {
+                        var colName = metadata[i].name;
+                        switch (metadata[i].type) {
+                            case 'text':
+                                result = item[colName].toLowerCase().match(filterValues[colName].toLowerCase());
+                                break;
+                            case 'date':
+                                var from = new Date(filterValues[colName].from);
+                                var to = new Date(filterValues[colName].to);
+                                var val = utilService.stringToDate(item[colName]);
+                                //console.log("From: "+from+" to: "+ to+" val: "+val);
+                                result = val>=from && val<=to;
+                                break;
+                            case 'number':
+                                var from = +filterValues[colName].from;
+                                var to = +filterValues[colName].to;
+                                var val = +item[colName];
+                                result = val>=from && val<=to;
+                                break;
+                            case 'select':
+                            case 'radio':
+                                for (var j=0;j<filterValues[colName].length;j++) {
+                                    if (filterValues[colName][j]==item[colName]) {
+                                        result = true;
+                                        break;
+                                    }
+                                    result = false;
+                                }
+                                break;
+                            case 'multiselect':
+                                for (var j=0;j<filterValues[colName].length;j++) {
+                                    if (item[colName].indexOf(filterValues[colName][j])!=-1) {
+                                        result = true;
+                                        break;
+                                    }
+                                    result = false;
+                                }
+                                break;
+                            case 'checkbox':
+                                var val = filterValues[colName]=='true';
+                                if (val!==item[colName]) {
+                                    result = false;
+                                    break;
+                                }
+                                break;
+                        }
+                    }
+                    if (!result) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        },
+        
+        paging: {
+            page: 1,
+            numOfItems: 0,
+            itemsOnPage: "10",
+            visiblePages: [],
+            last: 0,
+            indexFirst: 1,
+            indexLast: +this.itemsOnPage,
+            calculateVisiblePages: function() {
+                this.visiblePages = [];
+                //console.log("last: "+this.last+" page: "+this.page+" indexFirst: "+this.indexFirst+" last: "+this.indexLast);
+                if (this.page==this.last && this.page>2) {
+                    this.visiblePages.push(this.page-2);
+                }
+                if (this.page>1) {
+                    this.visiblePages.push(this.page-1);
+                }
+                this.visiblePages.push(this.page);
+                if (this.page!=this.last) {
+                    this.visiblePages.push(this.page+1);
+                }
+                if (this.page==1 && this.last>2) {
+                    this.visiblePages.push(this.page+2);
+                }
+            },
+            update: function(page) {
+                this.last = Math.ceil(this.numOfItems/this.itemsOnPage);
+                this.page = page;
+                this.indexFirst = (this.page-1)*this.itemsOnPage;
+                this.indexLast = this.indexFirst+this.itemsOnPage;
+                this.calculateVisiblePages();
+            },
+            calculateClass(page) {
+                if (page!=this.page) {
+                    return "clickable";
+                }
+                return "non-clickable";
+            }
         }
     }
 });
@@ -200,19 +470,9 @@ app.factory('daoService', function(utilService, configService) {
 			return utilService.copy(this.emptyRecord);
 		},
         
-        /*convertDateTypes: function() {
-            var metadata = configService.getMetadata();
-            for (var i = 0;i<records.length;i++) {
-                for (var j = 0;j<metadata.length;j++) {
-                    if (metadata[j].type==='date') {
-                        var date = records[i][metadata[j].name].split('-');
-                        if (!utilService.isEmpty(date)) {
-                            records[i][metadata[j].name] = new Date(date[2], +date[1]-1, date[0]);
-                        }
-                    }
-                }
-            }
-        },*/
+        countRecords: function() {
+            return records.length;
+        },
 		
 		getRecords: function() {
 			//should be got from outer service
