@@ -109,14 +109,21 @@ app.controller('CRUDAppController', function ($scope, $rootScope, tableService, 
             firstShowForm = false;
             
             //datepicker
-            $('.datepicker').datepicker({
-                format: 'dd-mm-yyyy',
-                autoclose: true,
-            }).on('changeDate', function(ev){                 
-                $(this).datepicker('hide');
-                $scope.$broadcast('dateChanged', {
-                    name: $(this).attr('name'),
-                    newVal: $(this).val()
+            
+            $('.datepicker').each(function() {
+                $(this).datepicker({
+                    format: 'dd-mm-yyyy',
+                    autoclose: true,
+                    startDate: $(this).attr('datemin'),
+                    endDate: $(this).attr('datemax'),
+                }).on('changeDate', function(ev){                 
+                    $(this).datepicker('hide');
+                    $scope.$broadcast('dateChanged', {
+                        name: $(this).attr('name'),
+                        newVal: $(this).val()
+                    });
+                }).on('keydown',function(e) {
+                    e.preventDefault();
                 });
             });
         }

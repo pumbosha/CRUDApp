@@ -56,6 +56,8 @@ app.component('crudInput', {
 			ctrl.step = ctrl.validations!=undefined ? ctrl.validations.step: null;
 		} else if (ctrl.type==='date') {
             ctrl.componentClass += 'datepicker';
+            ctrl.min = ctrl.validations!=undefined ? ctrl.validations.min: null;
+            ctrl.max = ctrl.validations!=undefined ? ctrl.validations.max: null;
         }
 		
         if (ctrl.updateOn!='') { 

@@ -25,9 +25,11 @@ Release 1:
 
 12. Pole image (rounded, circled, bordered itp)
 
-13. Stronnicowanie po stronie przeglądarki
+13. Działa tylko na FF
 
-14. Min date/Max date - do pola dat. Wywalić długie patterny - pola z datami muszą być readonly - mogą posiadać jakąś ikonkę kalendarza.
++ Stronnicowanie po stronie przeglądarki
+
++ Min date/Max date - do pola dat. Wywalić długie patterny - pola z datami muszą być readonly - mogą posiadać jakąś ikonkę kalendarza.
 
 Release 1.5:
 -> Nowe pola, drobne ulepszenia dotyczące wyglądu i UI
