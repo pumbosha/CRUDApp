@@ -25,10 +25,10 @@ Release 1:
 
 12. Pole image (rounded, circled, bordered itp)
 
-13. Działa tylko na FF
+13. Zaznaczanie wierszów nie działa
 
++ Działa tylko na FF (Pod chrome działa ale tylko na serwerze)
 + Stronnicowanie po stronie przeglądarki
-
 + Min date/Max date - do pola dat. Wywalić długie patterny - pola z datami muszą być readonly - mogą posiadać jakąś ikonkę kalendarza.
 
 Release 1.5:

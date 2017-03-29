@@ -127,7 +127,7 @@
 						<tr>
 					</thead>	
 					<tbody>
-						<tr ng-repeat="record in records | sortFilter:sort.column:sort.order!='asc' | tableFilter:filter.filterValues | pagingFilter">
+						<tr id="{{record[primaryKey]}}" ng-repeat="record in records | sortFilter:sort.column:sort.order!='asc' | tableFilter:filter.filterValues | pagingFilter">
 							<td class="operationsColumn">
 								<div class="form-inline">
                                     <span class="bttns btn-group">
@@ -143,7 +143,7 @@
 									</span>
 								</div>
 							</td>
-                            <td class="dataCol" ng-show="md.showInTable" ng-repeat="md in metadata | orderBy:'order'" ng-click="selectRecord(record)">
+                            <td class="dataCol" ng-show="md.showInTable" ng-repeat="md in metadata | orderBy:'order'" ng-click="toggleSelectRecord(record)">
                                 {{record[md.name] | tableValueFilter:record[md.name]:md}}
                             </td>
 						</tr>

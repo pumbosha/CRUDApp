@@ -147,8 +147,15 @@ app.controller('CRUDAppController', function ($scope, $rootScope, tableService, 
         }
     }
     
-    $scope.selectRecord = function(record) {
-        $scope.selectedRecords.push(record);
+    $scope.toggleSelectRecord = function(record) {
+        if ($scope.selectedRecords.indexOf(record)!=-1) {
+            $scope.selectedRecords.pop(record);
+            $("#"+record[primaryKey]).removeClass("highlighted");
+        }
+        else {
+            $scope.selectedRecords.push(record);
+            $("#"+record[primaryKey]).addClass("highlighted");
+        }
     }
 	
 	$scope.editRecord = function(record) {
@@ -247,5 +254,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, tableService, 
     $scope.sort = tableService.sort;
     $scope.filter = tableService.filter;
     $scope.paging = tableService.paging;
+    
+    $scope.primaryKey = primaryKey;
     
 });

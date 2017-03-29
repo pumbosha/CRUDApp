@@ -14,11 +14,7 @@ $(document).ready(function() {
 
     $('[data-toggle="tooltip"]').tooltip({
         trigger : 'hover'
-    })  
-
-    $(".dataCol").click(function() {
-        $(this).parent().toggleClass("highlighted");
-    })
+    });
 
     $("#tableContent table thead th").each(function() {
        $(this).css('min-width', $(this).width()+50); 

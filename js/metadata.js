@@ -33,7 +33,7 @@ var metadata = [
         "desc": "Type your second name",
         "availableOpts": "",
         "label": "Surname",
-        "updateOn": "",
+        "updateOn": "blur",
         "showInTable": false,
         "showInRecordView": false,
         "order": 2
