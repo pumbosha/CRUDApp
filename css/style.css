@@ -136,6 +136,13 @@ html {
  * Table styles
  */
 
+.tableCommunicate {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
 .tableContentInfo {
     float:left;
     font-size: .9em;
@@ -265,6 +272,10 @@ html {
  * Form styles
  */
 
+textarea {
+    width: 100%;
+}
+
 .crud-formItem select {
 	width:100%;	
 }
@@ -350,7 +361,8 @@ form div.bttns {
 }
 
 #succMsg {
-    margin: 20px 5px;
+    margin: 20px 10px;
+    font-size: 1.2em;
 }
 
 .error {

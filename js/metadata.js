@@ -39,6 +39,19 @@ var metadata = [
         "order": 2
     },
     {
+        "name": "description",
+        "type": "textarea",
+        "errorMessages": {"required": "Field 'description' is required."},
+        "validations": {"required":true},
+        "desc": "Type your desc",
+        "availableOpts": "",
+        "label": "Description",
+        "updateOn": "blur",
+        "showInTable": true,
+        "showInRecordView": true,
+        "order": 2
+    },
+    {
         "name": "pesel",
         "type": "text",
         "errorMessages": {"required": "Field 'pesel' is required.", "pattern": "Field 'pesel' should contains only number, and length: 11, and should match to field 'date of birth'"},
@@ -98,7 +111,13 @@ var metadata = [
         "name": "salary",
         "type": "number",
         "errorMessages": {"required": "Field 'salary' is required.", "number": "Value of field 'salary' should be the number", "min": "Value of field 'salary' is to less (should be bigger or equal than 0)", "max": "Value of this field is to big (should be less or equal than 1000)"},
-        "assignParams": {},
+        "assignParams": {
+            "description":[
+                {"cond": "+this>900", "val": "Ale dużo zarabia"},
+                {"cond": "+this>500 && +this<=900", "val": "To będzie klasa średnia"},
+                {"cond": "+this<=500", "val": "Biedak i robol"},
+            ]
+        },
         "validations": {"required":true, "min":"0", "max":"1000", "step":"10"},
         "desc": "Type your salary",
         "availableOpts": "",

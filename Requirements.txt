@@ -18,18 +18,15 @@ Release 1:
 + przenieść data do oddzielnego pliku tak jak metadata
 + localization service
 + Klucz główny! Aktualnie jest zhardcodowany na pesel
-
-10. Dodanie pola textarea
-
-11. Jakiś label gdy tabelka jest pusta
-
-12. Pole image (rounded, circled, bordered itp)
-
-13. Zaznaczanie wierszów nie działa
-
++ Dodanie pola textarea
++ Jakiś label gdy tabelka jest pusta
++ Zaznaczanie wierszów nie działa
 + Działa tylko na FF (Pod chrome działa ale tylko na serwerze)
 + Stronnicowanie po stronie przeglądarki
 + Min date/Max date - do pola dat. Wywalić długie patterny - pola z datami muszą być readonly - mogą posiadać jakąś ikonkę kalendarza.
+
+- uporządkowanie impomrtów
+- ew. sprzątnięcie w kontrolerze
 
 Release 1.5:
 -> Nowe pola, drobne ulepszenia dotyczące wyglądu i UI
@@ -53,6 +50,8 @@ Release 1.5:
 8. Opcja 'zaznacz wszystkie wiersze' (w sensie wszystkie przefiltrowane)
 
 11. Ulepszenia w filtrach (multiselect: or/and, text: regexy itp)
+
+12. Pole image (rounded, circled, bordered itp)
 
 Release 2:
 -> Nowe Featur'y

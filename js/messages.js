@@ -1,6 +1,8 @@
 var messages = {
     "communicates": {
         "successSaveForm": "Changes saved successfully.",  
+        "numOfItemsEqualsZero": "There is no items in database.",
+        "numOfFilteredItemsEqualsZero": "There is no filtered items. Try to change your filter settings.",
     },
     "labels": {
         "addRecord": "Add Record",

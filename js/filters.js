@@ -99,6 +99,14 @@ app.filter('tableValueFilter', function(utilService) {
                     return md.aliases[input];
                 }
                 return input;
+            case 'text':
+            case 'textarea':
+                if (!utilService.isEmpty(input)) {
+                    if (input.length>50) {
+                        input = input.substring(0, 50)+"...";
+                    }
+                }
+                return input;
             case 'date':
                 input = utilService.stringToDate(input);
                 if (!utilService.isEmpty(md.format)) {

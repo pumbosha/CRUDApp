@@ -262,27 +262,32 @@ app.factory('tableService', function(utilService, configService, $timeout, daoSe
                 for (var i=0;i<metadata.length;i++) {
                     if (!utilService.isEmpty(filterValues[metadata[i].name])) {
                         var colName = metadata[i].name;
+                        var it = item[colName];
+                        if (utilService.isEmpty(it)) {
+                            it = "";
+                        }
                         switch (metadata[i].type) {
                             case 'text':
-                                result = item[colName].toLowerCase().match(filterValues[colName].toLowerCase());
+                            case 'textarea':
+                                result = it.toLowerCase().match(filterValues[colName].toLowerCase());
                                 break;
                             case 'date':
                                 var from = new Date(filterValues[colName].from);
                                 var to = new Date(filterValues[colName].to);
-                                var val = utilService.stringToDate(item[colName]);
+                                var val = utilService.stringToDate(it);
                                 //console.log("From: "+from+" to: "+ to+" val: "+val);
                                 result = val>=from && val<=to;
                                 break;
                             case 'number':
                                 var from = +filterValues[colName].from;
                                 var to = +filterValues[colName].to;
-                                var val = +item[colName];
+                                var val = +it;
                                 result = val>=from && val<=to;
                                 break;
                             case 'select':
                             case 'radio':
                                 for (var j=0;j<filterValues[colName].length;j++) {
-                                    if (filterValues[colName][j]==item[colName]) {
+                                    if (filterValues[colName][j]==it) {
                                         result = true;
                                         break;
                                     }
@@ -291,7 +296,7 @@ app.factory('tableService', function(utilService, configService, $timeout, daoSe
                                 break;
                             case 'multiselect':
                                 for (var j=0;j<filterValues[colName].length;j++) {
-                                    if (item[colName].indexOf(filterValues[colName][j])!=-1) {
+                                    if (it.indexOf(filterValues[colName][j])!=-1) {
                                         result = true;
                                         break;
                                     }
@@ -300,7 +305,7 @@ app.factory('tableService', function(utilService, configService, $timeout, daoSe
                                 break;
                             case 'checkbox':
                                 var val = filterValues[colName]=='true';
-                                if (val!==item[colName]) {
+                                if (val!==it) {
                                     result = false;
                                     break;
                                 }

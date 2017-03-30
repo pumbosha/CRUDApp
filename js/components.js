@@ -97,6 +97,9 @@ app.component('crudInput', {
             else if (ctrl.type==='date') {
 				return 'templates/crudDateInput.htm';
 			}
+            else if (ctrl.type==='textarea') {
+				return 'templates/crudTextareaInput.htm';
+			}
 			else if (ctrl.type==='radio') {
 				return 'templates/crudRadioInput.htm';
 			}
