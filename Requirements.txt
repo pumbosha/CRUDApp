@@ -24,8 +24,8 @@ Release 1:
 + Działa tylko na FF (Pod chrome działa ale tylko na serwerze)
 + Stronnicowanie po stronie przeglądarki
 + Min date/Max date - do pola dat. Wywalić długie patterny - pola z datami muszą być readonly - mogą posiadać jakąś ikonkę kalendarza.
++ uporządkowanie impomrtów
 
-- uporządkowanie impomrtów
 - ew. sprzątnięcie w kontrolerze
 
 Release 1.5:
