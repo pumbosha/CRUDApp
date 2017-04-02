@@ -420,17 +420,17 @@ app.factory('utilService', function() {
 			if (obj==undefined) {
 				return '';
 			}
-			var condArr = obj.split(/\||\&|\=\=\!\=|\!|\^|\$|\(|\)/);
+            var condArr = obj.split(/\||\&|\=\=\!\=|\!|\^|\$|\(|\)/);  
 			for (var i = 0;i<condArr.length;i++) {
-				var evaledCond = this.evalOrReturn(condArr[i], record);
-				evaledCond = evaledCond==undefined ? "" : evaledCond;
+            	var evaledCond = this.evalOrReturn(condArr[i].replace('<', '(').replace('>', ')'), record);
+			    evaledCond = evaledCond==undefined ? "" : evaledCond;
 				obj = obj.replace(condArr[i], evaledCond);
 			}
-			return obj;
+            return obj;
 		},
         
 		evalOrReturn: function(obj, record) {
-			//alert("eval obj: "+JSON.stringify(obj)+" record: "+JSON.stringify(record));
+			//console.log("eval obj: "+JSON.stringify(obj)+" record: "+JSON.stringify(record));
 			if (obj==undefined || obj==null || obj=="") {
 				return "";
 			}

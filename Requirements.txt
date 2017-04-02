@@ -25,8 +25,7 @@ Release 1:
 + Stronnicowanie po stronie przeglądarki
 + Min date/Max date - do pola dat. Wywalić długie patterny - pola z datami muszą być readonly - mogą posiadać jakąś ikonkę kalendarza.
 + uporządkowanie impomrtów
-
-- ew. sprzątnięcie w kontrolerze
++ ew. sprzątnięcie w kontrolerze
 
 Release 1.5:
 -> Nowe pola, drobne ulepszenia dotyczące wyglądu i UI
@@ -40,12 +39,14 @@ Release 1.5:
 4. Pole dateAndTime
 
 + Pole do wyboru liczby jakieś fajniejsze, np wypełnianie kółka albo klikanie w pasek (insipnia advanced forms)
-
 + Różne rodzaje wyświetlania daty w tabeli
 
 6. Wartości defaultowe dla metadaty
 
 7. Metadane na nazwy tabeli i inne preferencje usera dot. wyglądu i zachowania tabeli i formularza
+- liczba znaków textarea w tabeli
+- tło
+- niestandardowe szerokości kolumn
 
 8. Opcja 'zaznacz wszystkie wiersze' (w sensie wszystkie przefiltrowane)
 
@@ -53,12 +54,14 @@ Release 1.5:
 
 12. Pole image (rounded, circled, bordered itp)
 
+13. Pytanie czy usuwać kilka wierszy
+
 Release 2:
 -> Nowe Featur'y
 
 1. Zrobić dyrektywe z tabelki (prostą - skopiować kod html)
 
-2. Po kliknięciu w wiersz tabeli niech otwiera się modal z prezentacją wiersza (export do pdf?)
++. Po kliknięciu w wiersz tabeli niech otwiera się modal z prezentacją wiersza (export do pdf?)
 
 3. Możliwość generowania wykresów (i przypinania do daszbordu)
 

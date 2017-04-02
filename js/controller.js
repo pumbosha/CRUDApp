@@ -33,6 +33,12 @@ app.controller('CRUDAppController', function ($scope, $rootScope, tableService, 
     
     $scope.viewedRecord;
     
+    $scope.sort = tableService.sort;
+    
+    $scope.filter = tableService.filter;
+    
+    $scope.paging = tableService.paging;
+    
     /******************************* Functions *******************************/
     
     var getPrimaryKey = function() {
@@ -250,10 +256,6 @@ app.controller('CRUDAppController', function ($scope, $rootScope, tableService, 
         doc.fromHTML($('#viewRecordContent').html(), 15, 15);
         doc.save($scope.viewedRecord[primaryKey]+'.pdf');
     }
-    
-    $scope.sort = tableService.sort;
-    $scope.filter = tableService.filter;
-    $scope.paging = tableService.paging;
     
     $scope.primaryKey = primaryKey;
     
