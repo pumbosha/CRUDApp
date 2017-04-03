@@ -149,7 +149,7 @@ var metadata = [
         "type": "text",
         "errorMessages": {"required":"Pseudonym is required", "pattern": "Field 'pseudonym' should contains name or surname."},
         "assignParams": {},
-        "validations": {"required":true, "pattern":"^.*(record.name.replace<'T', 'y'>|record.surname).*$"},
+        "validations": {"required":true, "pattern":"^.*(`record.name.replace('T', 'y')`|`record.surname`).*$"},
         "desc": "Type your pseudonym",
         "availableOpts": "",
         "label": "Pseudonym",

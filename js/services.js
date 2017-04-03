@@ -420,13 +420,13 @@ app.factory('utilService', function() {
 			if (obj==undefined) {
 				return '';
 			}
-            var condArr = obj.split(/\||\&|\=\=\!\=|\!|\^|\$|\(|\)/);  
-			for (var i = 0;i<condArr.length;i++) {
-            	var evaledCond = this.evalOrReturn(condArr[i].replace('<', '(').replace('>', ')'), record);
-			    evaledCond = evaledCond==undefined ? "" : evaledCond;
+			var condArr = obj.split("`");
+            for (var i = 1;i<condArr.length;i+=2) {
+				var evaledCond = this.evalOrReturn(condArr[i], record);
+                evaledCond = evaledCond==undefined ? "" : evaledCond;
 				obj = obj.replace(condArr[i], evaledCond);
 			}
-            return obj;
+			return obj.split("`").join("");
 		},
         
 		evalOrReturn: function(obj, record) {
