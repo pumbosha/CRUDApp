@@ -16,8 +16,6 @@ app.controller('CRUDAppController', function ($scope, $rootScope, tableService, 
 	$scope.metadata = configService.getMetadata();
 	
 	$scope.records = daoService.getRecords();
-    
-    $scope.numOfItems = daoService.countRecords();
 	
 	$scope.showForm = false;
 	
@@ -121,7 +119,7 @@ app.controller('CRUDAppController', function ($scope, $rootScope, tableService, 
                     format: 'dd-mm-yyyy',
                     autoclose: true,
                     startDate: $(this).attr('datemin'),
-                    endDate: $(this).attr('datemax'),
+                    endDate: $(this).attr('datemax')
                 }).on('changeDate', function(ev){                 
                     $(this).datepicker('hide');
                     $scope.$broadcast('dateChanged', {
@@ -129,7 +127,9 @@ app.controller('CRUDAppController', function ($scope, $rootScope, tableService, 
                         newVal: $(this).val()
                     });
                 }).on('keydown',function(e) {
-                    e.preventDefault();
+                    if (e.keyCode!=8 && e.keyCode!=46) {
+                        e.preventDefault();
+                    }
                 });
             });
         }
@@ -228,9 +228,12 @@ app.controller('CRUDAppController', function ($scope, $rootScope, tableService, 
         if (!$scope.editRecordClicked) {
             formService.assign(obj, $scope.record);
         }
+	}	
+    
+    $scope.notifyAll = function() {
         //changing random variable to trigger $onChange event on each component which want to listen
         $scope.random = {'val': Math.random().toString(36).substring(7)};
-	}		
+    }
 	
 	$scope.evalPattern = function(obj) {
 		return utilService.evalPatternCondition(obj, $scope.record);

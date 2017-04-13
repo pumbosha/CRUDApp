@@ -422,7 +422,7 @@ app.factory('utilService', function() {
 			}
 			var condArr = obj.split("`");
             for (var i = 1;i<condArr.length;i+=2) {
-				var evaledCond = this.evalOrReturn(condArr[i], record);
+                var evaledCond = this.evalOrReturn(condArr[i], record);
                 evaledCond = evaledCond==undefined ? "" : evaledCond;
 				obj = obj.replace(condArr[i], evaledCond);
 			}

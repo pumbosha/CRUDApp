@@ -96,7 +96,12 @@ app.filter('tableValueFilter', function(utilService) {
                 return input;
             case 'checkbox':
                 if (!utilService.isEmpty(md.aliases)) {
-                    return md.aliases[input];
+                    if (!utilService.isEmpty(input)) {
+                        return md.aliases[input];
+                    }
+                    else {
+                        return md.aliases["false"];
+                    }
                 }
                 return input;
             case 'text':
@@ -109,7 +114,7 @@ app.filter('tableValueFilter', function(utilService) {
                 return input;
             case 'date':
                 input = utilService.stringToDate(input);
-                if (!utilService.isEmpty(md.format)) {
+                if (!utilService.isEmpty(md.format) && !utilService.isEmpty(input)) {
                     return moment(input, 'dd-MM-yyy').format(md.format);
                 }
                 return input;

@@ -25,7 +25,7 @@ var messages = {
         "delete": "Internal error while deleting record",
         "update": "Internal error while updating record",
         "add": "Internal error while adding record",
-        "nonUniquePrimaryKey": "Person with this primary key already exists",
+        "nonUniquePrimaryKey": "Record with given primary key already exists.",
         "validationErrors": "Form contains validation errors.",
     }
 }

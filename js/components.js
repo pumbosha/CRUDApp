@@ -20,6 +20,7 @@ app.component('crudInput', {
 		updateOn: '@updateon',
 		model: '=',
 		onchange: '&change',
+        notify: '&notify',
 		evalParamsMethod: '&valid',
 		name: '@',
 		validations: '<',
@@ -42,7 +43,7 @@ app.component('crudInput', {
 				//Trigerring updating pattern by changed 'listener' variable
                 //'Called whenever one-way bindings are updated.'
 				if (changeObj.listener) {
-                    //alert('ONCHANGES: '+ctrl.name);
+                    //console.log('ONCHANGES: '+ctrl.name);
 					ctrl.pattern = ctrl.evalParamsMethod({params: ctrl.validations!=undefined ? ctrl.validations.pattern: ''});
 				}
 			}
@@ -76,6 +77,7 @@ app.component('crudInput', {
 		
 		$scope.$watch('$ctrl.model', function() {
             //alert('WATCH: '+ctrl.model);
+            ctrl.notify();
 			if (ctrl.assignParams!=undefined) {
 				ctrl.onchange({assgnprms: utilService.replaceThisKeyword(ctrl.assignParams, ctrl.model)});
 			}
