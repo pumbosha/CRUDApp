@@ -56,6 +56,8 @@ Release 1.5:
 
 13. Pytanie czy usuwać kilka wierszy
 
+14. sufixy w formularzu np do waluty
+
 Release 2:
 -> Nowe Featur'y
 

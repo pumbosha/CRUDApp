@@ -65,6 +65,7 @@ app.factory('tableService', function(utilService, configService, $timeout, daoSe
             filterValues: {},
             checkboxFilter: 'true',
             column: configService.retrieveFirstVisibleField(),
+            slider: null,
             update: function() {
                 $(".filter").val("");
                 $(".filter").hide();
@@ -107,6 +108,9 @@ app.factory('tableService', function(utilService, configService, $timeout, daoSe
             showNumberRangeFilter: function() {
                 var min = daoService.getMinValOf(this.column);
                 var max = daoService.getMaxValOf(this.column);
+                if (this.slider!=null) {
+                    this.slider.destroy();
+                }
                 $("input#numberFilter").ionRangeSlider({
                     type: "double",
                     min: min,
@@ -124,8 +128,8 @@ app.factory('tableService', function(utilService, configService, $timeout, daoSe
                     to = this.filterValues[this.column].to;
                 }
 
-                var slider = $("input#numberFilter").data("ionRangeSlider");
-                slider.update({
+                this.slider = $("input#numberFilter").data("ionRangeSlider");
+                this.slider.update({
                     from: from,
                     to: to
                 });
@@ -137,7 +141,7 @@ app.factory('tableService', function(utilService, configService, $timeout, daoSe
                 }, 100);
 
                 if (this.filterValues[this.column] != undefined) {
-                    slider.update({
+                    this.slider.update({
                         from: this.filterValues[this.column].from,
                         to: this.filterValues[this.column].to
                     });
