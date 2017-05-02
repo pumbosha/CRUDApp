@@ -70,7 +70,7 @@ app.filter('tableValueFilter', function(utilService) {
     return function(input, val, md) {
         switch(md.type) {
             case 'multiselect':
-                if ( Object.prototype.toString.call( input ) !== '[object Array]' ) {
+                if ( Object.prototype.toString.call(input) !== '[object Array]' ) {
                     return input;
                 }
                 var result = "";

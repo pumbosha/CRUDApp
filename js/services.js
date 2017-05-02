@@ -163,10 +163,12 @@ app.factory('tableService', function(utilService, configService, $timeout, daoSe
             },
 
             showCheckboxFilter: function() {
-                $("#checkboxFilter").show();
                 if (this.filterValues[this.column] != undefined) {
                     $("#checkboxFilter").val(this.filterValues[this.column]);
                 }
+                $timeout(function(){
+                    $("#checkboxFilter").show();
+                }, 100);
             },
 
             showMultielectFilter: function() {
